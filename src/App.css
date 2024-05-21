@@ -1,0 +1,72 @@
+#root{
+  font-family: "Outfit", sans-serif, sans-serif;
+}
+
+
+::-webkit-scrollbar {
+  width: 4px; /* Set the width of the scrollbar */
+  background-color: #f4f4f4; /* Set the background color */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #bfbfbf;
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  -ms-border-radius: 40px;
+  -o-border-radius: 40px;
+}
+
+/* Style the scrollbar thumb when hovering */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8c8c8c; /* Set the color of the scrollbar thumb on hover */
+}
+
+
+  .ant-picker-presets {
+      min-height: 250px;
+  }
+
+
+  /* .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
+    display: block;
+    flex-wrap: nowrap;
+    direction: ltr;
+  }
+   */
+
+  .antd_selected_presets_date {
+  color: #fff;
+   background: #7e78ef;
+   &:hover {
+    color: #7e78ef;
+  }
+  }
+
+ /* .ant-table-content {
+    position: sticky;
+    z-index: 3;
+    background: #ffffff;
+  }
+
+
+  .ant-table-wrapper table {
+    width: max-content;
+    text-align: start;
+    border-radius: 8px 8px 0 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  } */
+
+  @media screen and (min-width: 1920px) {
+    #root {
+      height: auto; /* Reset height for screens wider than 1920px */
+    }
+  }
+  
