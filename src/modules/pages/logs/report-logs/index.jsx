@@ -8,12 +8,14 @@ const { Option } = Select;
 const ReportLogs = () => {
   const [cards, setCards] = useState([{ key: 0 }]);
   const [selectedValue, setSelectedValue] = useState("Circle");
+  const [numCards, setNumCards] = useState(cards.length);
+  const [cardRemove, setCardRemove] = useState(false);
 
   const handleChange = (value) => {
     setSelectedValue(value);
   };
 
-  console.log(selectedValue, "selectedvalue");
+  // console.log(selectedValue, "selectedvalue");
 
   const cardRefs = useRef([]);
   const lineRefs = useRef([]);
@@ -21,12 +23,19 @@ const ReportLogs = () => {
   const addCard = () => {
     const newKey = cards.length;
     setCards([...cards, { key: newKey }]);
+    setNumCards(numCards + 1);
   };
 
   const removeCard = (index) => {
+    setCardRemove(true);
+    setNumCards(numCards - 1);
     const newCards = cards.filter((_, i) => i !== index);
     setCards(newCards);
+
+    updateCardHeight();
   };
+
+  console.log(cardRemove, "card Remove");
 
   const updateCardHeight = () => {
     cardRefs.current.forEach((ref, index) => {
@@ -40,24 +49,25 @@ const ReportLogs = () => {
           nextCardHeight
         );
 
-        const minCardHeight = Math.min(
-          currentCardHeight,
-          prevCardHeight,
-          nextCardHeight
-        );
+        console.log(index, "index");
 
-        console.log(prevCardHeight, "prev card height");
-        console.log(currentCardHeight, "current card height");
+        console.log(numCards, "numCards");
 
         // console.log(`Updated height of card-wrapper ${index}:`, maxCardHeight);
 
-        if (lineRefs.current[index]) {
-          console.log(
-            `Updated height of line ${index}:`,
-            lineRefs.current[index]
-          );
+        console.log(currentCardHeight, "current card height");
 
-          lineRefs.current[index].style.height = `${maxCardHeight}px`;
+        console.log(maxCardHeight, "max card height");
+        if (lineRefs.current[index]) {
+          // console.log(
+          //   `Updated height of line ${index}:`,
+          //   lineRefs.current[index]
+          // );
+
+          lineRefs.current[index].style.height = cardRemove
+            ? `${currentCardHeight}px`
+            : `${maxCardHeight}px`;
+          console.log(lineRefs.current[index].style.height, "line height");
           lineRefs.current[index].style.top = `-${ref.offsetHeight / 2}px`;
           lineRefs.current[index].style.borderBottom = "none"; // Adjust color and thickness as needed
 
@@ -96,17 +106,21 @@ const ReportLogs = () => {
         //   }
         // }
 
+        setCardRemove(false);
         // Check if the current index is the last index
-        if (index === cardRefs.current.length - 1) {
-          // Perform the operation for the last index
-          console.log("This is the last index:", index);
+        if (index < numCards && ref) {
+          // Your existing logic for updating card heights goes here
 
-          // Add border-bottom style to the last lineRef
-          if (lineRefs.current[index - 1]) {
-            lineRefs.current[index - 1].style.height = `${
-              (currentCardHeight + prevCardHeight) / 2
-            }px`;
-            lineRefs.current[index - 1].style.borderBottom = "1px solid black"; // Adjust color and thickness as needed
+          // Check if the current card is the last one
+          if (index === numCards - 1) {
+            // Apply style to the line before the last card
+            if (lineRefs.current[index - 1]) {
+              lineRefs.current[index - 1].style.height = `${
+                (currentCardHeight + prevCardHeight) / 2
+              }px`;
+              lineRefs.current[index - 1].style.borderBottom =
+                "1px solid black"; // Adjust color and thickness as needed
+            }
           }
         }
       }
@@ -115,7 +129,8 @@ const ReportLogs = () => {
 
   // useEffect(() => {
   //   updateCardHeight();
-  // }, [cards]);
+  //   setCardRemove(false);
+  // }, [cards, numCards]);
 
   return (
     <Wrapper>
@@ -151,10 +166,17 @@ const ReportLogs = () => {
                 className="line"
               />
             )}
-            <Button onClick={() => removeCard(index)}>-</Button>
+            {/* <Button onClick={() => removeCard(index)}>-</Button> */}
+            {index === cards.length - 1 && (
+              <div className="button-wrapper">
+                <Button onClick={() => removeCard(index)}>-</Button>
+                <Button onClick={addCard}>+</Button>
+              </div>
+            )}
           </div>
         ))}
-        <Button onClick={addCard}>+</Button>
+
+        {/* <Button onClick={addCard}>+</Button> */}
       </div>
     </Wrapper>
   );
@@ -189,10 +211,16 @@ const CardComponent = ({ onBodyChange, handleChange, selectedValue }) => {
       {cardBody.map((card, index) => (
         <div key={card.key}>
           <CardBody selectedValue={selectedValue} handleChange={handleChange} />
-          <Button onClick={() => removeCard(index)}>-</Button>
+          {/* <Button onClick={() => removeCard(index)}>-</Button> */}
+          {index === cardBody.length - 1 && (
+            <div className="button-wrapper">
+              <Button onClick={() => removeCard(index)}>-</Button>
+              <Button onClick={addCard}>+</Button>
+            </div>
+          )}
         </div>
       ))}
-      <Button onClick={addCard}>+</Button>
+      {/* <Button onClick={addCard}>+</Button> */}
     </Card>
   );
 };

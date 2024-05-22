@@ -9,6 +9,16 @@ export const Wrapper = styled.div`
 
   .card-wrapper {
     position: relative;
+    margin-bottom: 10px;
+  }
+
+  .button-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .button-wrapper > * {
+    margin-right: 5px; /* Adjust the spacing between buttons */
   }
 
   // .line {
