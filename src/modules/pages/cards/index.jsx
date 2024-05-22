@@ -34,31 +34,51 @@ const Cards = () => {
   };
 
   const handleExport = () => {
-    html2canvas(divRef.current, { backgroundColor: "#f5f5f5" }).then(
-      (canvas) => {
-        if (selectedFormat === "pdf") {
-          // Export as PDF
-          const pdf = new jsPDF();
-          const imgData = canvas.toDataURL("image/png");
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    var element = document.getElementById("capture-div");
+    var canvas = document.createElement("canvas");
+    canvas.width = element.offsetWidth;
+    canvas.height = element.offsetHeight;
+    html2canvas(element, {}).then(function (canvas) {
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(canvas, 0, 0);
+      var dataURL = canvas.toDataURL();
+      console.log(dataURL);
 
-          console.log(pdfWidth, "pdfWidth");
-          console.log(pdfHeight, "pdfHeight");
-          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-          pdf.save("screenshot.pdf");
-        } else {
-          // Convert canvas to image data
-          const imgData = canvas.toDataURL(`image/${selectedFormat}`);
+      const img = document.createElement("img");
+      img.src = dataURL;
 
-          // Export as the selected format
-          const link = document.createElement("a");
-          link.download = `screenshot.${selectedFormat}`;
-          link.href = imgData;
-          link.click();
-        }
-      }
-    );
+      const link = document.createElement("a");
+      link.download = `screenshot.${selectedFormat}`;
+      link.href = dataURL;
+      link.click();
+      // document.body.appendChild(img);
+    });
+
+    // html2canvas(divRef.current, { backgroundColor: "#f5f5f5" }).then(
+    //   (canvas) => {
+    //     if (selectedFormat === "pdf") {
+    //       // Export as PDF
+    //       const pdf = new jsPDF();
+    //       const imgData = canvas.toDataURL("image/png");
+    //       const pdfWidth = pdf.internal.pageSize.getWidth();
+    //       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    //       console.log(pdfWidth, "pdfWidth");
+    //       console.log(pdfHeight, "pdfHeight");
+    //       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    //       pdf.save("screenshot.pdf");
+    //     } else {
+    //       // Convert canvas to image data
+    //       const imgData = canvas.toDataURL(`image/${selectedFormat}`);
+
+    //       // Export as the selected format
+    //       const link = document.createElement("a");
+    //       link.download = `screenshot.${selectedFormat}`;
+    //       link.href = imgData;
+    //       link.click();
+    //     }
+    //   }
+    // );
   };
 
   const handleFormatChange = (event) => {
