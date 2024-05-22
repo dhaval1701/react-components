@@ -46,14 +46,61 @@ export const Wrapper = styled.div`
   //   transform: translateY(-50%); /* Center the circle vertically */
   // }
 
-  circle {
+  .circle {
+    content: "";
     position: absolute;
-    top: 50%; /* Position the circle vertically in the middle */
-    left: -8px; /* Adjust to center the circle */
-    width: 16px; /* Diameter of the circle */
-    height: 16px; /* Diameter of the circle */
+    top: 0; /* Position the circle vertically in the middle */
+    left: -6px; /* Adjust to center the circle */
+    width: 12px; /* Diameter of the circle */
+    height: 12px; /* Diameter of the circle */
     background-color: black; /* Color of the circle */
     border-radius: 50%; /* Make it a circle */
     transform: translateY(-50%); /* Center the circle vertically */
+  }
+
+  .rectangle {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 16px;
+    height: 8px;
+    background-color: black;
+    // border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .triangle {
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 16px solid black;
+    transform: translateY(-50%);
+  }
+
+  .diamond {
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 16px;
+    height: 16px;
+    background-color: black;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .none {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    border-radius: 50%;
+    transform: translateY(-50%);
   }
 `;

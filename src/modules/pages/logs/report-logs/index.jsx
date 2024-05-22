@@ -61,55 +61,33 @@ const ReportLogs = () => {
           lineRefs.current[index].style.top = `-${ref.offsetHeight / 2}px`;
           lineRefs.current[index].style.borderBottom = "none"; // Adjust color and thickness as needed
 
-          // Apply ::before style
-          // lineRefs.current[index].style.position = "relative"; // Ensure the parent is positioned
-          // lineRefs.current[index].innerHTML = ""; // Clear existing content
+          const content = document.createElement("div");
 
-          const beforeElement = document.createElement("div");
+          // Remove all possible classes first
+          content.classList.remove(
+            "circle",
+            "rectangle",
+            "none",
+            "triangle",
+            "diamond"
+          );
 
+          // Add the appropriate class based on the selected value
           if (selectedValue === "Circle") {
-            beforeElement.style.content = '""';
-            beforeElement.style.position = "absolute";
-            beforeElement.style.top = "0";
-            beforeElement.style.left = "-8px";
-            beforeElement.style.width = "16px";
-            beforeElement.style.height = "16px";
-            beforeElement.style.backgroundColor = "black";
-            beforeElement.style.borderRadius = "50%";
-            beforeElement.style.transform = "translateY(-50%)";
+            content.classList.add("circle");
           } else if (selectedValue === "Rectangle") {
-            beforeElement.style.content = '""';
-            beforeElement.style.position = "absolute";
-            beforeElement.style.top = "0";
-            beforeElement.style.left = "-8px";
-            beforeElement.style.width = "16px";
-            beforeElement.style.height = "8px"; // Adjust height for rectangle
-            beforeElement.style.backgroundColor = "black";
-            // No need for border-radius for rectangle
-            beforeElement.style.transform = "translateY(-50%)";
+            content.classList.add("rectangle");
           } else if (selectedValue === "None") {
-            beforeElement.style.content = '""';
-            beforeElement.style.position = "absolute";
-            beforeElement.style.top = "0";
-            beforeElement.style.left = "0";
-            beforeElement.style.width = "100%";
-            beforeElement.style.height = "1px"; // Adjust height for dash
-            beforeElement.style.backgroundColor = "black";
-            // No need for border-radius for dash
-            beforeElement.style.transform = "translateY(-50%)";
+            content.classList.add("none");
+          } else if (selectedValue === "Triangle") {
+            content.classList.add("triangle");
+          } else if (selectedValue === "Diamond") {
+            content.classList.add("diamond");
           }
 
-          // beforeElement.style.content = '""';
-          // beforeElement.style.position = "absolute";
-          // beforeElement.style.top = "0";
-          // beforeElement.style.left = "-8px";
-          // beforeElement.style.width = "16px";
-          // beforeElement.style.height = "16px";
-          // beforeElement.style.backgroundColor = "black";
-          // beforeElement.style.borderRadius = "50%";
-          // beforeElement.style.transform = "translateY(-50%)";
-
-          lineRefs.current[index].appendChild(beforeElement);
+          // Clear any existing content and append the new one
+          lineRefs.current[index].innerHTML = "";
+          lineRefs.current[index].appendChild(content);
         }
 
         // if (index === 0) {
@@ -141,6 +119,18 @@ const ReportLogs = () => {
 
   return (
     <Wrapper>
+      <Select
+        defaultValue={selectedValue}
+        onChange={handleChange}
+        style={{ minWidth: 300, marginBottom: 20 }}
+        dropdownStyle={{ minWidth: 300 }}
+      >
+        <Option value="Circle">Circle</Option>
+        <Option value="Rectangle">Rectangle 2</Option>
+        <Option value="None">None</Option>
+        <Option value="Triangle">Triangle </Option>
+        <Option value="Diamond">Diamond </Option>
+      </Select>
       <div className="card-container">
         {cards.map((card, index) => (
           <div
@@ -217,7 +207,11 @@ const CardBody = ({ handleChange, selectedValue }) => {
       }}
     >
       <Input placeholder="Circle" style={{ marginBottom: 8 }} />
-      <Select defaultValue={selectedValue} onChange={handleChange}>
+      <Select
+        defaultValue={"Rectangle"}
+        //  defaultValue={selectedValue}
+        //   onChange={handleChange}
+      >
         <Option value="Circle">Circle</Option>
         <Option value="Rectangle">Rectangle 2</Option>
         <Option value="None">None</Option>
