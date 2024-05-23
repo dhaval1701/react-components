@@ -10,13 +10,10 @@ const ReportLogs = () => {
   const [cards, setCards] = useState([{ key: uuidv4() }]);
   const [selectedValue, setSelectedValue] = useState("Circle");
   const [numCards, setNumCards] = useState(cards.length);
-  const [cardRemove, setCardRemove] = useState(false);
 
   const handleChange = (value) => {
     setSelectedValue(value);
   };
-
-  // console.log(selectedValue, "selectedvalue");
 
   const cardRefs = useRef([]);
   const lineRefs = useRef([]);
@@ -26,7 +23,7 @@ const ReportLogs = () => {
     setNumCards(numCards + 1);
   };
 
-  console.log(cards, "cards");
+  // console.log(cards, "cards");
 
   const removeCard = (cartToRemove, index) => {
     console.log(cartToRemove, "card to remove");
@@ -34,10 +31,6 @@ const ReportLogs = () => {
     const newCards = cards.filter((card, i) => card?.key !== cartToRemove?.key);
     setCards(newCards);
   };
-
-  console.log(cardRefs, "cardRefs");
-
-  console.log(cardRemove, "cardRemove");
 
   const updateCardHeight = () => {
     console.log("update called");
@@ -51,10 +44,6 @@ const ReportLogs = () => {
           prevCardHeight,
           nextCardHeight
         );
-
-        console.log(index, "index");
-
-        console.log(numCards, "numCards");
 
         // console.log(`Updated height of card-wrapper ${index}:`, maxCardHeight);
 
