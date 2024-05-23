@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Button, Card, Input, Select } from "antd";
 import { Wrapper } from "./style";
+import { v4 as uuidv4 } from "uuid";
 
 const { Option } = Select;
 
 const ReportLogs = () => {
-  const [cards, setCards] = useState([{ key: 0 }]);
+  const [cards, setCards] = useState([{ key: uuidv4() }]);
   const [selectedValue, setSelectedValue] = useState("Circle");
   const [numCards, setNumCards] = useState(cards.length);
   const [cardRemove, setCardRemove] = useState(false);
@@ -21,23 +22,25 @@ const ReportLogs = () => {
   const lineRefs = useRef([]);
 
   const addCard = () => {
-    const newKey = cards.length;
-    setCards([...cards, { key: newKey }]);
+    setCards([...cards, { key: uuidv4() }]);
     setNumCards(numCards + 1);
   };
 
-  const removeCard = (index) => {
-    setCardRemove(true);
-    setNumCards(numCards - 1);
-    const newCards = cards.filter((_, i) => i !== index);
-    setCards(newCards);
+  console.log(cards, "cards");
 
-    updateCardHeight();
+  const removeCard = (cartToRemove, index) => {
+    console.log(cartToRemove, "card to remove");
+    setNumCards(numCards - 1);
+    const newCards = cards.filter((card, i) => card?.key !== cartToRemove?.key);
+    setCards(newCards);
   };
 
-  console.log(cardRemove, "card Remove");
+  console.log(cardRefs, "cardRefs");
+
+  console.log(cardRemove, "cardRemove");
 
   const updateCardHeight = () => {
+    console.log("update called");
     cardRefs.current.forEach((ref, index) => {
       if (ref) {
         const currentCardHeight = ref.offsetHeight;
@@ -64,9 +67,7 @@ const ReportLogs = () => {
           //   lineRefs.current[index]
           // );
 
-          lineRefs.current[index].style.height = cardRemove
-            ? `${currentCardHeight}px`
-            : `${maxCardHeight}px`;
+          lineRefs.current[index].style.height = `${maxCardHeight}px`;
           console.log(lineRefs.current[index].style.height, "line height");
           lineRefs.current[index].style.top = `-${ref.offsetHeight / 2}px`;
           lineRefs.current[index].style.borderBottom = "none"; // Adjust color and thickness as needed
@@ -106,7 +107,6 @@ const ReportLogs = () => {
         //   }
         // }
 
-        setCardRemove(false);
         // Check if the current index is the last index
         if (index < numCards && ref) {
           // Your existing logic for updating card heights goes here
@@ -127,10 +127,9 @@ const ReportLogs = () => {
     });
   };
 
-  // useEffect(() => {
-  //   updateCardHeight();
-  //   setCardRemove(false);
-  // }, [cards, numCards]);
+  useEffect(() => {
+    updateCardHeight();
+  }, [cards, selectedValue]);
 
   return (
     <Wrapper>
@@ -154,6 +153,7 @@ const ReportLogs = () => {
             className="card-wrapper"
           >
             <CardComponent
+              title={`Card -${index}`}
               key={card.key}
               onBodyChange={updateCardHeight}
               handleChange={handleChange}
@@ -166,17 +166,11 @@ const ReportLogs = () => {
                 className="line"
               />
             )}
-            {/* <Button onClick={() => removeCard(index)}>-</Button> */}
-            {index === cards.length - 1 && (
-              <div className="button-wrapper">
-                <Button onClick={() => removeCard(index)}>-</Button>
-                <Button onClick={addCard}>+</Button>
-              </div>
-            )}
+            <Button onClick={() => removeCard(card, index)}>-</Button>
           </div>
         ))}
 
-        {/* <Button onClick={addCard}>+</Button> */}
+        <Button onClick={addCard}>+</Button>
       </div>
     </Wrapper>
   );
@@ -184,18 +178,24 @@ const ReportLogs = () => {
 
 export default ReportLogs;
 
-const CardComponent = ({ onBodyChange, handleChange, selectedValue }) => {
-  const [cardBody, setCardBody] = useState([{ key: 0 }]);
+const CardComponent = ({
+  onBodyChange,
+  handleChange,
+  selectedValue,
+  title,
+}) => {
+  const [cardBody, setCardBody] = useState([{ key: uuidv4() }]);
 
   const cardRef = useRef();
 
   const addCard = () => {
-    const newKey = cardBody.length;
-    setCardBody([...cardBody, { key: newKey }]);
+    setCardBody([...cardBody, { key: uuidv4() }]);
   };
 
-  const removeCard = (index) => {
-    const newCards = cardBody.filter((_, i) => i !== index);
+  const removeCard = (cartToRemove, index) => {
+    const newCards = cardBody.filter(
+      (card, i) => card?.key !== cartToRemove?.key
+    );
     setCardBody(newCards);
   };
 
@@ -204,23 +204,17 @@ const CardComponent = ({ onBodyChange, handleChange, selectedValue }) => {
       console.log("card body ref");
       onBodyChange();
     }
-  }, [cardBody, onBodyChange]);
+  }, [cardBody]);
 
   return (
-    <Card title="My Card" ref={cardRef}>
+    <Card title={title} ref={cardRef}>
       {cardBody.map((card, index) => (
         <div key={card.key}>
           <CardBody selectedValue={selectedValue} handleChange={handleChange} />
-          {/* <Button onClick={() => removeCard(index)}>-</Button> */}
-          {index === cardBody.length - 1 && (
-            <div className="button-wrapper">
-              <Button onClick={() => removeCard(index)}>-</Button>
-              <Button onClick={addCard}>+</Button>
-            </div>
-          )}
+          <Button onClick={() => removeCard(card, index)}>-</Button>
         </div>
       ))}
-      {/* <Button onClick={addCard}>+</Button> */}
+      <Button onClick={addCard}>+</Button>
     </Card>
   );
 };
