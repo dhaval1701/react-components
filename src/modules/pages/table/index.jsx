@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { Wrapper } from "./style";
 import { Badge, Card, Input, Space, Pagination, Table, message } from "antd";
@@ -24,6 +24,7 @@ const AntDesignTable = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const scrollableDivRef = useRef(null);
 
   const [filters, setFilters] = useState({
     start_date: dayjs().add(-30, "d"),
@@ -183,7 +184,6 @@ const AntDesignTable = () => {
       dataIndex: "order_id",
       key: "order_id",
       render: (e) => {
-        console.log(e);
         return <span>{e || "-"}</span>;
       },
     },
@@ -460,27 +460,30 @@ const AntDesignTable = () => {
 
         <Badge.Ribbon text="Table" color="pink">
           <Card title="With Date Value and Custom Range" size="small">
-            {/* <Table
+            <Table
               id="table1"
               sticky={{ offsetHeader: 58 }}
-              dataSource={list}
+              dataSource={[]}
               // columns={columnsWithWidth}
-              columns={columns}
-              loading={loading}
-              pagination={false}
-              scroll={{ x: "max-content" }}
-            /> */}
-            <Table
-              id="table2"
-              // sticky={{ offsetHeader: 58 }}
-              dataSource={list}
-              // columns={columnsWithWidth}
-              // showHeader={false}
               columns={columns}
               loading={loading}
               pagination={false}
               scroll={{ x: "max-content" }}
             />
+            <div ref={scrollableDivRef}>
+              <Table
+                id="table2"
+                // sticky={{ offsetHeader: 58 }}
+                dataSource={list}
+                // columns={columnsWithWidth}
+                showHeader={false}
+                columns={columns}
+                loading={loading}
+                pagination={false}
+                scroll={{ x: "max-content" }}
+                // sticky={{ offsetHeader: 58, offsetScroll: 20 }}
+              />
+            </div>
 
             <div className="d-flex align-items-center justify-content-between mt-2">
               <div>
