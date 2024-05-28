@@ -27,9 +27,9 @@ export const Wrapper = styled.div`
   //   top: 58px;
   // }
 
-  // .ant-table-wrapper .ant-table-thead > tr > th {
-  //   position: sticky;
-  //   top: 58px;
-  //   z-index: 3;
-  // }
+  .ant-table-wrapper .ant-table-thead > tr > th {
+    position: sticky;
+    top: 58px;
+    z-index: 3;
+  }
 `;
