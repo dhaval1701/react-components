@@ -521,23 +521,23 @@ const AntDesignTable = () => {
 
         <Badge.Ribbon text="Table" color="pink">
           <Card title="With Date Value and Custom Range" size="small">
-            {/* <Table
+            <Table
               id="table1"
-              sticky={{ offsetHeader: 58 }}
+              // sticky={{ offsetHeader: 58 }}
               dataSource={[]}
               // columns={columnsWithWidth}
               columns={columns}
               loading={loading}
               pagination={false}
               scroll={{ x: "max-content" }}
-            /> */}
+            />
             <div ref={scrollableDivRef}>
               <Table
                 id="table2"
                 // sticky={{ offsetHeader: 58 }}
                 dataSource={list}
                 // columns={columnsWithWidth}
-                // showHeader={false}
+                showHeader={false}
                 columns={columns}
                 loading={loading}
                 pagination={false}
