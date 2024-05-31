@@ -39,14 +39,12 @@ const AntDesignTable = () => {
     return (
       <div style={{ minWidth, position: "relative" }}>
         <span
-          style={
-            {
-              // position: "absolute",
-              // left: 0,
-              // top: 0,
-              // visibility: "hidden",
-            }
-          }
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            visibility: "hidden",
+          }}
         >
           {dataIndex}
         </span>
@@ -370,67 +368,6 @@ const AntDesignTable = () => {
 
     return { ...column, width };
   });
-
-  // useEffect(() => {
-  //   const synchronizeWidths = () => {
-  //     const headerCells = scrollableDivRef.current.querySelectorAll(
-  //       ".ant-table-thead th"
-  //     );
-  //     const bodyCells = scrollableDivRef.current.querySelectorAll(
-  //       ".ant-table-tbody td"
-  //     );
-
-  //     // Create an array to hold the widths
-  //     const widths = Array(headerCells.length).fill(0);
-
-  //     // Calculate the width for each header cell
-  //     headerCells.forEach((cell, index) => {
-  //       const contentLength = cell.textContent.length;
-  //       const width = contentLength * 10 + 20; // Adjust multiplier and padding as needed
-  //       widths[index] = width;
-  //     });
-
-  //     // Apply the calculated widths to both header and body cells
-  //     headerCells.forEach((cell, index) => {
-  //       cell.style.width = `${widths[index]}px`;
-  //     });
-
-  //     // Apply the calculated widths to body cells
-  //     bodyCells.forEach((cell, index) => {
-  //       const columnIndex = index % headerCells.length;
-  //       cell.style.width = `${widths[columnIndex]}px`;
-  //     });
-  //   };
-
-  //   // Initial synchronization
-  //   synchronizeWidths();
-
-  //   // Add event listener for window resize or other potential width changes
-  //   window.addEventListener("resize", synchronizeWidths);
-
-  //   return () => {
-  //     // Remove event listener on component unmount
-  //     window.removeEventListener("resize", synchronizeWidths);
-  //   };
-  // }, []); // Re-run on data changes (optional)
-
-  // useEffect(() => {
-  //   if (scrollableDivRef.current) {
-  //     const tableElement = scrollableDivRef.current.querySelector(".ant-table");
-  //     const headerCells = tableElement.querySelectorAll(".ant-table-thead th");
-  //     const bodyRows = tableElement.querySelectorAll(".ant-table-tbody tr");
-
-  //     if (bodyRows.length > 0) {
-  //       const bodyCells = bodyRows[0].querySelectorAll("td");
-
-  //       bodyCells.forEach((cell, index) => {
-  //         const width = cell.offsetWidth;
-  //         console.log(width, "width");
-  //         headerCells[index].style.width = `${width * 5}px`;
-  //       });
-  //     }
-  //   }
-  // }, []);
 
   return (
     <Wrapper>
