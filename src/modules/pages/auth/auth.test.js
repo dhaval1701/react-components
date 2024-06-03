@@ -21,5 +21,3 @@ test("Login with correct credentials", () => {
   // Assert
   expect(mockOnLogin).toHaveBeenCalledWith("testuser", "password123");
 });
-
-// Add more tests for invalid credentials, empty fields, etc.

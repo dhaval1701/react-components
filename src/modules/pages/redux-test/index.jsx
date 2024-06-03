@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import { Wrapper } from "./style";
-import { Badge, Card, Input, Space } from "antd";
+import { Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../../../slices/first/firstSlice";
 import { fetchContent } from "../../../slices/todos/todoSlice";
 
 const ReduxTest = () => {
-  const [tableData, setTableData] = useState([]);
   const count = useSelector((state) => state.firstSlice.count);
   const dispatch = useDispatch();
 
