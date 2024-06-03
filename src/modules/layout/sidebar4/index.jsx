@@ -6,23 +6,12 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  Card,
-  Layout,
-  List,
-  Menu,
-  Segmented,
-  theme,
-} from "antd";
-import { Outlet, useLocation } from "react-router-dom";
+import { Layout, Menu, Segmented, theme } from "antd";
+import { useLocation } from "react-router-dom";
 
 import { Wrapper } from "./style";
 import { useTheme } from "../../../ThemeContext";
 import payload from "../sidebar/lib";
-import Icons from "../../../icon";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -33,21 +22,6 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-
-const data = [
-  {
-    name: "John Doe",
-    avatar: "https://example.com/avatar1.jpg", // URL to user's profile picture
-  },
-  {
-    name: "Jane Smith",
-    avatar: "https://example.com/avatar2.jpg", // URL to user's profile picture
-  },
-  {
-    name: "Bob Johnson",
-    avatar: "https://example.com/avatar3.jpg", // URL to user's profile picture
-  },
-];
 
 const Sidebar4 = (props) => {
   const { token } = theme.useToken();

@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import {
   Avatar,
   Breadcrumb,
   Button,
@@ -21,7 +14,6 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Wrapper } from "./style";
 import { useTheme } from "../../../ThemeContext";
 import payload from "../sidebar/lib";
-import Icons from "../../../icon";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
