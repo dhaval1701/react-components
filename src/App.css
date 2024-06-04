@@ -1,6 +1,24 @@
-#root{
+/* #root{
   font-family: "Outfit", sans-serif, sans-serif;
+} */
+
+@font-face {
+  font-family: 'CustomFont';
+  src: url('../src/fonts/Sequel\ Sans\ Black\ Head.ttf') format('truetype');
+ 
+  /* Add additional font formats if necessary */
+  /* Specify the correct path to the font files */
 }
+
+/* #root{
+  font-family: 'CustomFont', sans-serif
+} */
+
+body {
+  font-family: 'CustomFont', sans-serif !important;
+}
+
+
 
 
 ::-webkit-scrollbar {

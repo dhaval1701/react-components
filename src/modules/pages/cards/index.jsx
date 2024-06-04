@@ -17,31 +17,6 @@ const Cards = () => {
 
   const [selectedContent, setSelectedContent] = useState("");
 
-  const [files, setFiles] = useState([]);
-
-  const handleFileChange = (event) => {
-    const selectedFiles = event.target.files;
-    if (selectedFiles && selectedFiles.length > 0) {
-      const newFiles = Array.from(selectedFiles);
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    }
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    // Optional: Add visual feedback
-    event.dataTransfer.dropEffect = "copy";
-  };
-
-  const handleDrop = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    let droppedFiles = Array.from(event.dataTransfer.files);
-    setFiles((prevFiles) => [...prevFiles, ...droppedFiles]);
-  };
-
   const handleSelection = () => {
     // Logic to handle selection
     const selection = window.getSelection();
@@ -135,50 +110,6 @@ const Cards = () => {
         <option value="pdf">PDF</option>
       </select>
       <button onClick={handleExport}>Export</button>
-
-      <div
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        style={{
-          border: "2px dashed #ccc",
-          borderRadius: "4px",
-          width: "300px",
-          height: "200px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
-        <>
-          <div className="upload-info">
-            <div>
-              <p>Drag and drop your files here</p>
-              <p>
-                Limit 15MB per file. Supported files: .PDF, .DOCX, .PPTX, .TXT,
-                .XLSX
-              </p>
-            </div>
-          </div>
-          <input
-            type="file"
-            hidden
-            id="browse"
-            onChange={handleFileChange}
-            accept=".png,.jpg,.jpeg"
-            multiple
-          />
-          <label htmlFor="browse" className="browse-btn">
-            Browse files
-          </label>
-        </>
-
-        <ul>
-          {files.map((file, index) => (
-            <li key={index}>{file.name}</li>
-          ))}
-        </ul>
-      </div>
       {/* <button onClick={handleExport2}>Export</button> */}
       <div id="capture-div" ref={divRef}>
         <Space

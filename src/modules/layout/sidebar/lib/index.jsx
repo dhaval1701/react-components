@@ -11,8 +11,10 @@ import cards from "./cards";
 import forms from "./forms";
 import redux from "./redux";
 import menuItems from "./menu-items";
+import practice from "./practice";
 
 const payload = [
+  ...practice,
   ...datepicker,
   ...table,
   ...cards,
