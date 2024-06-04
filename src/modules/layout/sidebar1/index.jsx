@@ -118,7 +118,11 @@ const Sidebar1 = (props) => {
 
         //   onCollapse={(value) => setCollapsed(value)}
       >
-        <div className="d-flex justify-content-between align-items-center px-3">
+        <div
+          className={`d-flex  ${
+            collapsed ? "flex-column gap-3 py-2" : ""
+          } justify-content-between align-items-center px-3`}
+        >
           <div className="demo-logo-vertical ">
             {collapsed ? (
               <img
@@ -146,7 +150,7 @@ const Sidebar1 = (props) => {
             )}
           </div>
           <div className="collapse-button d-flex justify-content-center">
-            {collapsed ? (
+            {collapsed || collapsedButtonClick ? (
               <>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +158,7 @@ const Sidebar1 = (props) => {
                   width={20}
                   onClick={handleCollapsed}
                 >
-                  <path d="M12 3C11.175 3 10.5 3.675 10.5 4.5C10.5 5.325 11.175 6 12 6C12.825 6 13.5 5.325 13.5 4.5C13.5 3.675 12.825 3 12 3ZM12 18C11.175 18 10.5 18.675 10.5 19.5C10.5 20.325 11.175 21 12 21C12.825 21 13.5 20.325 13.5 19.5C13.5 18.675 12.825 18 12 18ZM12 10.5C11.175 10.5 10.5 11.175 10.5 12C10.5 12.825 11.175 13.5 12 13.5C12.825 13.5 13.5 12.825 13.5 12C13.5 11.175 12.825 10.5 12 10.5Z"></path>
+                  <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>
                 </svg>
               </>
             ) : (
@@ -165,7 +169,7 @@ const Sidebar1 = (props) => {
                   onClick={handleCollapsed}
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M12 3C11.175 3 10.5 3.675 10.5 4.5C10.5 5.325 11.175 6 12 6C12.825 6 13.5 5.325 13.5 4.5C13.5 3.675 12.825 3 12 3ZM12 18C11.175 18 10.5 18.675 10.5 19.5C10.5 20.325 11.175 21 12 21C12.825 21 13.5 20.325 13.5 19.5C13.5 18.675 12.825 18 12 18ZM12 10.5C11.175 10.5 10.5 11.175 10.5 12C10.5 12.825 11.175 13.5 12 13.5C12.825 13.5 13.5 12.825 13.5 12C13.5 11.175 12.825 10.5 12 10.5Z"></path>
+                  <path d="M4.83578 12L11.0429 18.2071L12.4571 16.7929L7.66421 12L12.4571 7.20712L11.0429 5.79291L4.83578 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"></path>
                 </svg>
               </>
             )}
@@ -178,72 +182,99 @@ const Sidebar1 = (props) => {
               width: "fit-content",
             }}
           >
-            <form
-              className="d-flex justify-content-start align-items-center gap-2"
+            {collapsed ? (
+              <>
+                <div
+                  style={{
+                    marginTop: "40px",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width={20}
+                    fill="currentColor"
+                  >
+                    <path d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z"></path>
+                  </svg>
+                </div>
+              </>
+            ) : (
+              <>
+                {" "}
+                <form
+                  className="d-flex justify-content-start align-items-center gap-2"
+                  style={{
+                    padding: "10px",
+                    borderRadius: "5px",
+                    backgroundColor: "#ffff",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width={20}
+                    fill="currentColor"
+                  >
+                    <path d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z"></path>
+                  </svg>
+                  <input
+                    class="demo-input py-0 Typeahead-input form-control-plaintext w-100"
+                    type="text"
+                    placeholder="Search"
+                    name="q"
+                    title=""
+                  />
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+
+        <div
+          style={{ maxHeight: "60%", overflow: "auto", overflowX: "hidden" }}
+        >
+          <div style={{ padding: "20px" }}>
+            <div
               style={{
+                display: "inline-block",
                 padding: "10px",
-                borderRadius: "5px",
-                backgroundColor: "#ffff",
+                color: "#0000008c",
+                fontWeight: "bold",
+                fontSize: "14px",
               }}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                fill="currentColor"
-              >
-                <path d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z"></path>
-              </svg>
-              <input
-                class="demo-input py-0 Typeahead-input form-control-plaintext w-100"
-                type="text"
-                placeholder="Search"
-                name="q"
-                title=""
-              />
-            </form>
+              {!collapsed && <p style={{ margin: 0 }}>GENERAL</p>}
+            </div>
+            <Menu
+              theme="light"
+              mode="inline"
+              selectedKeys={[selectedKey]}
+              items={payload}
+            />
+          </div>
+
+          <div style={{ padding: "20px" }}>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "10px",
+                color: "#0000008c",
+                fontWeight: "bold",
+                fontSize: "14px",
+              }}
+            >
+              {!collapsed && <p style={{ margin: 0 }}>APPLICAITON</p>}
+            </div>
+            <Menu
+              theme="light"
+              mode="inline"
+              selectedKeys={[selectedKey]}
+              items={items}
+            />
           </div>
         </div>
 
-        <div style={{ padding: "20px" }}>
-          <div
-            style={{
-              display: "inline-block",
-              padding: "10px",
-              color: "#0000008c",
-              fontWeight: "bold",
-              fontSize: "14px",
-            }}
-          >
-            <p style={{ margin: 0 }}>GENERAL</p>
-          </div>
-          <Menu
-            theme="light"
-            mode="inline"
-            selectedKeys={[selectedKey]}
-            items={payload}
-          />
-        </div>
-
-        <div style={{ padding: "20px" }}>
-          <div
-            style={{
-              display: "inline-block",
-              padding: "10px",
-              color: "#0000008c",
-              fontWeight: "bold",
-              fontSize: "14px",
-            }}
-          >
-            <p style={{ margin: 0 }}>APPLICAITON</p>
-          </div>
-          <Menu
-            theme="light"
-            mode="inline"
-            selectedKeys={[selectedKey]}
-            items={items}
-          />
-        </div>
         <div
           style={{
             width: "100%",
@@ -270,18 +301,20 @@ const Sidebar1 = (props) => {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
-          <div
-            style={{
-              fontFamily: "Arial, sans-serif",
-              fontSize: "13px",
-              lineHeight: "1.5",
-            }}
-          >
-            <div style={{ fontWeight: "bold", marginBottom: "5px" }}>
-              John Doe
+          {!collapsed && (
+            <div
+              style={{
+                fontFamily: "Arial, sans-serif",
+                fontSize: "13px",
+                lineHeight: "1.5",
+              }}
+            >
+              <div style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                John Doe
+              </div>
+              <div>john.doe@example.com</div>
             </div>
-            <div>john.doe@example.com</div>
-          </div>
+          )}
         </div>
       </Sider>
     </Wrapper>
