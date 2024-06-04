@@ -309,7 +309,6 @@ const Sidebar1 = (props) => {
           {!collapsed && (
             <div
               style={{
-                fontFamily: "Arial, sans-serif",
                 fontSize: "13px",
                 lineHeight: "1.5",
               }}
