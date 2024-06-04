@@ -176,7 +176,7 @@ const Sidebar1 = (props) => {
           </div>
         </div>
 
-        <div style={{ paddingLeft: "25px" }}>
+        <div style={{ padding: "15px" }}>
           <div
             style={{
               width: "fit-content",
@@ -232,7 +232,12 @@ const Sidebar1 = (props) => {
         </div>
 
         <div
-          style={{ maxHeight: "60%", overflow: "auto", overflowX: "hidden" }}
+          style={{
+            margin: !collapsed ? "10px" : "",
+            maxHeight: "60%",
+            overflow: "auto",
+            overflowX: "hidden",
+          }}
         >
           <div style={{ padding: "20px" }}>
             <div

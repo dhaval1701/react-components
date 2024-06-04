@@ -14,9 +14,16 @@
   font-family: 'CustomFont', sans-serif
 } */
 
+
 body {
-  font-family: 'CustomFont', sans-serif !important;
+  font-family: 'CustomFont', sans-serif !important ;
 }
+
+/* above or below to override font*/
+
+/* html body {
+  font-family: 'CustomFont', sans-serif ;
+} */
 
 
 

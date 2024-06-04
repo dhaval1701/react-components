@@ -78,6 +78,15 @@ function App() {
   //   "menu"
   // );
 
+  const darkTheme = {
+    theme: {
+      algorithm: darkAlgorithm,
+      token: {
+        fontFamily: `"CustomFont", sans-serif`,
+      },
+    },
+  };
+
   return (
     <>
       {/* <ConfigProvider
@@ -89,15 +98,7 @@ function App() {
       >
         <RouterProvider router={router} />
       </ConfigProvider> */}
-      <ConfigProvider
-        {...(isDarkMode
-          ? {
-              theme: {
-                algorithm: darkAlgorithm,
-              },
-            }
-          : sideBarTheme)}
-      >
+      <ConfigProvider {...(isDarkMode ? darkTheme : sideBarTheme)}>
         <RouterProvider
           router={router}
           fallbackElement={<LoadingAnimation />}
