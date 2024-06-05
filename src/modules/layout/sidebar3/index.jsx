@@ -181,6 +181,9 @@ const Sidebar3 = (props) => {
           style={{
             paddingLeft: "15px",
             marginTop: "10px",
+            maxHeight: "30%",
+            overflow: "auto",
+            overflowX: "hidden",
           }}
         >
           <div
