@@ -183,7 +183,6 @@ const MenuItems = () => {
     }
   }, []);
 
-  console.log(dataSource, "dataSource");
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
       <SortableContext

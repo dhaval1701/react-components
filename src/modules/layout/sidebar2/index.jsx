@@ -119,8 +119,6 @@ const Sidebar2 = (props) => {
 
   const menuValues = transformedMenu(menus);
 
-  console.log(menuValues, "menuValues");
-
   return (
     <Wrapper flag={isDarkMode}>
       <Sider

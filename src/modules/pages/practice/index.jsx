@@ -1,6 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Practice = () => {
+  const { items, status, error } = useSelector((state) => state.users);
+
+  console.log(items, "items");
+
   return (
     <>
       <div

@@ -47,9 +47,6 @@ const ReportLogs = () => {
 
         // console.log(`Updated height of card-wrapper ${index}:`, maxCardHeight);
 
-        console.log(currentCardHeight, "current card height");
-
-        console.log(maxCardHeight, "max card height");
         if (lineRefs.current[index]) {
           // console.log(
           //   `Updated height of line ${index}:`,
@@ -57,7 +54,7 @@ const ReportLogs = () => {
           // );
 
           lineRefs.current[index].style.height = `${maxCardHeight}px`;
-          console.log(lineRefs.current[index].style.height, "line height");
+
           lineRefs.current[index].style.top = `-${ref.offsetHeight / 2}px`;
           lineRefs.current[index].style.borderBottom = "none"; // Adjust color and thickness as needed
 
@@ -190,7 +187,6 @@ const CardComponent = ({
 
   useEffect(() => {
     if (cardRef.current) {
-      console.log("card body ref");
       onBodyChange();
     }
   }, [cardBody]);

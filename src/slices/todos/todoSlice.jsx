@@ -1,45 +1,21 @@
-import {
-  createSlice,
-  createEntityAdapter,
-  createAsyncThunk,
-} from "@reduxjs/toolkit";
+// todosSlice.js
+import { createSlice } from "@reduxjs/toolkit";
 
-import axios from "axios";
-
-const initialState = {
-  contents: [],
-  isLoading: false,
-  error: null,
-};
-
-export const fetchContent = createAsyncThunk(
-  "content/fetchContent",
-  async () => {
-    const res = await axios("https://jsonplaceholder.typicode.com/photos");
-    const data = await res.data;
-    return data;
-  }
-);
-
-export const todosSlice = createSlice({
-  name: "todos",
-  initialState,
+const todosSlice = createSlice({
+  name: "todo",
+  initialState: [],
   reducers: {
-    // Add your synchronous reducers here
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchContent.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(fetchContent.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.contents = action.payload;
-    });
-    builder.addCase(fetchContent.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.error.message;
-    });
+    addTodo: (state, action) => {
+      state.push({ id: Date.now(), text: action.payload, completed: false });
+    },
+    toggleTodo: (state, action) => {
+      const todo = state.find((todo) => todo.id === action.payload);
+      if (todo) {
+        todo.completed = !todo.completed;
+      }
+    },
   },
 });
 
+export const { addTodo, toggleTodo } = todosSlice.actions;
 export default todosSlice.reducer;

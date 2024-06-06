@@ -1,10 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import firstSliceReducer from "../slices/first/firstSlice";
 import todoSliceReducer from "../slices/todos/todoSlice";
+import userSliceReducer from "../slices/user/userSlice";
 
 const rootReducer = combineReducers({
   firstSlice: firstSliceReducer,
-  todo: todoSliceReducer,
+  todos: todoSliceReducer,
+  users: userSliceReducer,
   // Add other reducers here
 });
 

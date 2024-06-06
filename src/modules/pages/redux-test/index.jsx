@@ -3,21 +3,36 @@ import { Wrapper } from "./style";
 import { Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../../../slices/first/firstSlice";
-import { fetchContent } from "../../../slices/todos/todoSlice";
+import { addTodo, toggleTodo } from "../../../slices/todos/todoSlice";
+import { fetchUsers } from "../../../slices/user/userSlice";
 
 const ReduxTest = () => {
   const count = useSelector((state) => state.firstSlice.count);
-  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todos);
 
-  const contents = useSelector((state) => state.todo.contents);
-  const isLoading = useSelector((state) => state.todo.isLoading);
-  const error = useSelector((state) => state.todo.error);
+  const { items, status, error } = useSelector((state) => state.users);
+
+  const dispatch = useDispatch();
+  const [newTodo, setNewTodo] = useState("");
+
+  console.log(items, "users");
+
+  console.log(status, "status");
+
+  const handleAddTodo = () => {
+    dispatch(addTodo(newTodo));
+    setNewTodo("");
+  };
+
+  const handleToggleTodo = (id) => {
+    dispatch(toggleTodo(id));
+  };
 
   useEffect(() => {
-    dispatch(fetchContent());
+    dispatch(fetchUsers());
   }, [dispatch]);
 
-  if (isLoading) {
+  if (status === "loading") {
     return "loading...";
   }
 
@@ -34,7 +49,42 @@ const ReduxTest = () => {
           width: "100%",
         }}
       >
-        <div>
+        <h1>Todos</h1>
+        <ul>
+          {todos.map((todo) => (
+            <li key={todo.id} onClick={() => handleToggleTodo(todo.id)}>
+              {todo.completed ? <del>{todo.text}</del> : todo.text}
+            </li>
+          ))}
+        </ul>
+        <input
+          type="text"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+        />
+        <button onClick={handleAddTodo}>Add Todo</button>
+
+        <h1>User with API</h1>
+        <ul>
+          {items.map((user) => (
+            <li key={user.id}>
+              <div>
+                <p>Name: {user.name}</p>
+                <p>Username: {user.username}</p>
+                <p>Email: {user.email}</p>
+                <p>
+                  Address: {user.address.street}, {user.address.city},{" "}
+                  {user.address.zipcode}
+                </p>
+                <p>Phone: {user.phone}</p>
+                <p>Website: {user.website}</p>
+                <p>Company: {user.company.name}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        {/* <div>
           <h1>Counter</h1>
           <p>Count: {count}</p>
           <button onClick={() => dispatch(increment())}>Increment</button>
@@ -51,7 +101,7 @@ const ReduxTest = () => {
               />
             </div>
           ))}
-        </div>
+        </div> */}
       </Space>
     </Wrapper>
   );
