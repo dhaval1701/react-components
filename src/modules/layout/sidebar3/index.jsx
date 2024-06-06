@@ -170,7 +170,6 @@ const Sidebar3 = (props) => {
                 style={{
                   width: "100px",
                   height: "85px",
-                  //   maxWidth: "100%",
                 }}
               />
             )}

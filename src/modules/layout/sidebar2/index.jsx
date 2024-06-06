@@ -45,7 +45,7 @@ const Sidebar2 = (props) => {
   const { collapsed, setCollapsed, visible, isSmallScreen } = props;
   // const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
-  const { theme1, isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode } = useTheme();
 
   const pathname = location.pathname;
 
@@ -65,14 +65,6 @@ const Sidebar2 = (props) => {
 
   // Call the function to find the selected key
   const selectedKey = findSelectedKey(payload);
-
-  // Array of vibrant colors
-  const vibrantColors = ["#f5222d", "#fa541c", "#fadb14", "#1677ff", "#a0d911"];
-
-  // Function to generate a random index
-  const getRandomIndex = () => Math.floor(Math.random() * vibrantColors.length);
-
-  const randomIndex = getRandomIndex();
 
   const handleCollapsed = () => {
     setCollapsed(!collapsed);
