@@ -33,7 +33,7 @@ export const generateStyles = (
 
   const tokenStyles = {
     token: {
-      fontFamily: `"CustomFont", sans-serif`,
+      fontFamily: `"Outfit","CustomFont", sans-serif`,
       //   colorText: selectedItemBgColor,
       colorPrimary: "blue",
       // colorPrimary: selectedItemBgColor,
