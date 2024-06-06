@@ -8,11 +8,6 @@
 
 }
 
-/* #root{
-  font-family: 'CustomFont', sans-serif
-} */
-
-
 body {
   font-family: 'CustomFont', sans-serif !important ;
   /* font-style: italic; */
@@ -23,9 +18,6 @@ body {
 /* html body {
   font-family: 'CustomFont', sans-serif ;
 } */
-
-
-
 
 ::-webkit-scrollbar {
   width: 4px; /* Set the width of the scrollbar */
