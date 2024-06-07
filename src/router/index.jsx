@@ -1,4 +1,5 @@
 import cards from "./cards";
+import charts from "./charts";
 import dashboard from "./dashboard";
 import datepicker from "./datepicker";
 import forms from "./forms";
@@ -18,6 +19,7 @@ const PageRoutes = [
   ...redux,
   ...menuItems,
   ...practice,
+  ...charts,
 ];
 
 export default PageRoutes;

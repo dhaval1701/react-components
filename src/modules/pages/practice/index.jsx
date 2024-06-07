@@ -8,9 +8,7 @@ const Practice = () => {
   console.log(items, "items");
 
   return (
-    <>
-      <Pie chartID="pie-two" />
-    </>
+    <></>
     // <>
     //   <div
     //     className="content d-flex flex-column flex-column-fluid"
