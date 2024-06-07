@@ -8,7 +8,39 @@ const Practice = () => {
   console.log(items, "items");
 
   return (
-    <></>
+    <>
+      <div>
+        <ul>
+          <li className="list-item">
+            Item 1
+            <button
+              className="hover-button"
+              onClick={() => console.log("Button clicked")}
+            >
+              Click me
+            </button>
+          </li>
+          <li className="list-item">
+            Item 2
+            <button
+              className="hover-button"
+              onClick={() => console.log("Button clicked")}
+            >
+              Click me
+            </button>
+          </li>
+          <li className="list-item">
+            Item 3
+            <button
+              className="hover-button"
+              onClick={() => console.log("Button clicked")}
+            >
+              Click me
+            </button>
+          </li>
+        </ul>
+      </div>
+    </>
     // <>
     //   <div
     //     className="content d-flex flex-column flex-column-fluid"
