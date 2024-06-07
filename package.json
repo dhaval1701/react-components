@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.9.11",
     "@ant-design/colors": "^7.0.2",
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "^7.0.0",

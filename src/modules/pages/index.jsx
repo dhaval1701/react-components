@@ -20,6 +20,7 @@ import Sidebar3 from "../layout/sidebar3";
 import Sidebar4 from "../layout/sidebar4";
 import PageLoader from "../../components/page-loader";
 import LoadingAnimation from "../../app-loader";
+import Header2 from "../layout/header2";
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -240,6 +241,7 @@ const App = () => {
             setSidebarShow={setSidebarShow}
             sidebarShow={sidebarShow}
           />
+          <Header2 />
           {isSmallScreen && <AntBreadCumb url={location.pathname} />}
           <Content
             style={{
@@ -260,6 +262,40 @@ const App = () => {
         </Layout>
       </Layout>
     </div>
+    // <div
+    //   style={{
+    //     minHeight: "100vh",
+    //     maxWidth: "2160px",
+    //     margin: "auto",
+    //   }}
+    // >
+    //   <Layout
+    //   // style={{
+    //   //   marginLeft: isSmallScreen ? 0 : collapsed ? 80 : 252,
+    //   //   position: "relative", // Ensure Layout has a position to control z-index
+    //   //   zIndex: isSmallScreen && visible ? 1052 : "auto", // Adjust the z-index as needed
+    //   // }}
+    //   >
+    //     <Header2 />
+
+    //     <Content
+    //       style={{
+    //         margin: "60px 16px",
+    //       }}
+    //     >
+    //       <div
+    //         style={{
+    //           padding: 24,
+    //           minHeight: "100vh",
+    //           borderRadius: borderRadiusLG,
+    //         }}
+    //       >
+    //         <Outlet />
+    //       </div>
+    //     </Content>
+    //     <FooterAnt />
+    //   </Layout>
+    // </div>
   );
 };
 export default App;
