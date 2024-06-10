@@ -7,6 +7,13 @@ export const Wrapper = styled.div`
     font-size: 0.875rem;
   }
 
+  .sidebar-1-hover {
+    overflow: hidden;
+    &:hover {
+      overflow: auto;
+    }
+  }
+
   ${({ flag }) =>
     !flag &&
     css`

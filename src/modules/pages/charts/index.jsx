@@ -11,7 +11,7 @@ const Charts = () => {
       <Pie chartID="pie-two" />
       {/* <LineHighChart /> */}
       {/* <BarChartD3 /> */}
-      <MapAmCharts chartID="map-am-chart" />
+      {/* <MapAmCharts chartID="map-am-chart" /> */}
     </>
   );
 };

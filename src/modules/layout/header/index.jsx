@@ -124,16 +124,16 @@ const HeaderAnt = (props) => {
   );
 
   const bookmarkContent = (
-    <div class="front">
-      <h5 class="f-18 f-w-600 mb-0 dropdown-title text-center border-bottom p-3">
+    <div className="front">
+      <h5 className="f-18 f-w-600 mb-0 dropdown-title text-center border-bottom p-3">
         Bookmark
       </h5>
       <ul className="notification-box p-3">
         <li>
-          <div class="row">
-            <div class="col-4 text-center">
-              <div class="bookmark-content">
-                <div class="bookmark-icon bg-light-primary">
+          <div className="row">
+            <div className="col-4 text-center">
+              <div className="bookmark-content">
+                <div className="bookmark-icon bg-light-primary">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -144,7 +144,7 @@ const HeaderAnt = (props) => {
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-file-text stroke-primary"
+                    className="feather feather-file-text stroke-primary"
                   >
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
@@ -153,12 +153,12 @@ const HeaderAnt = (props) => {
                     <polyline points="10 9 9 9 8 9"></polyline>
                   </svg>
                 </div>
-                <span class="font-primary">Forms</span>
+                <span className="font-primary">Forms</span>
               </div>
             </div>
-            <div class="col-4 text-center">
-              <div class="bookmark-content">
-                <div class="bookmark-icon bg-light-secondary">
+            <div className="col-4 text-center">
+              <div className="bookmark-content">
+                <div className="bookmark-icon bg-light-secondary">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -169,18 +169,18 @@ const HeaderAnt = (props) => {
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-user stroke-secondary"
+                    className="feather feather-user stroke-secondary"
                   >
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
                 </div>
-                <span class="font-secondary">Profile</span>
+                <span className="font-secondary">Profile</span>
               </div>
             </div>
-            <div class="col-4 text-center">
-              <div class="bookmark-content">
-                <div class="bookmark-icon bg-light-warning">
+            <div className="col-4 text-center">
+              <div className="bookmark-content">
+                <div className="bookmark-icon bg-light-warning">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -191,7 +191,7 @@ const HeaderAnt = (props) => {
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-server stroke-warning"
+                    className="feather feather-server stroke-warning"
                   >
                     <rect
                       x="2"
@@ -213,13 +213,17 @@ const HeaderAnt = (props) => {
                     <line x1="6" y1="18" x2="6" y2="18"></line>
                   </svg>
                 </div>
-                <span class="font-warning">Tables</span>
+                <span className="font-warning">Tables</span>
               </div>
             </div>
           </div>
         </li>
-        <li class="text-center">
-          <a class="flip-btn f-w-700" id="flip-btn" href="javascript:void(0)">
+        <li className="text-center">
+          <a
+            className="flip-btn f-w-700"
+            id="flip-btn"
+            href="javascript:void(0)"
+          >
             Add New Bookmark
           </a>
         </li>
@@ -348,7 +352,7 @@ const HeaderAnt = (props) => {
             <path d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z"></path>
           </svg>
           <input
-            class="demo-input py-0 Typeahead-input form-control-plaintext w-100"
+            className="demo-input py-0 Typeahead-input form-control-plaintext w-100"
             type="text"
             placeholder="Search Mofi .."
             name="q"
@@ -446,12 +450,12 @@ const HeaderAnt = (props) => {
             <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path>
           </svg>
           <div
-            class="d-flex flex-column justify-content-center"
+            className="d-flex flex-column justify-content-center"
             style={{ lineHeight: "20px", padding: "5px" }}
           >
             <span>Alen Miller</span>
-            <p class="mb-0 font-outfit">
-              UI Designer<i class="fa fa-angle-down"></i>
+            <p className="mb-0 font-outfit">
+              UI Designer<i className="fa fa-angle-down"></i>
             </p>
           </div>
         </div>

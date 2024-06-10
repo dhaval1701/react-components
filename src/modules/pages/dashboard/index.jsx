@@ -555,7 +555,7 @@ const Dashboard = () => {
             <div className="col-sm-6 col-lg-6 col-xl-2">
               <Card className="custom-card">
                 <div className="custom-card-inner">
-                  <div class="custom-card-front">
+                  <div className="custom-card-front">
                     <div className="d-flex justify-content-start align-items-start h6">
                       Number 1
                     </div>
@@ -578,7 +578,7 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  <div class="custom-card-back">
+                  <div className="custom-card-back">
                     <p>This is example of percentage</p>
                   </div>
                 </div>

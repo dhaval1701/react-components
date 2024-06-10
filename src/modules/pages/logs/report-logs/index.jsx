@@ -69,7 +69,7 @@ const ReportLogs = () => {
             "diamond"
           );
 
-          // Add the appropriate class based on the selected value
+          // Add the appropriate className based on the selected value
           if (selectedValue === "Circle") {
             content.classList.add("circle");
           } else if (selectedValue === "Rectangle") {

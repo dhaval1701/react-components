@@ -56,7 +56,7 @@ const Practice = () => {
     //               <div className="card-body p-5">
     //                 <div className="d-flex flex-wrap gap-4">
     //                   <div className="position-relative">
-    //                     {/* <input type="text" class="form-control form-control-solid fs-7"
+    //                     {/* <input type="text" className="form-control form-control-solid fs-7"
     //                                                   placeholder="Enter Event Type "> */}
     //                     <select
     //                       className="form-select form-select-solid fs-7 min-w-225px select2-hidden-accessible"
@@ -117,7 +117,7 @@ const Practice = () => {
     //                     </span>
     //                   </div>
     //                   <div className="position-relative">
-    //                     {/* <input type="text" class="form-control form-control-solid fs-7"
+    //                     {/* <input type="text" className="form-control form-control-solid fs-7"
     //                                                   placeholder="Enter Event Type "> */}
     //                     <select
     //                       className="form-select form-select-solid fs-7 min-w-225px select2-hidden-accessible"
@@ -177,7 +177,7 @@ const Practice = () => {
     //                     </span>
     //                   </div>
     //                   <div className="position-relative">
-    //                     {/* <input type="text" class="form-control form-control-solid fs-7"
+    //                     {/* <input type="text" className="form-control form-control-solid fs-7"
     //                                                   placeholder="Enter Event Type "> */}
     //                     <select
     //                       className="form-select form-select-solid fs-7 min-w-175px select2-hidden-accessible"
@@ -265,8 +265,8 @@ const Practice = () => {
     //                     </div>
     //                     {/*end::Daterangepicker*/}
     //                   </div>
-    //                   {/* <div class="position-relative "><button class="btn btn-primary btn-sm btn-icon h-40px w-40px"><i class="ki-outline ki-filter fs-3"></i></button></div>
-    // 											<div class="position-relative "><button class="btn btn-light-primary btn-sm btn-icon h-40px w-40px"><i class="ki-outline ki-cross fs-1"></i></button></div> */}
+    //                   {/* <div className="position-relative "><button className="btn btn-primary btn-sm btn-icon h-40px w-40px"><i className="ki-outline ki-filter fs-3"></i></button></div>
+    // 											<div className="position-relative "><button className="btn btn-light-primary btn-sm btn-icon h-40px w-40px"><i className="ki-outline ki-cross fs-1"></i></button></div> */}
     //                   <div className="position-relative ">
     //                     <a
     //                       href="calendar.html"
