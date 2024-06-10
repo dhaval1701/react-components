@@ -10,7 +10,6 @@ function Pie(props) {
     const root = am5.Root.new(chartID);
     root.setThemes([am5themes_Animated.new(root)]);
 
-    console.log(root, "root");
     const chart = root.container.children.push(
       am5percent.PieChart.new(root, {
         startAngle: 180,
