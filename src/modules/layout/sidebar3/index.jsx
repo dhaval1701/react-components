@@ -15,7 +15,7 @@ import { Wrapper } from "./style";
 import { useTheme } from "../../../ThemeContext";
 import payload from "../sidebar/lib";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -43,7 +43,6 @@ const data = [
 const Sidebar3 = (props) => {
   const { token } = theme.useToken();
   const { collapsed, setCollapsed, visible, isSmallScreen } = props;
-  // const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const { theme1, isDarkMode, toggleTheme } = useTheme();
   const [selectedKey1, setSelectedKey1] = useState("/dashboard");

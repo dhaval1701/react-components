@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+
 import { Layout, Menu, Segmented, theme } from "antd";
 import { useLocation } from "react-router-dom";
 
@@ -26,10 +20,7 @@ function getItem(label, key, icon, children) {
 const Sidebar4 = (props) => {
   const { token } = theme.useToken();
   const { collapsed, setCollapsed, visible, isSmallScreen } = props;
-  // const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
-  const { theme1, isDarkMode, toggleTheme } = useTheme();
-  const [selectedKey1, setSelectedKey1] = useState("/dashboard");
 
   const pathname = location.pathname;
 
