@@ -43,8 +43,15 @@ const items = [
 
 const Sidebar1 = (props) => {
   const { token } = theme.useToken();
-  const { collapsed, setCollapsed, visible, isSmallScreen } = props;
-  const [collapsedButtonClick, setCollapsedButtonClick] = useState(false);
+  const {
+    collapsed,
+    setCollapsed,
+    visible,
+    isSmallScreen,
+    collapsedButtonClick,
+    setCollapsedButtonClick,
+  } = props;
+  // const [collapsedButtonClick, setCollapsedButtonClick] = useState(false);
   const location = useLocation();
   const { theme1, isDarkMode, toggleTheme } = useTheme();
 
@@ -76,20 +83,21 @@ const Sidebar1 = (props) => {
   const randomIndex = getRandomIndex();
 
   const handleCollapsed = () => {
+    console.log("handle collapsed of sidebar 1 called");
     setCollapsedButtonClick(!collapsedButtonClick);
   };
 
-  useEffect(() => {
-    if (!collapsedButtonClick) {
-      setCollapsed(false);
-    } else {
-      setCollapsed(!collapsed);
-    }
-  }, [collapsedButtonClick]);
+  console.log("sidebar 1 mounts ");
 
-  console.log(collapsed, "collapsed value");
+  console.log("collapse value in sidebar1", collapsed);
+  // useEffect(() => {
+  //   if (!collapsedButtonClick) {
+  //     setCollapsed(false);
+  //   } else {
+  //     setCollapsed(!collapsed);
+  //   }
+  // }, [collapsedButtonClick]);
 
-  console.log(collapsedButtonClick, "collapsedButtonClick value");
   return (
     <Wrapper selectedColor={vibrantColors[randomIndex]} flag={isDarkMode}>
       <Sider
@@ -105,15 +113,23 @@ const Sidebar1 = (props) => {
           bottom: 0,
           background: isDarkMode ? token.colorBgContainer : null,
           display: isSmallScreen ? (visible ? "block" : "none") : "block",
-          zIndex: isSmallScreen ? (visible ? 1053 : 0) : 0,
+          zIndex: isSmallScreen
+            ? visible
+              ? 1053
+              : 0
+            : collapsedButtonClick
+            ? 1500
+            : 0,
         }}
         // style={{ minHeight: "100vh" }}
         width={252}
         onMouseEnter={() => {
-          collapsed && collapsedButtonClick ? setCollapsed(false) : null;
+          console.log("on mouse enter");
+          // collapsed && collapsedButtonClick ? setCollapsed(false) : null;
         }}
         onMouseLeave={() => {
-          collapsedButtonClick ? setCollapsed(true) : null;
+          console.log("on mouse leave");
+          // collapsedButtonClick ? setCollapsed(true) : null;
         }}
 
         //   onCollapse={(value) => setCollapsed(value)}

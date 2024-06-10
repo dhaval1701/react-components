@@ -55,6 +55,7 @@ const App = () => {
     sidebar4: false,
   });
   // const [bootStatus, setBootStatus] = useState(true);
+  const [collapsedButtonClick, setCollapsedButtonClick] = useState(false);
   const location = useLocation();
 
   const breadcrumb = (
@@ -91,7 +92,21 @@ const App = () => {
     };
   }, []);
 
+  console.log("page component mounts ");
+
+  useEffect(() => {
+    if (!collapsedButtonClick) {
+      setCollapsed(false);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  }, [collapsedButtonClick]);
+
   console.log(isSmallScreen, "isSmallScreen");
+
+  console.log(collapsed, "collapsed value");
+
+  console.log(collapsedButtonClick, "collapsedButtonClick value");
 
   // event of reload
   // useEffect(() => {
@@ -156,6 +171,8 @@ const App = () => {
               visible={visible}
               collapsed={collapsed}
               setCollapsed={setCollapsed}
+              collapsedButtonClick={collapsedButtonClick}
+              setCollapsedButtonClick={setCollapsedButtonClick}
             />
           </>
         )}
@@ -214,7 +231,11 @@ const App = () => {
 
         <Layout
           style={{
-            marginLeft: isSmallScreen ? 0 : collapsed ? 80 : 252,
+            marginLeft: isSmallScreen
+              ? 0
+              : collapsed || collapsedButtonClick
+              ? 80
+              : 252,
             position: "relative", // Ensure Layout has a position to control z-index
             zIndex: isSmallScreen && visible ? 1052 : "auto", // Adjust the z-index as needed
           }}
@@ -240,6 +261,7 @@ const App = () => {
             setCollapsed={setCollapsed}
             setSidebarShow={setSidebarShow}
             sidebarShow={sidebarShow}
+            collapsedButtonClick={collapsedButtonClick}
           />
           <Header2 />
           {isSmallScreen && <AntBreadCumb url={location.pathname} />}
