@@ -253,12 +253,11 @@ const HeaderAnt = (props) => {
       className="d-flex justify-content-between align-items-center p-4"
       // theme="light"
       style={{
-        width:
-          isSmallScreen || collapsedButtonClick
-            ? "100%"
-            : collapsed
-            ? "calc(100% - 80px)"
-            : "calc(100% - 252px)",
+        width: isSmallScreen
+          ? "100%"
+          : collapsed || collapsedButtonClick
+          ? "calc(100% - 80px)"
+          : "calc(100% - 252px)",
         position: "fixed",
         top: 0,
         zIndex: 8,

@@ -55,8 +55,20 @@ const App = () => {
     sidebar4: false,
   });
   // const [bootStatus, setBootStatus] = useState(true);
-  const [collapsedButtonClick, setCollapsedButtonClick] = useState(false);
   const location = useLocation();
+  const [collapsedButtonClick, setCollapsedButtonClick] = useState(false);
+
+  const handleCollapsed = () => {
+    setCollapsedButtonClick(!collapsedButtonClick);
+  };
+
+  useEffect(() => {
+    if (!collapsedButtonClick) {
+      setCollapsed(false);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  }, [collapsedButtonClick]);
 
   const breadcrumb = (
     location?.pathname?.split("/")?.filter((d) => d) || []
@@ -92,21 +104,7 @@ const App = () => {
     };
   }, []);
 
-  console.log("page component mounts ");
-
-  useEffect(() => {
-    if (!collapsedButtonClick) {
-      setCollapsed(false);
-    } else {
-      setCollapsed(!collapsed);
-    }
-  }, [collapsedButtonClick]);
-
   console.log(isSmallScreen, "isSmallScreen");
-
-  console.log(collapsed, "collapsed value");
-
-  console.log(collapsedButtonClick, "collapsedButtonClick value");
 
   // event of reload
   // useEffect(() => {
@@ -172,7 +170,7 @@ const App = () => {
               collapsed={collapsed}
               setCollapsed={setCollapsed}
               collapsedButtonClick={collapsedButtonClick}
-              setCollapsedButtonClick={setCollapsedButtonClick}
+              handleCollapsed={handleCollapsed}
             />
           </>
         )}
@@ -235,7 +233,7 @@ const App = () => {
               ? 0
               : collapsed || collapsedButtonClick
               ? 80
-              : 252,
+              : !collapsedButtonClick && 252,
             position: "relative", // Ensure Layout has a position to control z-index
             zIndex: isSmallScreen && visible ? 1052 : "auto", // Adjust the z-index as needed
           }}

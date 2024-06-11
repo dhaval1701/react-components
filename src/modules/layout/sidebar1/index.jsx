@@ -49,7 +49,7 @@ const Sidebar1 = (props) => {
     visible,
     isSmallScreen,
     collapsedButtonClick,
-    setCollapsedButtonClick,
+    handleCollapsed,
   } = props;
   // const [collapsedButtonClick, setCollapsedButtonClick] = useState(false);
   const location = useLocation();
@@ -82,14 +82,10 @@ const Sidebar1 = (props) => {
 
   const randomIndex = getRandomIndex();
 
-  const handleCollapsed = () => {
-    console.log("handle collapsed of sidebar 1 called");
-    setCollapsedButtonClick(!collapsedButtonClick);
-  };
+  // const handleCollapsed = () => {
+  //   setCollapsedButtonClick(!collapsedButtonClick);
+  // };
 
-  console.log("sidebar 1 mounts ");
-
-  console.log("collapse value in sidebar1", collapsed);
   // useEffect(() => {
   //   if (!collapsedButtonClick) {
   //     setCollapsed(false);
@@ -113,23 +109,15 @@ const Sidebar1 = (props) => {
           bottom: 0,
           background: isDarkMode ? token.colorBgContainer : null,
           display: isSmallScreen ? (visible ? "block" : "none") : "block",
-          zIndex: isSmallScreen
-            ? visible
-              ? 1053
-              : 0
-            : collapsedButtonClick
-            ? 1500
-            : 0,
+          zIndex: isSmallScreen ? (visible ? 1053 : 0) : 1500,
         }}
         // style={{ minHeight: "100vh" }}
         width={252}
         onMouseEnter={() => {
-          console.log("on mouse enter");
-          // collapsed && collapsedButtonClick ? setCollapsed(false) : null;
+          collapsed && collapsedButtonClick ? setCollapsed(false) : null;
         }}
         onMouseLeave={() => {
-          console.log("on mouse leave");
-          // collapsedButtonClick ? setCollapsed(true) : null;
+          collapsedButtonClick ? setCollapsed(true) : null;
         }}
 
         //   onCollapse={(value) => setCollapsed(value)}
