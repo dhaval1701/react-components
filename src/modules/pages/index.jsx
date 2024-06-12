@@ -106,6 +106,16 @@ const App = () => {
 
   console.log(isSmallScreen, "isSmallScreen");
 
+  useEffect(() => {
+    const userDiv = document.getElementById("user");
+
+    const myDataSet = userDiv.dataset;
+
+    console.log("dataset", myDataSet);
+
+    return () => {};
+  }, []);
+
   // event of reload
   // useEffect(() => {
   //   const handleBeforeUnload = (event) => {
@@ -150,6 +160,12 @@ const App = () => {
         margin: "auto",
       }}
     >
+      <div
+        id="user"
+        data-id="123"
+        data-name="John Doe"
+        data-email="john@example.com"
+      ></div>
       <Layout>
         {/* {!isSmallScreen && (
         // <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />

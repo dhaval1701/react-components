@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import DarkBlue from "highcharts/themes/high-contrast-dark";
+import DarkBlue from "highcharts/themes/sand-signika";
 
 // Apply the PreBuilt theme
 DarkBlue(Highcharts);
