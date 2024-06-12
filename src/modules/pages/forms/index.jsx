@@ -267,7 +267,7 @@ const Forms = () => {
   return (
     <Wrapper>
       <div className="row">
-        <div className="col-md-12 col-lg-6">
+        <div className="col-md-12 col-lg-9">
           <Card title="Menu" className="menu-card">
             <Form
               form={form}
@@ -422,8 +422,8 @@ const Forms = () => {
             </Form>
           </Card>
         </div>
-        <div className="col-md-12 col-lg-6">
-          <Card title="Card" size="small">
+        <div className="col-md-12 col-lg-3">
+          <Card title="Your Demo Menu" size="small" style={{ minHeight: 350 }}>
             {/* <Menu
               theme="light"
               mode="inline"

@@ -101,7 +101,7 @@ function App() {
       <ConfigProvider {...(isDarkMode ? darkTheme : sideBarTheme)}>
         <RouterProvider
           router={router}
-          fallbackElement={<LoadingAnimation />}
+          // fallbackElement={<LoadingAnimation />}
         />
       </ConfigProvider>
     </>

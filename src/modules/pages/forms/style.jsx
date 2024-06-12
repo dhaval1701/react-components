@@ -46,34 +46,41 @@ export const Wrapper = styled.div`
     justify-content: flex-end;
   }
 
-  .ant-menu-item {
-    color: #0d0c225c;
+  // demo menu style
+  .ant-menu-light.ant-menu-root.ant-menu-inline {
+    background: #b4c6fb;
+  }
+
+  .ant-menu-item-selected {
+    border-radius: 15px;
+    overflow: visible;
+    position: relative;
+    &::before {
+      content: "";
+      width: 90px;
+      height: 83px;
+      position: absolute;
+      border-radius: 50px;
+      bottom: 40px;
+      right: -6px;
+      box-shadow: 50px 50px 0 0 #f5f5f5;
+      z-index: -1;
+    }
+  }
+
+  .ant-menu.ant-menu-inline .ant-menu-item-selected::after {
+    content: "";
+    width: 90px;
+    height: 83px;
+    position: absolute;
+    border-radius: 50px;
+    top: 40px;
+    right: -6px;
+    box-shadow: 50px -50px 0 0 #f5f5f5;
   }
 
   .ant-menu-submenu-title {
     font-weight: 550;
     font-size: 0.995rem;
-    color: #0d0c225c;
-  }
-
-  .ant-menu-item-selected {
-    color: #c41d7f;
-  }
-
-  .ant-menu-submenu .ant-menu-item {
-    position: relative;
-    overflow: visible;
-    &::before {
-      content: "";
-      background: #9e9e9e;
-      width: 1px;
-      height: 50px;
-      border-radius: 0px;
-      position: absolute;
-    }
-  }
-
-  .ant-menu .ant-menu-submenu-title:hover {
-    color: #c41d7f;
   }
 `;
