@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
@@ -13,6 +13,7 @@ import LoadingAnimation from "./app-loader";
 import { router } from "./app-routes";
 import "daterangepicker/daterangepicker.css";
 import "daterangepicker";
+import { GlobalContext } from "./commonContext";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -22,9 +23,26 @@ function App() {
   const dynamicTheme = generateDynamicLightTheme(brandColor);
   const darkLightTheme = generateTheme(isDarkMode);
 
+  const { data, updateCommonGlobalVal } = useContext(GlobalContext);
+
   const handleClick = () => {
     setIsDarkMode((previousValue) => !previousValue);
   };
+  // const location = useLocation();
+  // console.log("location", location);
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      console.log(e, "asdasd");
+    };
+
+    console.log(data, "data");
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   // const generateStyles =
   //   (mainBgColor,
@@ -99,10 +117,13 @@ function App() {
         <RouterProvider router={router} />
       </ConfigProvider> */}
       <ConfigProvider {...(isDarkMode ? darkTheme : sideBarTheme)}>
-        <RouterProvider
-          router={router}
+        {/* <RouterProvider
+          // router={() => AppRouter(data?.userType)}
+          router={AppRouter()}
+
           // fallbackElement={<LoadingAnimation />}
-        />
+        /> */}
+        <RouterProvider router={router} />
       </ConfigProvider>
     </>
   );

@@ -1,9 +1,10 @@
 // modules/pages/auth/index.jsx
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icons from "../../../icon";
 import { GetLinks } from "../../../core";
+import { GlobalContext } from "../../../commonContext";
 
 const menus = [
   {
@@ -55,16 +56,22 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const { data, updateCommonGlobalVal } = useContext(GlobalContext);
+
   const handleLogin = () => {
     // Here, you would typically validate the username and password
     // For simplicity, let's assume a successful login if both fields are filled
     if (username && password) {
       // Store the user information in localStorage
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userType", 1);
+      updateCommonGlobalVal("userType_", 1);
       // During login or after fetching the menu data
       localStorage.setItem("menus", JSON.stringify(menus));
+
+      // console.log(data, "data");
       // Navigate to the layout/dashboard page
-      navigate("/menu-items");
+      navigate("/dashboard");
     } else {
       // Handle invalid login
       alert("Invalid username or password");
@@ -74,7 +81,7 @@ const Login = () => {
   useEffect(() => {
     localStorage.setItem(
       "token",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTcwNDQ3NTgsImV4cCI6MTcxNzEzMTE1OCwidWlkIjoiMiJ9.aymlSovrJuf3WALTjF1Sok5mp40W0ukOFE6mZDHzydU"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTgyNzExNzYsImV4cCI6MTcxODM1NzU3NiwidWlkIjoiMiJ9.TdI6-jKhuiV_AMYlgUUAFg7PrcrNlTCduaNzS-3v_lg"
     );
   }, []);
 

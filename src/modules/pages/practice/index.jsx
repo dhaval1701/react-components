@@ -1,44 +1,245 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Pie from "../../../components/am-charts/semi-circle-pie-chart";
+import { Popover, Table, Tooltip } from "antd";
+import { MakeApiCall } from "../../../api";
 
 const Practice = () => {
-  const { items, status, error } = useSelector((state) => state.users);
+  const [schedularLoading, setSchedularLoading] = useState(false);
+  const [schedularData, setSchedularData] = useState([]);
+  const [popoverVisible, setPopoverVisible] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const popoverRef = useRef(null);
 
-  console.log(items, "items");
+  const openSchedulerPopover = (record) => {
+    const uniqueKey = `${record.event_name}-${record.daily_frequency}-${record.daily_frequency_slots}`;
+    setPopoverVisible((prevState) => ({
+      ...prevState,
+      [uniqueKey]: true,
+    }));
+  };
+
+  const closeSchedulerPopover = (record) => {
+    const uniqueKey = `${record.event_name}-${record.daily_frequency}-${record.daily_frequency_slots}`;
+    setPopoverVisible((prevState) => ({
+      ...prevState,
+      [uniqueKey]: false,
+    }));
+  };
+
+  const getFullDayName = (dayAbbreviation) => {
+    const days = {
+      Sun: "Sunday",
+      Mon: "Monday",
+      Tue: "Tuesday",
+      Wed: "Wednesday",
+      Thu: "Thursday",
+      Fri: "Friday",
+      Sat: "Saturday",
+    };
+
+    return days[dayAbbreviation] || "";
+  };
+
+  const handleButtonClick = () => {
+    setIsLoading(true);
+
+    // Simulating API call delay with setTimeout
+    setTimeout(() => {
+      // Mocking API response data
+      const mockApiResponse = {
+        data: "Mock API response data",
+      };
+
+      // setResponseData(mockApiResponse);
+      setIsLoading(false);
+      // Function to find the parent with the class 'ant-popover'
+      function findParentWithClass(element, className) {
+        while (element && !element.classList.contains(className)) {
+          element = element.parentElement;
+        }
+        return element;
+      }
+
+      if (popoverRef.current) {
+        console.log(popoverRef.current, "popover ref");
+
+        const parentWithClass = findParentWithClass(
+          popoverRef.current,
+          "ant-popover"
+        );
+        console.log(parentWithClass, "parentWithClass");
+
+        if (parentWithClass) {
+          parentWithClass.classList.add("ant-popover-hidden");
+        }
+
+        // const pop = document.getElementsByClassName("ant-popover");
+        // console.log(pop, "pop");
+        // for (let i = 0; i < pop.length; i++) {
+        //   pop[i].classList.add("ant-popover-hidden");
+        // }
+      }
+    }, 4000); // Simulate a 1-second delay
+  };
+
+  const schedulerColumns = [
+    {
+      title: "Event Name",
+      dataIndex: "event_name",
+      key: "event_name",
+    },
+    {
+      title: "Frequency Run",
+      dataIndex: "daily_frequency",
+      key: "daily_frequency",
+      width: 150,
+    },
+    {
+      title: "Run Time",
+      dataIndex: "daily_frequency_slots",
+      key: "daily_frequency_slots",
+      width: 150,
+      render: (text) => {
+        const parsedArray = JSON.parse(text);
+        // Check if the value is an array
+        if (Array.isArray(parsedArray) && parsedArray.length > 0) {
+          // Access the first element of the array and remove quotes
+          const time = parsedArray[0].replace(/["']/g, "");
+          return time;
+        }
+        return parsedArray;
+      },
+    },
+    {
+      title: "Lookback",
+      dataIndex: "lookback",
+      key: "lookback",
+      width: 300,
+      render: (text, record) => {
+        const currentDay = new Date().toLocaleString("en-US", {
+          weekday: "short",
+        });
+        const currentDayValue = record.lookback_days[currentDay];
+
+        return (
+          <>
+            <div className="d-flex justify-content-start">
+              <Tooltip
+                // getTooltipContainer={(trigger) => trigger.parentNode}
+                title="Click For More Details"
+              >
+                <Popover
+                  className="w-50px"
+                  title="Lookback Data"
+                  getPopupContainer={(trigger) => trigger.parentNode}
+                  trigger="click"
+                  placement="bottomRight"
+                  open={
+                    popoverVisible[
+                      `${record.event_name}-${record.daily_frequency}-${record.daily_frequency_slots}`
+                    ] || false
+                  }
+                  onOpenChange={() => closeSchedulerPopover(record)}
+                  content={
+                    <div id="pop-up" ref={popoverRef}>
+                      <ul>
+                        {Object.entries(record.lookback_days).map(
+                          ([day, value]) => (
+                            <li
+                              key={day}
+                              className="list-item" // Add the CSS className here
+                            >
+                              <span style={{ fontWeight: "bolder" }}>
+                                {getFullDayName(day)}
+                              </span>{" "}
+                              {value} days
+                            </li>
+                          )
+                        )}
+                      </ul>
+                      <button onClick={handleButtonClick} disabled={isLoading}>
+                        {isLoading ? "Loading..." : "Fetch Data"}
+                      </button>
+                    </div>
+                  }
+                >
+                  <span
+                    className="watch-icon"
+                    onClick={() => openSchedulerPopover(record)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <svg
+                      width="20"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="social-icon"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M21.6 12a9.6 9.6 0 1 1-19.2 0 9.6 9.6 0 0 1 19.2 0Zm-8.4-4.8a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Zm-2.4 3.6a1.2 1.2 0 0 0 0 2.4v3.6A1.2 1.2 0 0 0 12 18h1.2a1.2 1.2 0 1 0 0-2.4V12a1.2 1.2 0 0 0-1.2-1.2h-1.2Z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </span>
+                </Popover>
+              </Tooltip>
+
+              <p>
+                {/* Every{" "} */}
+                <span style={{ fontWeight: "bold" }}>
+                  Today( {getFullDayName(currentDay)})
+                </span>
+                , data of the past{" "}
+                <span style={{ fontWeight: "bold", padding: "5px" }}>
+                  {currentDayValue}
+                </span>
+                {currentDayValue > 1 ? "days" : "day"} gets updated.
+              </p>
+            </div>
+          </>
+        );
+      },
+    },
+  ];
+
+  const getSchedulerData = async () => {
+    const response = await MakeApiCall(
+      `user/get-user-scheduler-setting`,
+      "get",
+      null,
+      true
+    );
+
+    if (response?.status) {
+      setSchedularData(response?.data || []);
+      setSchedularLoading(false);
+    } else {
+      message.warning(response?.message);
+      setSchedularLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setSchedularLoading(true);
+    getSchedulerData();
+    return () => {};
+  }, []);
 
   return (
     <>
       <div>
-        <ul>
-          <li className="list-item">
-            Item 1
-            <button
-              className="hover-button"
-              onClick={() => console.log("Button clicked")}
-            >
-              Click me
-            </button>
-          </li>
-          <li className="list-item">
-            Item 2
-            <button
-              className="hover-button"
-              onClick={() => console.log("Button clicked")}
-            >
-              Click me
-            </button>
-          </li>
-          <li className="list-item">
-            Item 3
-            <button
-              className="hover-button"
-              onClick={() => console.log("Button clicked")}
-            >
-              Click me
-            </button>
-          </li>
-        </ul>
+        <Table
+          loading={schedularLoading}
+          dataSource={schedularData}
+          columns={schedulerColumns}
+          pagination={false}
+          scroll={{
+            x: 950,
+            y: 500,
+          }}
+        />
       </div>
     </>
     // <>

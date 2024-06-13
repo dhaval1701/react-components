@@ -32,6 +32,7 @@ import AntDropdown from "../../../components/ant-dropdown";
 import ColorShades from "../../../components/colorShades";
 import { generate, presetPalettes } from "@ant-design/colors";
 import RangePickerComponent from "../../../components/ant-rangepicker";
+import { useNavigate } from "react-router-dom";
 
 const options = [];
 for (let i = 10; i < 36; i++) {
@@ -53,6 +54,7 @@ const Dashboard = () => {
   const [selectOpen, setSelectOpen] = useState(false);
   const selectRef = useRef(null);
   const { token } = theme.useToken();
+  const navigate = useNavigate();
 
   const columns = [
     {
@@ -497,8 +499,35 @@ const Dashboard = () => {
     setSelectOpen(true);
   };
 
+  const users = [
+    { id: 1, name: "User One", userType: 1 },
+    { id: 2, name: "User Two", userType: 2 },
+    // Add more users as needed
+  ];
+
+  const switchUserType = (userType) => {
+    localStorage.setItem("userType", userType);
+    navigate("/practice"); // Reload the page to apply new routes
+  };
+
+  console.log("enter");
   return (
     <Wrapper ref={selectRef}>
+      <div className="section">
+        <div>
+          <h2>User List</h2>
+          <ul>
+            {users.map((user) => (
+              <li key={user.id}>
+                {user.name} (Type: {user.userType})
+                <button onClick={() => switchUserType(2)}>
+                  Switch to User Type 2
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <div className="section">
         <Select
           id="first-select"

@@ -22,4 +22,22 @@ const PageRoutes = [
   ...charts,
 ];
 
+// const PageRoutes = (type = 4) => {
+//   console.log(type, "type----");
+//   return type === 1
+//     ? [...dashboard]
+//     : [
+//         ...forms,
+//         ...cards,
+//         ...table,
+//         // ...dashboard,
+//         ...datepicker,
+//         ...logs,
+//         ...redux,
+//         ...menuItems,
+//         ...practice,
+//         ...charts,
+//       ];
+// };
+
 export default PageRoutes;
