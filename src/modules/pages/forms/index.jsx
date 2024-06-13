@@ -318,99 +318,103 @@ const Forms = () => {
                 </Form.Item>
               </Space>
 
-              <Form.List name="children">
-                {(fields, { add, remove }) => (
-                  <>
-                    {fields.map(
-                      ({ key, name, fieldKey, ...restField }, index) => (
-                        <Space
-                          key={key}
-                          className="submenu-item"
-                          style={{ backgroundColor: getBackgroundColor(index) }}
-                          align="baseline"
-                        >
-                          <Form.Item
-                            {...restField}
-                            label="Icon"
-                            name={[name, "icon"]}
-                            fieldKey={[fieldKey, "icon"]}
+              <div
+              // style={{ border: "1px dashed #ccc" }}
+              >
+                <Form.List name="children">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map(
+                        ({ key, name, fieldKey, ...restField }, index) => (
+                          <Space
+                            key={key}
+                            className="submenu-item"
+                            // style={{ backgroundColor: getBackgroundColor(index) }}
+                            align="baseline"
                           >
-                            <Popover
-                              content={iconContent}
-                              title="Search Icons"
-                              trigger="click"
-                              visible={
-                                showPopover && currentChildIndex === index
-                              }
-                              onVisibleChange={(visible) =>
-                                setShowPopover(visible)
-                              }
+                            <Form.Item
+                              {...restField}
+                              label="Icon"
+                              name={[name, "icon"]}
+                              fieldKey={[fieldKey, "icon"]}
                             >
-                              <div
-                                className="icon-container"
-                                onClick={() => handleChildIconClick(index)}
+                              <Popover
+                                content={iconContent}
+                                title="Search Icons"
+                                trigger="click"
+                                visible={
+                                  showPopover && currentChildIndex === index
+                                }
+                                onVisibleChange={(visible) =>
+                                  setShowPopover(visible)
+                                }
                               >
-                                <Icon
-                                  icon={selectedChildIcon[index] || "mdi:add"}
-                                  width="30"
-                                  height="30"
-                                  style={{ cursor: "pointer" }}
-                                />
-                              </div>
-                            </Popover>
-                          </Form.Item>
+                                <div
+                                  className="icon-container"
+                                  onClick={() => handleChildIconClick(index)}
+                                >
+                                  <Icon
+                                    icon={selectedChildIcon[index] || "mdi:add"}
+                                    width="30"
+                                    height="30"
+                                    style={{ cursor: "pointer" }}
+                                  />
+                                </div>
+                              </Popover>
+                            </Form.Item>
 
-                          <Form.Item
-                            {...restField}
-                            label="Path"
-                            name={[name, "path"]}
-                            fieldKey={[fieldKey, "path"]}
-                            rules={[
-                              {
-                                required: true,
-                                message: "Child path is required",
-                              },
-                            ]}
-                          >
-                            <Input placeholder="Child Path" />
-                          </Form.Item>
+                            <Form.Item
+                              {...restField}
+                              label="Path"
+                              name={[name, "path"]}
+                              fieldKey={[fieldKey, "path"]}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Child path is required",
+                                },
+                              ]}
+                            >
+                              <Input placeholder="Child Path" />
+                            </Form.Item>
 
-                          <Form.Item
-                            {...restField}
-                            label="Menu Title"
-                            name={[name, "menuTitle"]}
-                            fieldKey={[fieldKey, "menuTitle"]}
-                            rules={[
-                              {
-                                required: true,
-                                message: "Child menu title is required",
-                              },
-                            ]}
-                          >
-                            <Input placeholder="Child Menu Title" />
-                          </Form.Item>
+                            <Form.Item
+                              {...restField}
+                              label="Menu Title"
+                              name={[name, "menuTitle"]}
+                              fieldKey={[fieldKey, "menuTitle"]}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Child menu title is required",
+                                },
+                              ]}
+                            >
+                              <Input placeholder="Child Menu Title" />
+                            </Form.Item>
 
-                          <MinusCircleOutlined
-                            className="remove-icon"
-                            onClick={() => remove(name)}
-                          />
-                        </Space>
-                      )
-                    )}
-                    <Form.Item>
-                      <Button
-                        type="dashed"
-                        onClick={() => add()}
-                        block
-                        icon={<PlusOutlined />}
-                        className="add-submenu-button"
-                      >
-                        Add SubMenu
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form.List>
+                            <MinusCircleOutlined
+                              className="remove-icon"
+                              onClick={() => remove(name)}
+                            />
+                          </Space>
+                        )
+                      )}
+                      <Form.Item>
+                        <Button
+                          type="dashed"
+                          onClick={() => add()}
+                          block
+                          icon={<PlusOutlined />}
+                          className="add-submenu-button"
+                        >
+                          {fields.length === 0 ? "add submenu" : fields.length}
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              </div>
 
               <div className="form-footer">
                 <Form.Item>

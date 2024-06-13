@@ -22,7 +22,8 @@ export const Wrapper = styled.div`
   .submenu-item {
     display: flex;
     padding: 15px;
-    background-color: #f9f9f9;
+    // background-color: #f9f9f9;
+    border: 1px dashed #ccc;
     border-radius: 7px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
