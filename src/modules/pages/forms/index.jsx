@@ -400,17 +400,21 @@ const Forms = () => {
                           </Space>
                         )
                       )}
-                      <Form.Item>
-                        <Button
-                          type="dashed"
-                          onClick={() => add()}
-                          block
-                          icon={<PlusOutlined />}
-                          className="add-submenu-button"
-                        >
-                          {fields.length === 0 ? "add submenu" : fields.length}
-                        </Button>
-                      </Form.Item>
+                      <div className="add-submenu-container">
+                        <Form.Item>
+                          <Button
+                            type="dashed"
+                            onClick={() => add()}
+                            block
+                            icon={<PlusOutlined />}
+                            className="add-submenu-button"
+                          >
+                            {fields.length === 0
+                              ? "add submenu"
+                              : fields.length}
+                          </Button>
+                        </Form.Item>
+                      </div>
                     </>
                   )}
                 </Form.List>
