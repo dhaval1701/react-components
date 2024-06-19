@@ -47,6 +47,8 @@ function App() {
 
   console.log(routeObject, "routeObject");
 
+  // const practiceRoutes =
+  //   data?.userType_ === 1 ? [...AdminRoutes] : [...PageRoutes];
   // Define routes based on user type
   const userRoutes = data?.userType_ ? routeObject[data?.userType_] : [];
 
@@ -66,6 +68,17 @@ function App() {
       path: "*",
       element: <div>404</div>,
     },
+    //this is working
+    // {
+    //   path: "/",
+    //   element: (
+    //     <Suspense fallback={<LoadingAnimation />}>
+    //       <PrivateRoute element={<Page />} />
+    //     </Suspense>
+    //   ),
+    //   children: [...practiceRoutes],
+    // },
+    //this is also working
     ...(userRoutes?.length > 0
       ? [
           {
