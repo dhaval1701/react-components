@@ -1,6 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import "./App.css";
-import { RouterProvider, useLocation } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+  BrowserRouter,
+  Routes,
+  Route,
+  createRoutesFromElements,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
@@ -10,12 +18,24 @@ import { useTheme } from "./ThemeContext";
 import { generateStyles } from "./components/antd-style";
 import { DndContext } from "@dnd-kit/core";
 import LoadingAnimation from "./app-loader";
-import { router } from "./app-routes";
+// import { router } from "./app-routes";
 import "daterangepicker/daterangepicker.css";
 import "daterangepicker";
 import { GlobalContext } from "./commonContext";
+import Login from "./modules/pages/auth";
+import Page from "./modules/pages/index";
+import { AdminRoutes, PageRoutes, routeObject } from "./router";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
+
+const isAuthenticated = () => {
+  console.log(localStorage.getItem("isLoggedIn"), "isLoggedIn");
+  return localStorage.getItem("isLoggedIn") === "true";
+};
+
+const PrivateRoute = ({ element, ...rest }) => {
+  return isAuthenticated() ? element : <Navigate to="/login" replace />;
+};
 
 function App() {
   const { theme1, isDarkMode, toggleTheme } = useTheme();
@@ -25,24 +45,76 @@ function App() {
 
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
 
-  const handleClick = () => {
-    setIsDarkMode((previousValue) => !previousValue);
-  };
-  // const location = useLocation();
-  // console.log("location", location);
-  useEffect(() => {
-    const handleStorageChange = (e) => {
-      console.log(e, "asdasd");
-    };
+  console.log(routeObject, "routeObject");
 
-    console.log(data, "data");
+  // Define routes based on user type
+  const userRoutes = data?.userType_ ? routeObject[data?.userType_] : [];
 
-    window.addEventListener("storage", handleStorageChange);
+  console.log(userRoutes, "user Routes");
 
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  // Create routes with only createBrowserRouter
+  const router1 = createBrowserRouter([
+    {
+      path: "/login",
+      element: (
+        <Suspense fallback={<LoadingAnimation />}>
+          <Login />
+        </Suspense>
+      ),
+    },
+    {
+      path: "*",
+      element: <div>404</div>,
+    },
+    ...(userRoutes?.length > 0
+      ? [
+          {
+            path: "/",
+            element: (
+              <Suspense fallback={<LoadingAnimation />}>
+                <PrivateRoute element={<Page />} />
+              </Suspense>
+            ),
+            children: [...userRoutes],
+            // children: userRoutes.map((route) => ({
+            //   path: route.path,
+            //   element: route.element,
+            // })),
+          },
+        ]
+      : []),
+  ]);
+
+  // Create routes with only createBrowserRouter and createRoutesFromElements
+  const routes = createRoutesFromElements(
+    <>
+      <Route
+        path="/login"
+        element={
+          <Suspense fallback={<LoadingAnimation />}>
+            <Login />
+          </Suspense>
+        }
+      />
+      <Route path="*" element={<div>404</div>} />
+      {userRoutes?.length > 0 && (
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<LoadingAnimation />}>
+              <PrivateRoute element={<Page />} />
+            </Suspense>
+          }
+        >
+          {userRoutes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+        </Route>
+      )}
+    </>
+  );
+
+  const router = createBrowserRouter(routes);
 
   // const generateStyles =
   //   (mainBgColor,
@@ -107,23 +179,8 @@ function App() {
 
   return (
     <>
-      {/* <ConfigProvider
-        theme={{
-          algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
-          // ...darkLightTheme,
-          // ...dynamicTheme,
-        }}
-      >
-        <RouterProvider router={router} />
-      </ConfigProvider> */}
       <ConfigProvider {...(isDarkMode ? darkTheme : sideBarTheme)}>
-        {/* <RouterProvider
-          // router={() => AppRouter(data?.userType)}
-          router={AppRouter()}
-
-          // fallbackElement={<LoadingAnimation />}
-        /> */}
-        <RouterProvider router={router} />
+        <RouterProvider router={router1} />
       </ConfigProvider>
     </>
   );

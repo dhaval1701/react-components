@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
   CheckCircleOutlined,
@@ -33,6 +33,7 @@ import ColorShades from "../../../components/colorShades";
 import { generate, presetPalettes } from "@ant-design/colors";
 import RangePickerComponent from "../../../components/ant-rangepicker";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../../commonContext";
 
 const options = [];
 for (let i = 10; i < 36; i++) {
@@ -55,6 +56,8 @@ const Dashboard = () => {
   const selectRef = useRef(null);
   const { token } = theme.useToken();
   const navigate = useNavigate();
+
+  const { data, updateCommonGlobalVal } = useContext(GlobalContext);
 
   const columns = [
     {
@@ -505,9 +508,16 @@ const Dashboard = () => {
     // Add more users as needed
   ];
 
+  const updateUserTypeInLocalStorage = (newType) => {
+    localStorage.setItem("userType", newType);
+    updateCommonGlobalVal("userType_", newType);
+    const event = new Event("userTypeChanged");
+    window.dispatchEvent(event);
+  };
+
   const switchUserType = (userType) => {
-    localStorage.setItem("userType", userType);
-    navigate("/practice"); // Reload the page to apply new routes
+    updateUserTypeInLocalStorage(userType);
+    navigate("/cards"); // Reload the page to apply new routes
   };
 
   console.log("enter");

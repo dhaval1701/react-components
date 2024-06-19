@@ -81,7 +81,7 @@ const Login = () => {
   useEffect(() => {
     localStorage.setItem(
       "token",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTgyNzExNzYsImV4cCI6MTcxODM1NzU3NiwidWlkIjoiMiJ9.TdI6-jKhuiV_AMYlgUUAFg7PrcrNlTCduaNzS-3v_lg"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTg1OTg5OTksImV4cCI6MTcxODY4NTM5OSwidWlkIjoiMiJ9.HMEdMImHQczIstlXVdQOCg8e4ByYUcuDtC3cG0LjPE8"
     );
   }, []);
 
