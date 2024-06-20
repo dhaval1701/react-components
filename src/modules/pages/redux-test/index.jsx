@@ -15,10 +15,6 @@ const ReduxTest = () => {
   const dispatch = useDispatch();
   const [newTodo, setNewTodo] = useState("");
 
-  console.log(items, "users");
-
-  console.log(status, "status");
-
   const handleAddTodo = () => {
     dispatch(addTodo(newTodo));
     setNewTodo("");

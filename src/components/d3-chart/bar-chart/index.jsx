@@ -52,7 +52,6 @@ const BarChartD3 = () => {
       .attr("width", x.bandwidth())
       .attr("fill", "steelblue")
       .on("mouseover", (event, d) => {
-        console.log(event, "event value");
         tooltip.transition().duration(200).style("opacity", 0.9);
         tooltip
           .html(`<strong>${d.label}</strong>: ${d.value}`)

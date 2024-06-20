@@ -39,7 +39,6 @@ const DatePicker = () => {
               // id="id------11111"
               value={[filters?.start_date, filters?.end_date]}
               onChange={(e) => {
-                console.log(e, "date1");
                 const filters_ = filters;
                 filters_.start_date = e?.[0];
                 filters_.end_date = e?.[1];
@@ -57,7 +56,6 @@ const DatePicker = () => {
               // id="id------2222222"
               value={[filters2?.start_date, filters2?.end_date]}
               onChange={(e) => {
-                console.log(e, "date2");
                 const filters_ = filters2;
                 filters_.start_date = e?.[0];
                 filters_.end_date = e?.[1];
@@ -75,7 +73,6 @@ const DatePicker = () => {
               // id="asin_dashboard_filter_range_picker2fdsaaa"
               value={[filters3?.start_date, filters3?.end_date]}
               onChange={(e) => {
-                console.log(e, "e");
                 const filters_ = filters3;
                 filters_.start_date = e?.[0];
                 filters_.end_date = e?.[1];
@@ -96,7 +93,6 @@ const DatePicker = () => {
               // id="asin_dashboard_filter_range_pickerfdasfasdsda"
               value={[filters4?.start_date, filters4?.end_date]}
               onChange={(e) => {
-                console.log(e, "e");
                 const filters_ = filters4;
                 filters_.start_date = e?.[0];
                 filters_.end_date = e?.[1];

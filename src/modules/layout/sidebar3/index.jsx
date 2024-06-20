@@ -78,8 +78,6 @@ const Sidebar3 = (props) => {
     setCollapsed(!collapsed);
   };
 
-  console.log(isDarkMode, "isDarkMode");
-
   return (
     <Wrapper selectedColor={vibrantColors[randomIndex]} flag={isDarkMode}>
       <Sider

@@ -104,8 +104,6 @@ const App = () => {
     };
   }, []);
 
-  console.log(isSmallScreen, "isSmallScreen");
-
   useEffect(() => {
     const userDiv = document.getElementById("user");
 

@@ -63,13 +63,13 @@ const Practice = () => {
       }
 
       if (popoverRef.current) {
-        console.log(popoverRef.current, "popover ref");
+       
 
         const parentWithClass = findParentWithClass(
           popoverRef.current,
           "ant-popover"
         );
-        console.log(parentWithClass, "parentWithClass");
+
 
         if (parentWithClass) {
           parentWithClass.classList.add("ant-popover-hidden");

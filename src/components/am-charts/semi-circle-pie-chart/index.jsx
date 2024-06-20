@@ -19,7 +19,6 @@ function Pie(props) {
       })
     );
 
-    console.log(chart, "chart");
     const series = chart.series.push(
       am5percent.PieSeries.new(root, {
         startAngle: 180,

@@ -26,14 +26,12 @@ const ReportLogs = () => {
   // console.log(cards, "cards");
 
   const removeCard = (cartToRemove, index) => {
-    console.log(cartToRemove, "card to remove");
     setNumCards(numCards - 1);
     const newCards = cards.filter((card, i) => card?.key !== cartToRemove?.key);
     setCards(newCards);
   };
 
   const updateCardHeight = () => {
-    console.log("update called");
     cardRefs.current.forEach((ref, index) => {
       if (ref) {
         const currentCardHeight = ref.offsetHeight;

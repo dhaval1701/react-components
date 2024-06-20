@@ -26,7 +26,6 @@ const CenterLogs = () => {
   const addCard = (index) => {
     const highestCardNumber = Math.max(...cards, 0);
     const newCardNumber = highestCardNumber + 1;
-    console.log(cards, "index");
 
     if (cards.length > 0) {
       // Insert new card before the card at the specified index
@@ -90,7 +89,6 @@ const CenterLogs = () => {
 export default CenterLogs;
 
 const CardComponent = ({ index, title, length, onAdd, onRemove }) => {
-  console.log(index, "index");
   return (
     <Card title={`Card ${title}`}>
       <p>This is a simple card with add and remove buttons.</p>

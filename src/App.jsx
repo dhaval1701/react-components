@@ -29,7 +29,6 @@ import { AdminRoutes, PageRoutes, routeObject } from "./router";
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
 const isAuthenticated = () => {
-  console.log(localStorage.getItem("isLoggedIn"), "isLoggedIn");
   return localStorage.getItem("isLoggedIn") === "true";
 };
 
@@ -45,14 +44,10 @@ function App() {
 
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
 
-  console.log(routeObject, "routeObject");
-
   const practiceRoutes =
     data?.userType_ === 1 ? [...AdminRoutes] : [...PageRoutes];
   // Define routes based on user type
   const userRoutes = data?.userType_ ? routeObject[data?.userType_] : [];
-
-  console.log(userRoutes, "user Routes");
 
   // Create routes with only createBrowserRouter
   const router1 = createBrowserRouter([
@@ -223,7 +218,6 @@ const generateSidebar = (
 ) => {
   const { styles } = useSubMenuStyle();
 
-  console.log(styles, "submenu style");
   return {
     components: {
       Layout: {
@@ -362,7 +356,7 @@ const generateDynamicLightTheme = (brandColor) => {
 const generateDynamicDarkTheme = (brandColor) => {
   const reversedColors = generate(brandColor);
   const shades = reversedColors.slice().reverse(); // Reverse the array of colors
-  console.log(shades, "shades");
+
   return {
     token: {
       fontFamily: `"Outfit", sans-serif, sans-serif`,

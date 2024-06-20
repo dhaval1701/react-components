@@ -20,7 +20,7 @@ const Cards = () => {
   const handleSelection = () => {
     // Logic to handle selection
     const selection = window.getSelection();
-    console.log(selection, "selection");
+
     if (selection) {
       const selectedText = selection.toString();
       setSelectedContent(selectedText);
@@ -42,7 +42,6 @@ const Cards = () => {
       var ctx = canvas.getContext("2d");
       ctx.drawImage(canvas, 0, 0);
       var dataURL = canvas.toDataURL();
-      console.log(dataURL);
 
       const img = document.createElement("img");
       img.src = dataURL;

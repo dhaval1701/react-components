@@ -520,7 +520,6 @@ const Dashboard = () => {
     navigate("/cards"); // Reload the page to apply new routes
   };
 
-  console.log("enter");
   return (
     <Wrapper ref={selectRef}>
       <div className="section">
@@ -578,7 +577,6 @@ const Dashboard = () => {
           // id="asin_dashboard_filter_range_picker"
           value={[filters?.start_date, filters?.end_date]}
           onChange={(e) => {
-            console.log(e, "e");
             const filters_ = filters;
             filters_.start_date = e?.[0];
             filters_.end_date = e?.[1];

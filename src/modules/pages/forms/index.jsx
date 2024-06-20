@@ -120,8 +120,6 @@ const Forms = () => {
   // };
 
   const handleSearch = async () => {
-    console.log("click");
-    console.log(form.getFieldValue("path"));
     try {
       const response = await axios.get(
         `https://api.iconify.design/search?query=${iconQuery}`
@@ -211,7 +209,6 @@ const Forms = () => {
   //   setButtonDisabled(hasError);
   // };
 
-  console.log(form.getFieldValue("path"), "path value");
   const iconContent = (
     <div
       style={{
@@ -259,7 +256,6 @@ const Forms = () => {
   };
 
   const updateMenu = (values) => {
-    console.log(values, "values");
     const newMenu = values ? [values] : [];
     setMenu(newMenu);
   };

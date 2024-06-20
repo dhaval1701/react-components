@@ -159,8 +159,6 @@ const RangePickerComponent = (props) => {
             ?.getElementsByClassName("ant-picker-presets")[0]
             .querySelector("ul li:last-child");
 
-          console.log(lastLi, "last li clicked ");
-
           if (lastLi) {
             // Remove highlighting from previously selected preset
             const highlightedPreset = document
@@ -195,7 +193,6 @@ const RangePickerComponent = (props) => {
           .querySelector("ul li:last-child");
 
         if (lastLi) {
-          console.log(lastLi, "lastLi");
           lastLi?.classList.remove("antd_selected_presets_date");
         }
 

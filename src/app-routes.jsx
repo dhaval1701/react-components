@@ -19,7 +19,6 @@ const Login = lazy(() => import("./modules/pages/auth/index.jsx"));
 const Page = lazy(() => import("./modules/pages/index.jsx"));
 
 const isAuthenticated = () => {
-  console.log(localStorage.getItem("isLoggedIn"), "isLoggedIn");
   return localStorage.getItem("isLoggedIn") === "true";
 };
 

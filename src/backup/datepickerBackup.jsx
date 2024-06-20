@@ -60,10 +60,6 @@ const RangePickerComponent = (props) => {
     return defaultPresets;
   };
 
-  console.log(value, "value");
-
-  console.log(isOpen, "isOpen");
-
   const rangePresets = propPresets || getDefaultPresets();
 
   const getformat = (date) => {
@@ -71,8 +67,6 @@ const RangePickerComponent = (props) => {
   };
 
   useEffect(() => {
-    console.log("1 useEffect");
-
     const element = document
       .getElementsByClassName(id)?.[0]
       ?.getElementsByClassName("ant-picker-presets");
@@ -86,8 +80,6 @@ const RangePickerComponent = (props) => {
           getformat(presetsDates?.[1]?.$d) === getformat(value?.[1]?.$d)
         );
       });
-
-      console.log(isActive, "isActive");
 
       // If custom range is selected, set isActive to -1
       if (isCustomRangeSelected) {
@@ -107,8 +99,6 @@ const RangePickerComponent = (props) => {
         )[0];
         pickerDropdown?.classList.add("preset-selected");
       }
-
-      console.log(isCustomRangeSelected, "isCustomRangeSelected");
 
       // Show/hide picker panels based on custom range selection or wantDefaultPicker flag
       const pickerPanels =
@@ -139,17 +129,13 @@ const RangePickerComponent = (props) => {
         );
         highlightedPreset?.classList.remove("antd_selected_presets_date");
 
-        console.log(highlightedPreset, "highlight preset");
         // Highlight the selected preset
         lastLi.classList.add("antd_selected_presets_date");
-
-        console.log(lastLi, "lastLi");
 
         // Show picker panels
         const pickerPanels =
           document.getElementsByClassName("ant-picker-panels")[0];
         pickerPanels.style.display = "block";
-        console.log("Last li clicked. Default behavior prevented.");
 
         event.stopPropagation();
 
@@ -188,8 +174,6 @@ const RangePickerComponent = (props) => {
 
       // Set custom range to false
       setIsCustomRangeSelected(false);
-
-      console.log("Preset clicked.");
     };
 
     const pickerDropdown =

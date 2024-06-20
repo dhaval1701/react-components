@@ -25,8 +25,6 @@ function MapAmCharts(props) {
 
     const root = am5.Root.new(chartID);
 
-    console.log(root, "root");
-
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
     root.setThemes([am5themes_Animated.new(root)]);
@@ -113,8 +111,6 @@ function MapAmCharts(props) {
         geoJSON: am5geodata_worldLow,
       })
     );
-
-    console.log(am5geodata_worldLow, "am5geodata_worldLow");
 
     // Create line series for trajectory lines
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-line-series/

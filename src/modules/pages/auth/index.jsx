@@ -69,7 +69,6 @@ const Login = () => {
       // During login or after fetching the menu data
       localStorage.setItem("menus", JSON.stringify(menus));
 
-      // console.log(data, "data");
       // Navigate to the layout/dashboard page
       navigate("/dashboard");
     } else {

@@ -53,8 +53,6 @@ const Sidebar4 = (props) => {
     setCollapsed(!collapsed);
   };
 
-  console.log(visible, "visible");
-
   return (
     <Wrapper selectedColor={vibrantColors[randomIndex]}>
       <Sider
