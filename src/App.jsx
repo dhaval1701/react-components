@@ -47,8 +47,8 @@ function App() {
 
   console.log(routeObject, "routeObject");
 
-  // const practiceRoutes =
-  //   data?.userType_ === 1 ? [...AdminRoutes] : [...PageRoutes];
+  const practiceRoutes =
+    data?.userType_ === 1 ? [...AdminRoutes] : [...PageRoutes];
   // Define routes based on user type
   const userRoutes = data?.userType_ ? routeObject[data?.userType_] : [];
 
@@ -69,33 +69,33 @@ function App() {
       element: <div>404</div>,
     },
     //this is working
-    // {
-    //   path: "/",
-    //   element: (
-    //     <Suspense fallback={<LoadingAnimation />}>
-    //       <PrivateRoute element={<Page />} />
-    //     </Suspense>
-    //   ),
-    //   children: [...practiceRoutes],
-    // },
+    {
+      path: "/",
+      element: (
+        <Suspense fallback={<LoadingAnimation />}>
+          <PrivateRoute element={<Page />} />
+        </Suspense>
+      ),
+      children: [...practiceRoutes],
+    },
     //this is also working
-    ...(userRoutes?.length > 0
-      ? [
-          {
-            path: "/",
-            element: (
-              <Suspense fallback={<LoadingAnimation />}>
-                <PrivateRoute element={<Page />} />
-              </Suspense>
-            ),
-            children: [...userRoutes],
-            // children: userRoutes.map((route) => ({
-            //   path: route.path,
-            //   element: route.element,
-            // })),
-          },
-        ]
-      : []),
+    // ...(userRoutes?.length > 0
+    //   ? [
+    //       {
+    //         path: "/",
+    //         element: (
+    //           <Suspense fallback={<LoadingAnimation />}>
+    //             <PrivateRoute element={<Page />} />
+    //           </Suspense>
+    //         ),
+    //         children: [...userRoutes],
+    //         // children: userRoutes.map((route) => ({
+    //         //   path: route.path,
+    //         //   element: route.element,
+    //         // })),
+    //       },
+    //     ]
+    //   : []),
   ]);
 
   // Create routes with only createBrowserRouter and createRoutesFromElements

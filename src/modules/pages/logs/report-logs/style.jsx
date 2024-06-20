@@ -7,6 +7,14 @@ export const Wrapper = styled.div`
   //     align-items: center;
   //   }
 
+  .overflow {
+    width: 200px; /* Adjust width as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid #ccc;
+  }
+
   .card-wrapper {
     position: relative;
     margin-bottom: 10px;
