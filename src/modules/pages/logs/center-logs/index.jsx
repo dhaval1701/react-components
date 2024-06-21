@@ -57,10 +57,10 @@ const CenterLogs = () => {
         ))}
       </Row>
 
-      <Card title="Card Overflow">
-        <div style={{ margin: "20px", width: 400 }}>
+      <Card title="Card Overflow" style={{ width: 200 }}>
+        <div style={{ margin: "20px" }}>
           <h2>WithOut Row Value and Tooltip</h2>
-          <OverflowText rule={false}>
+          <OverflowText row={2} rule={false}>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam
             impedit quaerat vel illum, magnam quod. Dicta beatae eligendi facere
             magnam?
@@ -105,7 +105,7 @@ const OverflowText = ({ row = 1, rule, children, placement }) => {
     overflow: "hidden",
     textOverflow: "ellipsis",
     border: "1px solid #ccc",
-    maxHeight: row ? `${row * 1.6}em` : "none", // Adjust line height as needed
+    maxHeight: row ? `${row * 1.6}em` : "none",
     display: "-webkit-box",
     WebkitLineClamp: row,
     WebkitBoxOrient: "vertical",
@@ -114,11 +114,7 @@ const OverflowText = ({ row = 1, rule, children, placement }) => {
   const content = <div style={{ width: "fit-content" }}>{children}</div>;
 
   return (
-    <Tooltip
-      title={rule ? content : ""}
-      placement={placement || "topLeft"}
-      overlayStyle={{ width: "max-content" }}
-    >
+    <Tooltip title={rule ? content : ""} placement={placement || "topLeft"}>
       <div style={style}>{children}</div>
     </Tooltip>
   );

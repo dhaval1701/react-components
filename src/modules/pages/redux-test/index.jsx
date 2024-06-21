@@ -4,16 +4,59 @@ import { Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../../../slices/first/firstSlice";
 import { addTodo, toggleTodo } from "../../../slices/todos/todoSlice";
-import { fetchUsers } from "../../../slices/user/userSlice";
 
-const ReduxTest = () => {
-  const count = useSelector((state) => state.firstSlice.count);
+const ReduxTest = ({
+  user,
+  fetchUserData,
+  createUserData,
+  updateUserData,
+  deleteUserData,
+  clearUserData,
+}) => {
+  // const { items, status, error } = useSelector((state) => state.users);
   const todos = useSelector((state) => state.todos);
-
-  const { items, status, error } = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
   const [newTodo, setNewTodo] = useState("");
+
+  const [users, setUsers] = useState([]);
+  const [newUser, setNewUser] = useState({ name: "", username: "", email: "" });
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
+
+  useEffect(() => {
+    if (!user.loading && user.data.length) {
+      setUsers([...user.data]);
+      clearUserData();
+    }
+  }, [user]);
+
+  const handleCreateUser = () => {
+    createUserData(newUser);
+    setNewUser({ name: "", username: "", email: "" });
+  };
+
+  const handleUpdateUser = (user) => {
+    const body = {
+      id: user.id,
+      ...newUser,
+    };
+    updateUserData(body);
+  };
+
+  const handleDeleteUser = (id) => {
+    deleteUserData(id);
+  };
+
+  if (user.loading) {
+    return "loading...";
+  }
+
+  if (user.error) {
+    return `Error: ${user.error}`;
+  }
 
   const handleAddTodo = () => {
     dispatch(addTodo(newTodo));
@@ -24,17 +67,7 @@ const ReduxTest = () => {
     dispatch(toggleTodo(id));
   };
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
-
-  if (status === "loading") {
-    return "loading...";
-  }
-
-  if (error) {
-    return error;
-  }
+  console.log(users, "user.data");
 
   return (
     <Wrapper>
@@ -47,7 +80,7 @@ const ReduxTest = () => {
       >
         <h1>Todos</h1>
         <ul>
-          {todos.map((todo) => (
+          {todos?.map((todo) => (
             <li key={todo.id} onClick={() => handleToggleTodo(todo.id)}>
               {todo.completed ? <del>{todo.text}</del> : todo.text}
             </li>
@@ -59,26 +92,6 @@ const ReduxTest = () => {
           onChange={(e) => setNewTodo(e.target.value)}
         />
         <button onClick={handleAddTodo}>Add Todo</button>
-
-        <h1>User with API</h1>
-        <ul>
-          {items.map((user) => (
-            <li key={user.id}>
-              <div>
-                <p>Name: {user.name}</p>
-                <p>Username: {user.username}</p>
-                <p>Email: {user.email}</p>
-                <p>
-                  Address: {user.address.street}, {user.address.city},{" "}
-                  {user.address.zipcode}
-                </p>
-                <p>Phone: {user.phone}</p>
-                <p>Website: {user.website}</p>
-                <p>Company: {user.company.name}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
 
         {/* <div>
           <h1>Counter</h1>
@@ -98,6 +111,50 @@ const ReduxTest = () => {
             </div>
           ))}
         </div> */}
+      </Space>
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{
+          width: "100%",
+        }}
+      >
+        <h1>Users</h1>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>
+              <div>
+                <p>Name: {user.name}</p>
+                <p>Username: {user.username}</p>
+                <p>Email: {user.email}</p>
+                <button onClick={() => handleUpdateUser(user)}>Update</button>
+                <button onClick={() => handleDeleteUser(user.id)}>
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <h2>Add User</h2>
+        <input
+          type="text"
+          placeholder="Name"
+          value={newUser.name}
+          onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Username"
+          value={newUser.username}
+          onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={newUser.email}
+          onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+        />
+        <button onClick={handleCreateUser}>Add User</button>
       </Space>
     </Wrapper>
   );

@@ -1,38 +1,86 @@
-// userSlice.js
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  fetchUserData,
+  createUserData,
+  updateUserData,
+  deleteUserData,
+} from "./userAsyncAction";
 
-// Define an async thunk for fetching data
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await axios.get(
-    "https://jsonplaceholder.typicode.com/users"
-  );
-  return response.data;
-});
+const initialState = {
+  loading: false,
+  data: [],
+  error: null,
+};
 
-// Create a slice for the data
 const userSlice = createSlice({
-  name: "users",
-  initialState: {
-    items: [],
-    status: "idle",
-    error: null,
+  name: "user",
+  initialState,
+  reducers: {
+    clearUserData: (state) => {
+      state.data = [];
+      state.error = null;
+    },
   },
-  reducers: {},
   extraReducers: (builder) => {
+    // Fetch users
     builder
-      .addCase(fetchUsers.pending, (state) => {
-        state.status = "loading";
+      .addCase(fetchUserData.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.items = action.payload;
+      .addCase(fetchUserData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(fetchUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+    // Create user
+    builder
+      .addCase(createUserData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createUserData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data.push(action.payload);
+      })
+      .addCase(createUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+    // Update user
+    builder
+      .addCase(updateUserData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUserData.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.data.findIndex(
+          (user) => user.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.data[index] = action.payload;
+        }
+      })
+      .addCase(updateUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+    // Delete user
+    builder
+      .addCase(deleteUserData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteUserData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = state.data.filter((user) => user.id !== action.payload);
+      })
+      .addCase(deleteUserData.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.error.message;
       });
   },
 });
 
+export const { clearUserData } = userSlice.actions;
 export default userSlice.reducer;
