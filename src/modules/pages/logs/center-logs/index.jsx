@@ -67,7 +67,7 @@ const CenterLogs = () => {
           </OverflowText>
 
           <h2>With Row Value and Tooltip</h2>
-          <OverflowText row={3} rule={true}>
+          <OverflowText row={2} rule={true} placement={"bottom"}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque iure
             vitae id error, amet assumenda nulla! Quam, iure, veritatis commodi
             unde perspiciatis ea tempora ipsum corporis placeat eligendi
@@ -98,7 +98,7 @@ const CardComponent = ({ index, title, length, onAdd, onRemove }) => {
   );
 };
 
-const OverflowText = ({ row = 1, rule, children }) => {
+const OverflowText = ({ row = 1, rule, children, placement }) => {
   const style = {
     // width: "500px", // Default width
     whiteSpace: row ? "normal" : "nowrap",
@@ -113,15 +113,13 @@ const OverflowText = ({ row = 1, rule, children }) => {
 
   const content = <div style={{ width: "fit-content" }}>{children}</div>;
 
-  return rule ? (
+  return (
     <Tooltip
-      title={content}
-      placement="topLeft"
-      // overlayStyle={{ width: "max-content" }}
+      title={rule ? content : ""}
+      placement={placement || "topLeft"}
+      overlayStyle={{ width: "max-content" }}
     >
       <div style={style}>{children}</div>
     </Tooltip>
-  ) : (
-    <div style={style}>{children}</div>
   );
 };
