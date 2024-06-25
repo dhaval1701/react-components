@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Input, message, Tooltip, Empty } from "antd";
 import { Icon } from "@iconify/react";
 import axios from "axios";
+import copy from "copy-to-clipboard";
 import { Wrapper } from "./style";
 
 const { Search } = Input;
@@ -10,8 +11,8 @@ const IconsPage = () => {
   const [iconQuery, setIconQuery] = useState("");
   const [iconTitle, setIconTitle] = useState("");
   const [icons, setIcons] = useState([]);
-
   const [isSticky, setIsSticky] = useState(false);
+  const [copiedIconIndex, setCopiedIconIndex] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +25,7 @@ const IconsPage = () => {
     // Cleanup function to prevent memory leaks
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   const handleSearch = async (value) => {
     setIconTitle(value);
 
@@ -46,7 +48,30 @@ const IconsPage = () => {
     }
   };
 
-  console.log(icons, "icons");
+  const handleIconClick = (iconName, index) => {
+    // Use the Clipboard API to copy text to the clipboard
+    navigator.clipboard.writeText(iconName).then(
+      () => {
+        message.success(`Copied icon: ${iconName}`);
+        setCopiedIconIndex(index);
+        setTimeout(() => {
+          setCopiedIconIndex(null);
+        }, 2000);
+      },
+      (err) => {
+        message.error("Failed to copy icon");
+        console.error("Failed to copy text: ", err);
+      }
+    );
+
+    // copy(iconName);
+    // message.success(`Copied icon: ${iconName}`);
+    // setCopiedIconIndex(index);
+
+    // setTimeout(() => {
+    //   setCopiedIconIndex(null);
+    // }, 2000);
+  };
 
   return (
     <Wrapper>
@@ -54,7 +79,6 @@ const IconsPage = () => {
         <div className={`search-header ${isSticky ? "is-sticky" : ""}`}>
           <Search
             placeholder="Search icons"
-            //   enterButton="Search"
             allowClear
             size="large"
             onSearch={handleSearch}
@@ -79,8 +103,18 @@ const IconsPage = () => {
             ) : (
               icons.map((icon, index) => (
                 <Tooltip key={index} title={icon}>
-                  <div className="custom-card">
-                    <Icon icon={icon} width="30" height="30" />
+                  <div
+                    className="custom-card"
+                    onClick={() => handleIconClick(icon, index)}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    {copiedIconIndex === index ? (
+                      <span className="copied-text">Copied!</span>
+                    ) : (
+                      <Icon icon={icon} width="30" height="30" />
+                    )}
                   </div>
                 </Tooltip>
               ))

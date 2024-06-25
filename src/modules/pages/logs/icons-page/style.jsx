@@ -43,4 +43,10 @@ export const Wrapper = styled.div`
     backdrop-filter: blur(10px);
     animation: slideDown 0.35s ease-out;
   }
+
+  .custom-card .copied-text {
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    transform: scale(1.2);
+  }
 `;

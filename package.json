@@ -25,6 +25,7 @@
     "apexcharts": "^3.49.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
+    "copy-to-clipboard": "^3.3.3",
     "d3": "^7.9.0",
     "daterangepicker": "^3.1.0",
     "dayjs": "^1.11.10",
