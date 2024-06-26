@@ -146,9 +146,9 @@ const Cards = () => {
                       </div>
                     </div>
 
-                    <div className="custom-card-back">
+                    {/* <div className="custom-card-back">
                       <p>This is example of percentage</p>
-                    </div>
+                    </div> */}
                   </div>
                 </Card>
               </div>
@@ -286,7 +286,7 @@ const Cards = () => {
               <div className="col-sm-6 col-lg-6 col-xl-4">
                 <div
                   className="card1"
-                  // style={{ backgroundColor: token.colorBgContainer }}
+                  style={{ backgroundColor: token.colorBgContainer }}
                 >
                   <div className="position-relative overflow-hidden">
                     <div

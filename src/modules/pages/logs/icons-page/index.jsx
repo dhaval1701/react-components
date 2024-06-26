@@ -82,7 +82,10 @@ const IconsPage = () => {
             allowClear
             size="large"
             onSearch={handleSearch}
-            style={{ width: 600 }}
+            style={{
+              width: 600,
+              boxShadow: "0 8px 24px #1a29470a, 0 2px 8px #1a294714;",
+            }}
             value={iconQuery}
             onChange={(e) => setIconQuery(e.target.value)}
           />
@@ -113,7 +116,12 @@ const IconsPage = () => {
                     {copiedIconIndex === index ? (
                       <span className="copied-text">Copied!</span>
                     ) : (
-                      <Icon icon={icon} width="30" height="30" />
+                      <Icon
+                        className="icon"
+                        icon={icon}
+                        width="30"
+                        height="30"
+                      />
                     )}
                   </div>
                 </Tooltip>

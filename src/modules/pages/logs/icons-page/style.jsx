@@ -22,6 +22,10 @@ export const Wrapper = styled.div`
 
   .custom-card:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    .icon {
+      transition: transform 0.3s ease;
+      transform: scale(1.2);
+    }
   }
 
   @keyframes slideDown {

@@ -29,7 +29,7 @@ const ReduxTest = ({
   useEffect(() => {
     if (!user.loading && user.data.length) {
       setUsers([...user.data]);
-      clearUserData();
+      // clearUserData();
     }
   }, [user]);
 
