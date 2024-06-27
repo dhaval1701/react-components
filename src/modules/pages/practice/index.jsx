@@ -4,6 +4,10 @@ import Pie from "../../../components/am-charts/semi-circle-pie-chart";
 import { Popover, Table, Tabs, Tooltip } from "antd";
 import { MakeApiCall } from "../../../api";
 import { useLocation, useNavigate } from "react-router-dom";
+import Cards from "../cards/index";
+import ReduxTest from "../redux-test/index";
+import DatePicker from "../datepicker";
+import Charts from "../charts";
 
 const Practice = () => {
   const [schedularLoading, setSchedularLoading] = useState(false);
@@ -65,27 +69,23 @@ const Practice = () => {
     {
       key: "1",
       label: "Tab 1",
-      children: "Content of Tab Pane 1",
+      children: <Cards />,
     },
     {
       key: "2",
       label: "Tab 2",
-      children: "Content of Tab Pane 2",
+      children: <DatePicker />,
     },
     {
       key: "3",
       label: "Tab 3",
-      children: "Content of Tab Pane 3",
+      children: <Charts/>,
     },
   ];
 
   return (
     <>
-      <Tabs
-        activeKey={defaultActiveKey}
-        items={items}
-        onChange={onChange}
-      />
+      <Tabs activeKey={defaultActiveKey} items={items} onChange={onChange} />
     </>
     // <>
     //   <div
