@@ -23,8 +23,6 @@ const ReportLogs = () => {
     setNumCards(numCards + 1);
   };
 
-  // console.log(cards, "cards");
-
   const removeCard = (cartToRemove, index) => {
     setNumCards(numCards - 1);
     const newCards = cards.filter((card, i) => card?.key !== cartToRemove?.key);
