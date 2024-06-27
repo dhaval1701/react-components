@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Pie from "../../../components/am-charts/semi-circle-pie-chart";
-import { Popover, Table, Tooltip } from "antd";
+import { Popover, Table, Tabs, Tooltip } from "antd";
 import { MakeApiCall } from "../../../api";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Practice = () => {
   const [schedularLoading, setSchedularLoading] = useState(false);
@@ -11,36 +12,6 @@ const Practice = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const popoverRef = useRef(null);
-
-  const openSchedulerPopover = (record) => {
-    const uniqueKey = `${record.event_name}-${record.daily_frequency}-${record.daily_frequency_slots}`;
-    setPopoverVisible((prevState) => ({
-      ...prevState,
-      [uniqueKey]: true,
-    }));
-  };
-
-  const closeSchedulerPopover = (record) => {
-    const uniqueKey = `${record.event_name}-${record.daily_frequency}-${record.daily_frequency_slots}`;
-    setPopoverVisible((prevState) => ({
-      ...prevState,
-      [uniqueKey]: false,
-    }));
-  };
-
-  const getFullDayName = (dayAbbreviation) => {
-    const days = {
-      Sun: "Sunday",
-      Mon: "Monday",
-      Tue: "Tuesday",
-      Wed: "Wednesday",
-      Thu: "Thursday",
-      Fri: "Friday",
-      Sat: "Saturday",
-    };
-
-    return days[dayAbbreviation] || "";
-  };
 
   const handleButtonClick = () => {
     setIsLoading(true);
@@ -63,13 +34,10 @@ const Practice = () => {
       }
 
       if (popoverRef.current) {
-       
-
         const parentWithClass = findParentWithClass(
           popoverRef.current,
           "ant-popover"
         );
-
 
         if (parentWithClass) {
           parentWithClass.classList.add("ant-popover-hidden");
@@ -84,163 +52,40 @@ const Practice = () => {
     }, 4000); // Simulate a 1-second delay
   };
 
-  const schedulerColumns = [
-    {
-      title: "Event Name",
-      dataIndex: "event_name",
-      key: "event_name",
-    },
-    {
-      title: "Frequency Run",
-      dataIndex: "daily_frequency",
-      key: "daily_frequency",
-      width: 150,
-    },
-    {
-      title: "Run Time",
-      dataIndex: "daily_frequency_slots",
-      key: "daily_frequency_slots",
-      width: 150,
-      render: (text) => {
-        const parsedArray = JSON.parse(text);
-        // Check if the value is an array
-        if (Array.isArray(parsedArray) && parsedArray.length > 0) {
-          // Access the first element of the array and remove quotes
-          const time = parsedArray[0].replace(/["']/g, "");
-          return time;
-        }
-        return parsedArray;
-      },
-    },
-    {
-      title: "Lookback",
-      dataIndex: "lookback",
-      key: "lookback",
-      width: 300,
-      render: (text, record) => {
-        const currentDay = new Date().toLocaleString("en-US", {
-          weekday: "short",
-        });
-        const currentDayValue = record.lookback_days[currentDay];
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const defaultActiveKey = queryParams.get("tabs") || "1";
 
-        return (
-          <>
-            <div className="d-flex justify-content-start">
-              <Tooltip
-                // getTooltipContainer={(trigger) => trigger.parentNode}
-                title="Click For More Details"
-              >
-                <Popover
-                  className="w-50px"
-                  title="Lookback Data"
-                  getPopupContainer={(trigger) => trigger.parentNode}
-                  trigger="click"
-                  placement="bottomRight"
-                  open={
-                    popoverVisible[
-                      `${record.event_name}-${record.daily_frequency}-${record.daily_frequency_slots}`
-                    ] || false
-                  }
-                  onOpenChange={() => closeSchedulerPopover(record)}
-                  content={
-                    <div id="pop-up" ref={popoverRef}>
-                      <ul>
-                        {Object.entries(record.lookback_days).map(
-                          ([day, value]) => (
-                            <li
-                              key={day}
-                              className="list-item" // Add the CSS className here
-                            >
-                              <span style={{ fontWeight: "bolder" }}>
-                                {getFullDayName(day)}
-                              </span>{" "}
-                              {value} days
-                            </li>
-                          )
-                        )}
-                      </ul>
-                      <button onClick={handleButtonClick} disabled={isLoading}>
-                        {isLoading ? "Loading..." : "Fetch Data"}
-                      </button>
-                    </div>
-                  }
-                >
-                  <span
-                    className="watch-icon"
-                    onClick={() => openSchedulerPopover(record)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <svg
-                      width="20"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="social-icon"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M21.6 12a9.6 9.6 0 1 1-19.2 0 9.6 9.6 0 0 1 19.2 0Zm-8.4-4.8a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Zm-2.4 3.6a1.2 1.2 0 0 0 0 2.4v3.6A1.2 1.2 0 0 0 12 18h1.2a1.2 1.2 0 1 0 0-2.4V12a1.2 1.2 0 0 0-1.2-1.2h-1.2Z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </span>
-                </Popover>
-              </Tooltip>
+  const onChange = (key) => {
+    navigate(`/practice/tabs?tabs=${key}`);
+  };
 
-              <p>
-                {/* Every{" "} */}
-                <span style={{ fontWeight: "bold" }}>
-                  Today( {getFullDayName(currentDay)})
-                </span>
-                , data of the past{" "}
-                <span style={{ fontWeight: "bold", padding: "5px" }}>
-                  {currentDayValue}
-                </span>
-                {currentDayValue > 1 ? "days" : "day"} gets updated.
-              </p>
-            </div>
-          </>
-        );
-      },
+  const items = [
+    {
+      key: "1",
+      label: "Tab 1",
+      children: "Content of Tab Pane 1",
+    },
+    {
+      key: "2",
+      label: "Tab 2",
+      children: "Content of Tab Pane 2",
+    },
+    {
+      key: "3",
+      label: "Tab 3",
+      children: "Content of Tab Pane 3",
     },
   ];
 
-  const getSchedulerData = async () => {
-    const response = await MakeApiCall(
-      `user/get-user-scheduler-setting`,
-      "get",
-      null,
-      true
-    );
-
-    if (response?.status) {
-      setSchedularData(response?.data || []);
-      setSchedularLoading(false);
-    } else {
-      message.warning(response?.message);
-      setSchedularLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    setSchedularLoading(true);
-    getSchedulerData();
-    return () => {};
-  }, []);
-
   return (
     <>
-      <div>
-        <Table
-          loading={schedularLoading}
-          dataSource={schedularData}
-          columns={schedulerColumns}
-          pagination={false}
-          scroll={{
-            x: 950,
-            y: 500,
-          }}
-        />
-      </div>
+      <Tabs
+        activeKey={defaultActiveKey}
+        items={items}
+        onChange={onChange}
+      />
     </>
     // <>
     //   <div

@@ -5,4 +5,8 @@ export default [
     path: "practice",
     element: <Practice />,
   },
+  {
+    path: "practice/tabs",
+    element: <Practice />,
+  },
 ];
