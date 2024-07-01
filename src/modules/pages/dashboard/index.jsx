@@ -34,6 +34,248 @@ import { generate, presetPalettes } from "@ant-design/colors";
 import RangePickerComponent from "../../../components/ant-rangepicker";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../../commonContext";
+import { object } from "prop-types";
+
+const dataSource = [
+  {
+    id: "1",
+    system_event_process_id: "SEP001",
+    report_date: "2023-07-01",
+    search_keyword: "example keyword",
+    search_keyword_frequency_rank: "1",
+    item1_id: "I001",
+    item1_name: "Item 1",
+    item1_brand_name: "Brand 1",
+    item1_click_share: "10%",
+    item1_conversion_share: "5%",
+    item2_id: "I002",
+    item2_name: "Item 2",
+    item2_brand_name: "Brand 2",
+    item2_click_share: "20%",
+    item2_conversion_share: "10%",
+    item3_id: "I003",
+    item3_name: "Item 3",
+    item3_brand_name: "Brand 3",
+    item3_click_share: "30%",
+    item3_conversion_share: "15%",
+    marketplace_id: "M001",
+    marketplace: "Marketplace 1",
+    advertiser_id: "A001",
+    created_at: "2023-07-01",
+    updated_at: "2023-07-01",
+  },
+  {
+    id: "1",
+    system_event_process_id: "SEP001",
+    report_date: "2023-07-01",
+    search_keyword: "example keyword",
+    search_keyword_frequency_rank: "1",
+    item1_id: "I001",
+    item1_name: "Item 1",
+    item1_brand_name: "Brand 1",
+    item1_click_share: "10%",
+    item1_conversion_share: "5%",
+    item2_id: "I002",
+    item2_name: "Item 2",
+    item2_brand_name: "Brand 2",
+    item2_click_share: "20%",
+    item2_conversion_share: "10%",
+    item3_id: "I003",
+    item3_name: "Item 3",
+    item3_brand_name: "Brand 3",
+    item3_click_share: "30%",
+    item3_conversion_share: "15%",
+    marketplace_id: "M001",
+    marketplace: "Marketplace 1",
+    advertiser_id: "A001",
+    created_at: "2023-07-01",
+    updated_at: "2023-07-01",
+  },
+  {
+    id: "1",
+    system_event_process_id: "SEP001",
+    report_date: "2023-07-01",
+    search_keyword: "example keyword",
+    search_keyword_frequency_rank: "1",
+    item1_id: "I001",
+    item1_name: "Item 1",
+    item1_brand_name: "Brand 1",
+    item1_click_share: "10%",
+    item1_conversion_share: "5%",
+    item2_id: "I002",
+    item2_name: "Item 2",
+    item2_brand_name: "Brand 2",
+    item2_click_share: "20%",
+    item2_conversion_share: "10%",
+    item3_id: "I003",
+    item3_name: "Item 3",
+    item3_brand_name: "Brand 3",
+    item3_click_share: "30%",
+    item3_conversion_share: "15%",
+    marketplace_id: "M001",
+    marketplace: "Marketplace 1",
+    advertiser_id: "A001",
+    created_at: "2023-07-01",
+    updated_at: "2023-07-01",
+  },
+  {
+    id: "1",
+    system_event_process_id: "SEP001",
+    report_date: "2023-07-01",
+    search_keyword: "example keyword",
+    search_keyword_frequency_rank: "1",
+    item1_id: "I001",
+    item1_name: "Item 1",
+    item1_brand_name: "Brand 1",
+    item1_click_share: "10%",
+    item1_conversion_share: "5%",
+    item2_id: "I002",
+    item2_name: "Item 2",
+    item2_brand_name: "Brand 2",
+    item2_click_share: "20%",
+    item2_conversion_share: "10%",
+    // item3_id: "I003",
+    // item3_name: "Item 3",
+    // item3_brand_name: "Brand 3",
+    // item3_click_share: "30%",
+    // item3_conversion_share: "15%",
+    marketplace_id: "M001",
+    marketplace: "Marketplace 1",
+    advertiser_id: "A001",
+    created_at: "2023-07-01",
+    updated_at: "2023-07-01",
+  },
+];
+
+const transformedDataSource = dataSource.map((item) => {
+  const all_items = Array.from({ length: 3 }, (_, index) => index + 1)
+    .map((index) => ({
+      id: item[`item${index}_id`],
+      name: item[`item${index}_name`],
+      brand_name: item[`item${index}_brand_name`],
+      click_share: item[`item${index}_click_share`],
+      conversion_share: item[`item${index}_conversion_share`],
+    }))
+    .filter((item) => item.id); // Filter out items where id is falsy (e.g., undefined,null)
+
+  const all_items_dynamic = Object.keys(item)
+    .filter((key) => key.match(/^item\d+_id$/))
+    .map((key) => {
+      console.log(key.match(/^item(\d+)_id$/), "key match");
+      const index = key.match(/^item(\d+)_id$/)[1];
+      return {
+        id: item[`item${index}_id`],
+        name: item[`item${index}_name`],
+        brand_name: item[`item${index}_brand_name`],
+        click_share: item[`item${index}_click_share`],
+        conversion_share: item[`item${index}_conversion_share`],
+      };
+    });
+
+  return {
+    ...item, // Spread all other properties from the original item object
+    all_items: all_items_dynamic,
+  };
+});
+
+console.log(transformedDataSource, "transformedDataSource");
+
+// dataSource.map((d, i) => {
+//   console.log(d, "d");
+//   const allItems = [];
+//   d.all_items?.map((a, i) => {
+//     allItems.push({
+//       id: d.item1_id,
+//       name: i.name,
+//       brand_name: i.brand_name,
+//       click_share: i.click_share,
+//       conversion_share: i.conversion_share,
+//     });
+//   });
+//   d.all_items = allItems;
+// });
+
+// console.log(dataSource, "data source");
+
+const dataSource1 = [
+  {
+    id: "1",
+    system_event_process_id: "SEP001",
+    report_date: "2023-07-01",
+    search_keyword: "example keyword",
+    search_keyword_frequency_rank: "1",
+    all_items: [
+      {
+        id: "I001",
+        name: "Item 1",
+        brand_name: "Brand 1",
+        click_share: "10%",
+        conversion_share: "5%",
+      },
+      {
+        id: "I002",
+        name: "Item 2",
+        brand_name: "Brand 2",
+        click_share: "20%",
+        conversion_share: "10%",
+      },
+      {
+        id: "I003",
+        name: "Item 3",
+        brand_name: "Brand 3",
+        click_share: "30%",
+        conversion_share: "15%",
+      },
+    ],
+    marketplace_id: "M001",
+    marketplace: "Marketplace 1",
+    advertiser_id: "A001",
+    created_at: "2023-07-01",
+    updated_at: "2023-07-01",
+  },
+  {
+    id: "1",
+    system_event_process_id: "SEP001",
+    report_date: "2023-07-01",
+    search_keyword: "example keyword",
+    search_keyword_frequency_rank: "1",
+    all_items: [
+      {
+        id: "I001",
+        name: "Item 1",
+        brand_name: "Brand 1",
+        click_share: "10%",
+        conversion_share: "5%",
+      },
+      {
+        id: "I002",
+        name: "Item 2",
+        brand_name: "Brand 2",
+        click_share: "20%",
+        conversion_share: "10%",
+      },
+      {
+        id: "I003",
+        name: "Item 3",
+        brand_name: "Brand 3",
+        click_share: "30%",
+        conversion_share: "15%",
+      },
+    ],
+    marketplace_id: "M001",
+    marketplace: "Marketplace 1",
+    advertiser_id: "A001",
+    created_at: "2023-07-01",
+    updated_at: "2023-07-01",
+  },
+];
+
+// dataSource?.map((d) => {
+//   console.log(d, "data");
+//   d.all_items.map((i) => {
+//     console.log(i, "items");
+//   });
+// });
 
 const options = [];
 for (let i = 10; i < 36; i++) {
@@ -441,8 +683,6 @@ const Dashboard = () => {
     setSelectOpen(false);
   };
 
-  console.log(tempSelectedValues, "temp values");
-  console.log(selectedValues, "select values");
   const handleCancel = () => {
     setSelectedValues(tempSelectedValues);
     setSelectOpen(false);

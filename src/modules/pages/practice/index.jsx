@@ -1,13 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Pie from "../../../components/am-charts/semi-circle-pie-chart";
-import { Popover, Table, Tabs, Tooltip } from "antd";
+import { Popover, Table, Tabs, Tooltip, Menu } from "antd";
+import {
+  AppstoreOutlined,
+  MailOutlined,
+  SettingOutlined,
+  MinusOutlined,
+} from "@ant-design/icons";
 import { MakeApiCall } from "../../../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cards from "../cards/index";
 import ReduxTest from "../redux-test/index";
 import DatePicker from "../datepicker";
 import Charts from "../charts";
+import { Wrapper } from "./style";
 
 const Practice = () => {
   const [schedularLoading, setSchedularLoading] = useState(false);
@@ -69,7 +76,7 @@ const Practice = () => {
     {
       key: "1",
       label: "Tab 1",
-      children: <Cards />,
+      children: <MenuPractice />,
     },
     {
       key: "2",
@@ -79,7 +86,7 @@ const Practice = () => {
     {
       key: "3",
       label: "Tab 3",
-      children: <Charts/>,
+      children: <Charts />,
     },
   ];
 
@@ -1663,3 +1670,76 @@ const Practice = () => {
 };
 
 export default Practice;
+
+const items = [
+  {
+    key: "1",
+    icon: <MinusOutlined />,
+    label: "Navigation One",
+    children: [
+      {
+        key: "11",
+        label: "Option 1",
+      },
+      {
+        key: "12",
+        label: "Option 2",
+      },
+      {
+        key: "13",
+        label: "Option 3",
+      },
+    ],
+  },
+  {
+    key: "2",
+    icon: <MinusOutlined />,
+    label: "Navigation Two",
+  },
+  {
+    key: "3",
+    icon: <MinusOutlined />,
+    label: "Navigation Three",
+  },
+];
+const MenuPractice = () => {
+  const [stateOpenKeys, setStateOpenKeys] = useState(["1", "11"]);
+  const onOpenChange = (openKeys) => {
+    const currentOpenKey = openKeys.find(
+      (key) => stateOpenKeys.indexOf(key) === -1
+    );
+    // open
+    if (currentOpenKey !== undefined) {
+      const repeatIndex = openKeys
+        .filter((key) => key !== currentOpenKey)
+        .findIndex((key) => levelKeys[key] === levelKeys[currentOpenKey]);
+      setStateOpenKeys(
+        openKeys
+          // remove repeat key
+          .filter((_, index) => index !== repeatIndex)
+          // remove current level all child
+          .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey])
+      );
+    } else {
+      // close
+      setStateOpenKeys(openKeys);
+    }
+  };
+
+  return (
+    <Wrapper>
+      <div style={{ backgroundColor: "#fff" }}>
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={["11"]}
+          // openKeys={stateOpenKeys}
+          // onOpenChange={onOpenChange}
+          style={{
+            width: 256,
+          }}
+          items={items}
+        />
+      </div>
+    </Wrapper>
+  );
+};

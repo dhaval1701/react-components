@@ -17,4 +17,35 @@ export const Wrapper = styled.div`
   .list-item:hover .hover-button {
     display: inline-block;
   }
+
+  .ant-menu-item-selected {
+    transition: color 0.2s ease !important;
+    background-color: #f9f9f9 !important;
+
+    .ant-menu-title-content {
+      color: #443dba !important;
+      font-weight: 600;
+      &:hover {
+        color: #443dba !important;
+      }
+    }
+
+    &:hover {
+    }
+  }
+
+  .ant-menu-item {
+    font-weight: 550;
+    color: #4b5675;
+    &:hover {
+      background-color: #f9f9f9 !important;
+      .ant-menu-title-content {
+        color: #443dba !important;
+        font-weight: 600;
+        &:hover {
+          color: #443dba !important;
+        }
+      }
+    }
+  }
 `;
