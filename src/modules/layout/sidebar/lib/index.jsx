@@ -13,23 +13,26 @@ import redux from "./redux";
 import menuItems from "./menu-items";
 import practice from "./practice";
 import charts from "./charts";
+import button from "./button";
 
 const payload = [
+  ...button,
+  ...cards,
   ...charts,
   ...practice,
   ...datepicker,
   ...table,
-  ...cards,
+
   ...forms,
   ...dashboard,
   ...logs,
   ...redux,
   ...menuItems,
-  // ...reports,
-  // ...systemCheck,
-  // ...setting,
-  // ...manageUser,
-  // ...settingAdmin,
+  ...reports,
+  ...systemCheck,
+  ...setting,
+  ...manageUser,
+  ...settingAdmin,
 ];
 
 export default payload;

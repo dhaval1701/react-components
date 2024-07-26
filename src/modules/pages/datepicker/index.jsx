@@ -39,6 +39,7 @@ const DatePicker = () => {
               // id="id------11111"
               value={[filters?.start_date, filters?.end_date]}
               onChange={(e) => {
+                console.log(e, "data picker value");
                 const filters_ = filters;
                 filters_.start_date = e?.[0];
                 filters_.end_date = e?.[1];

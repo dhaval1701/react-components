@@ -1,6 +1,70 @@
 /* #root{
   font-family: "Outfit", sans-serif, sans-serif;
 } */
+ 
+:root {
+  --color-50: #ffc9ff;
+  --color-100: #d298ff;
+  --color-200: #b77fff;
+  --color-300: #9c68fd;
+  --color-400: #8251e3;
+  --color-500: #683ac9;
+  --color-600: #4d23b0;
+  --color-700: #2f0997;
+  --color-800: #2f0997;
+  --color-900: #00007f;
+  --color-950: #000068;
+}
+
+.bg-50 { background-color: var(--color-50); }
+
+.text-50 { color: var(--color-50); }
+
+.bg-100 { background-color: var(--color-100); }
+
+.text-100 { color: var(--color-100); }
+
+.bg-200 { background-color: var(--color-200); }
+
+.text-200 { color: var(--color-200); }
+
+.bg-300 { background-color: var(--color-300); }
+
+.text-300 { color: var(--color-300); }
+
+.bg-400 { background-color: var(--color-400); }
+
+.text-400 { color: var(--color-400); }
+
+.bg-500 { background-color: var(--color-500); }
+
+.text-500 { color: var(--color-500); }
+
+.bg-600 { background-color: var(--color-600); }
+
+.text-600 { color: var(--color-600); }
+
+.bg-700 { background-color: var(--color-700); }
+
+.text-700 { color: var(--color-700); }
+
+.bg-800 { background-color: var(--color-800); }
+
+.text-800 { color: var(--color-800); }
+
+.bg-900 { background-color: var(--color-900); }
+
+.text-900 { color: var(--color-900); }
+
+.bg-950 { background-color: var(--color-950); }
+
+.text-950 { color: var(--color-950); }
+
+
+
+
+
+
 
 @font-face {
   font-family: 'CustomFont';
@@ -128,4 +192,9 @@ body {
 
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
+}
+
+
+.ant-table-wrapper .ant-table-row-expand-icon-spaced {
+  margin: 3px !important;
 }

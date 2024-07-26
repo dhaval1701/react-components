@@ -15,6 +15,8 @@ import ReduxTest from "../redux-test/index";
 import DatePicker from "../datepicker";
 import Charts from "../charts";
 import { Wrapper } from "./style";
+import Chart from "react-apexcharts";
+import ReactApexChart from "react-apexcharts";
 
 const Practice = () => {
   const [schedularLoading, setSchedularLoading] = useState(false);
@@ -67,6 +69,144 @@ const Practice = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const defaultActiveKey = queryParams.get("tabs") || "1";
+  const [expandClicked, setExpandClicked] = useState(false);
+
+  const options = {
+    chart: {
+      type: "line",
+      height: 350,
+      stacked: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      width: [1, 1, 1, 4],
+    },
+    title: {
+      text: "Sales and Units Over Time",
+      align: "left",
+    },
+    xaxis: {
+      categories: [
+        "Jul-01",
+        "Jul-02",
+        "Jul-03",
+        "Jul-04",
+        "Jul-05",
+        "Jul-06",
+        "Jul-07",
+        "Jul-08",
+        "Jul-09",
+        "Jul-10",
+        "Jul-11",
+        "Jul-12",
+        "Jul-13",
+        "Jul-14",
+        "Jul-15",
+        "Jul-16",
+        "Jul-17",
+        "Jul-18",
+      ],
+    },
+    yaxis: [
+      {
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#008FFB",
+        },
+        labels: {
+          style: {
+            colors: "#008FFB",
+          },
+        },
+        title: {
+          text: "Sales",
+          style: {
+            color: "#008FFB",
+          },
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+      {
+        seriesName: "AOV",
+        opposite: true,
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#FEB019",
+        },
+        labels: {
+          style: {
+            colors: "#FEB019",
+          },
+        },
+        title: {
+          text: "AOV",
+          style: {
+            color: "#FEB019",
+          },
+        },
+      },
+    ],
+    tooltip: {
+      fixed: {
+        enabled: true,
+        position: "topLeft",
+        offsetY: 30,
+        offsetX: 60,
+      },
+    },
+    legend: {
+      horizontalAlign: "left",
+      offsetX: 40,
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "50%",
+      },
+    },
+    colors: ["#008FFB", "#00E396", "#FEB019", "#FF4560"],
+  };
+
+  const series = [
+    {
+      name: "Sales Type 1",
+      type: "bar",
+      data: [
+        500, 2500, 1500, 1000, 4000, 7500, 6000, 3500, 1500, 4000, 2500, 3500,
+        1500, 1000, 5000, 30000, 4000, 0,
+      ],
+    },
+    {
+      name: "Sales Type 2",
+      type: "bar",
+      data: [
+        500, 2500, 1500, 1000, 4000, 7500, 6000, 3500, 1500, 4000, 2500, 3500,
+        1500, 1000, 5000, 30000, 4000, 0,
+      ],
+    },
+    {
+      name: "Units",
+      type: "bar",
+      data: [1, 4, 3, 2, 3, 5, 4, 3, 1, 2, 2, 2, 0.5, 1, 2, 2.5, 1.5, 2],
+    },
+    {
+      name: "AOV",
+      type: "line",
+      data: [
+        600, 950, 850, 750, 900, 1100, 1050, 900, 750, 950, 800, 850, 700, 600,
+        800, 1100, 800, 750,
+      ],
+    },
+  ];
 
   const onChange = (key) => {
     navigate(`/practice/tabs?tabs=${key}`);
@@ -90,10 +230,117 @@ const Practice = () => {
     },
   ];
 
+  const columns = [
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+    },
+    {
+      title: "Sales",
+      dataIndex: "sales",
+      key: "sales",
+    },
+    {
+      title: "Units",
+      dataIndex: "units",
+      key: "units",
+    },
+    {
+      title: "Orders",
+      dataIndex: "orders",
+      key: "orders",
+    },
+    {
+      title: "Sales",
+      dataIndex: "sales2",
+      key: "sales2",
+    },
+  ];
+
+  const data = [
+    {
+      key: "1",
+      brand: "Nike",
+      sales: "$50,000",
+      units: 500,
+      orders: 100,
+      sales2: "$50,000",
+      children: [
+        {
+          key: "3",
+          brand: "Adidas",
+          sales: "$45,000",
+          units: 450,
+          orders: 90,
+          sales2: "$45,000",
+        },
+        {
+          key: "4",
+          brand: "Adidas",
+          sales: "$45,000",
+          units: 450,
+          orders: 90,
+          sales2: "$45,000",
+        },
+      ],
+    },
+
+    {
+      key: "5",
+      brand: "Puma",
+      sales: "$30,000",
+      units: 300,
+      orders: 60,
+      sales2: "$30,000",
+    },
+    {
+      key: "6",
+      brand: "Reebok",
+      sales: "$25,000",
+      units: 250,
+      orders: 50,
+      sales2: "$25,000",
+    },
+  ];
+
+  useEffect(() => {
+    const firstHeader = document.querySelector(
+      "thead.ant-table-thead tr th:first-child"
+    );
+    if (firstHeader) {
+      firstHeader.style.paddingLeft = "40px";
+    }
+
+    const eRows = document.querySelectorAll(
+      ".ant-table-row-indent.indent-level-1"
+    );
+    console.log(eRows, "eRows");
+    eRows.forEach((row) => {
+      row.style.paddingLeft = "0";
+    });
+  }, [expandClicked]);
+
   return (
     <>
-      <Tabs activeKey={defaultActiveKey} items={items} onChange={onChange} />
+      <div>
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="line"
+          height={350}
+        />
+      </div>
     </>
+
+    // <>
+    //   <Table
+    //     columns={columns}
+    //     dataSource={data}
+    //     rowKey={"key"}
+    //     onExpand={() => setExpandClicked(!expandClicked)}
+    //   />
+    // </>
     // <>
     //   <div
     //     className="content d-flex flex-column flex-column-fluid"

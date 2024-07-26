@@ -1,3 +1,4 @@
+import button from "./button";
 import cards from "./cards";
 import charts from "./charts";
 import dashboard from "./dashboard";
@@ -10,6 +11,7 @@ import redux from "./redux";
 import table from "./table";
 
 export const PageRoutes = [
+  ...button,
   ...forms,
   ...cards,
   ...table,

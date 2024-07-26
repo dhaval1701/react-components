@@ -80,6 +80,8 @@ const CenterLogs = () => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </OverflowText>
+
+          <OverflowText rule={true}>Lorem ipsum</OverflowText>
         </div>
       </Card>
     </Wrapper>
@@ -99,23 +101,48 @@ const CardComponent = ({ index, title, length, onAdd, onRemove }) => {
 };
 
 const OverflowText = ({ row = 1, rule, children, placement }) => {
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const [id] = useState(() => `overflow-text-${Math.random()}`);
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      const element = document.getElementById(id);
+
+      console.log(element.scrollHeight, "scrollHeigh");
+
+      console.log(element.offsetHeight, "offset Height");
+      if (element) {
+        // Compare scrollHeight to offsetHeight
+        setIsOverflowing(element.scrollHeight > element.offsetHeight);
+      }
+    };
+
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+    return () => {
+      window.removeEventListener("resize", checkOverflow);
+    };
+  }, [id]);
+
   const style = {
-    // width: "500px", // Default width
-    whiteSpace: row ? "normal" : "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
     border: "1px solid #ccc",
-    maxHeight: row ? `${row * 1.6}em` : "none",
+    maxHeight: `${row * 1.5}em`, // Adjust this multiplier as needed
     display: "-webkit-box",
     WebkitLineClamp: row,
     WebkitBoxOrient: "vertical",
+    lineHeight: "1.5em", // Adjust this as needed
   };
 
-  const content = <div style={{ width: "fit-content" }}>{children}</div>;
-
   return (
-    <Tooltip title={rule ? content : ""} placement={placement || "topLeft"}>
-      <div style={style}>{children}</div>
+    <Tooltip
+      title={rule && isOverflowing ? children : ""}
+      placement={placement || "topLeft"}
+    >
+      <div id={id} style={style}>
+        {children}
+      </div>
     </Tooltip>
   );
 };
