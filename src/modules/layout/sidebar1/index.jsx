@@ -94,6 +94,8 @@ const Sidebar1 = (props) => {
   //   }
   // }, [collapsedButtonClick]);
 
+  console.log(payload, "payload");
+
   return (
     <Wrapper selectedColor={vibrantColors[randomIndex]} flag={isDarkMode}>
       <Sider

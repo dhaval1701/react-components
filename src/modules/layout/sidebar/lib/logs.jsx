@@ -31,6 +31,11 @@ export default [
         icon: <MinusOutlined />,
         label: GetLinks("/logs/icons-page", "Icons"),
       },
+      {
+        key: "/logs/style-page",
+        icon: <MinusOutlined />,
+        label: GetLinks("/logs/style-page", "Style"),
+      },
     ],
   },
 ];

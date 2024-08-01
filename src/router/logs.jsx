@@ -1,6 +1,7 @@
 import CenterLogs from "../modules/pages/logs/center-logs";
 import IconsPage from "../modules/pages/logs/icons-page";
 import ReportLogs from "../modules/pages/logs/report-logs";
+import StylePage from "../modules/pages/logs/style-page";
 
 export default [
   {
@@ -17,6 +18,10 @@ export default [
       {
         path: "icons-page",
         element: <IconsPage />,
+      },
+      {
+        path: "style-page",
+        element: <StylePage />,
       },
     ],
   },

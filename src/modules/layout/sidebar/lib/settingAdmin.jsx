@@ -5,7 +5,7 @@ export default [
   {
     key: "9",
     icon: <Icons type="setting" />,
-    label: "Setting",
+    label: "Other Page",
     admin: "true",
     children: [
       {

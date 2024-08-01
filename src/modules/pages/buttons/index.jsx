@@ -64,8 +64,6 @@ const ButtonPage = () => {
       });
   };
 
-  console.log(generatedCSS, "generated css");
-
   useEffect(() => {
     generateShades(selectedColor);
   }, [selectedColor]);
@@ -109,44 +107,34 @@ const ButtonPage = () => {
 
   const generateShades = (color) => {
     const baseColor = chroma(color);
-    const luminance = baseColor.luminance();
+    const isLight = chroma(color).luminance() > 0.5;
 
-    // Determine if the color is light or dark
-    const isLight = luminance > 0.5;
+    // Adjust these values to fine-tune the contrast
+    const lightSteps = [2, 1.5, 1, 0.5, 0.25, 0, -0.25, -0.5, -0.75, -1, -1.25];
+    const darkSteps = [4, 3, 2, 1, 0.5, 0, -0.5, -1, -1.5, -2, -2.5];
 
-    // Set gap values based on light or dark color
-    const brightenAmount = isLight
-      ? [3, 2.5, 2, 1.5, 1, 0.5, 0]
-      : [4, 3, 2.5, 2, 1.5, 1, 0.5];
-    const darkenAmount = isLight ? [0.5, 1, 1.5, 2, 2.5] : [0, 0.5, 1, 1.5, 2];
+    const steps = isLight ? lightSteps : darkSteps;
 
-    const shades = [
-      { name: "50", color: baseColor.brighten(brightenAmount[0]).hex() },
-      { name: "100", color: baseColor.brighten(brightenAmount[1]).hex() },
-      { name: "200", color: baseColor.brighten(brightenAmount[2]).hex() },
-      { name: "300", color: baseColor.brighten(brightenAmount[3]).hex() },
-      { name: "400", color: baseColor.brighten(brightenAmount[4]).hex() },
-      { name: "500", color: baseColor.brighten(brightenAmount[5]).hex() },
-      { name: "600", color: baseColor.brighten(brightenAmount[6]).hex() },
-      { name: "700", color: baseColor.hex() }, // Base color
-      { name: "800", color: baseColor.darken(darkenAmount[0]).hex() },
-      { name: "900", color: baseColor.darken(darkenAmount[1]).hex() },
-      { name: "950", color: baseColor.darken(darkenAmount[2]).hex() },
-    ];
+    const shades = steps.map((step, index) => ({
+      name: [
+        "50",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900",
+        "950",
+      ][index],
+      color: baseColor.brighten(step).hex(),
+    }));
 
-    const newColors = {
-      50: baseColor.brighten(brightenAmount[0]).hex(),
-      100: baseColor.brighten(brightenAmount[1]).hex(),
-      200: baseColor.brighten(brightenAmount[2]).hex(),
-      300: baseColor.brighten(brightenAmount[3]).hex(),
-      400: baseColor.brighten(brightenAmount[4]).hex(),
-      500: baseColor.brighten(brightenAmount[5]).hex(),
-      600: baseColor.brighten(brightenAmount[6]).hex(),
-      700: baseColor.hex(),
-      800: baseColor.darken(darkenAmount[0]).hex(),
-      900: baseColor.darken(darkenAmount[1]).hex(),
-      950: baseColor.darken(darkenAmount[2]).hex(),
-    };
+    const newColors = Object.fromEntries(
+      shades.map((shade) => [shade.name, shade.color])
+    );
 
     setColors(newColors);
     setColorShades(shades);
@@ -179,8 +167,6 @@ const ButtonPage = () => {
   //     900: "#3b209d",
   //     950: "#1f1164",
   //   };
-
-  console.log(colorShades, "colorShades");
 
   const getTextColor = (shade) => {
     return shade <= 300 ? "#3b209d" : "#e9e9fe";

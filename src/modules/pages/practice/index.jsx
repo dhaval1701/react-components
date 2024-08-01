@@ -17,6 +17,7 @@ import Charts from "../charts";
 import { Wrapper } from "./style";
 import Chart from "react-apexcharts";
 import ReactApexChart from "react-apexcharts";
+import DateRangePickerComponent from "../../../components/range-picker";
 
 const Practice = () => {
   const [schedularLoading, setSchedularLoading] = useState(false);
@@ -323,14 +324,33 @@ const Practice = () => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <ReactApexChart
           options={options}
           series={series}
           type="line"
           height={350}
         />
+      </div> */}
+
+      {/* <div className="card p-3"> */}
+      <div
+      id="hello"
+        className="d-flex justify-content-between align-items-center overflow-auto"
+        style={{ maxWidth: "100%" }}
+      >
+        <div className="d-flex" style={{ flexWrap: "nowrap" }}>
+          {[1, 2, 3, 4, 5].map((num) => (
+            <div className="card mb-4" key={num} style={{ minWidth: "25%" }}>
+              <div className="card-body position-relative">
+                <h5 className="card-title">Date Range Picker {num}</h5>
+                <DateRangePickerComponent id={`daterangepicker${num}`} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+      {/* </div> */}
     </>
 
     // <>

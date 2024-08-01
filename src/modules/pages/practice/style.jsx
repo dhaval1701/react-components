@@ -48,4 +48,13 @@ export const Wrapper = styled.div`
       }
     }
   }
+
+  .daterangepicker {
+    position: relative;
+    z-index: 10;
+  }
+
+  .card {
+    overflow: visible;
+  }
 `;
