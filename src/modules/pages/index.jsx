@@ -44,7 +44,7 @@ const items = [
   ]),
   getItem("Files", "9", <FileOutlined />),
 ];
-const App = () => {
+const Page = ({ auth }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [visible, setVisible] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -289,7 +289,7 @@ const App = () => {
                 borderRadius: borderRadiusLG,
               }}
             >
-              <Outlet />
+              <Outlet context={{ auth }} />
             </div>
           </Content>
           <FooterAnt />
@@ -332,4 +332,4 @@ const App = () => {
     // </div>
   );
 };
-export default App;
+export default Page;

@@ -35,6 +35,8 @@ import RangePickerComponent from "../../../components/ant-rangepicker";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../../commonContext";
 import { object } from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../../slices/auth-slice/authSlice";
 
 const dataSource = [
   {
@@ -161,7 +163,6 @@ const transformedDataSource = dataSource.map((item) => {
   const all_items_dynamic = Object.keys(item)
     .filter((key) => key.match(/^item\d+_id$/))
     .map((key) => {
-      console.log(key.match(/^item(\d+)_id$/), "key match");
       const index = key.match(/^item(\d+)_id$/)[1];
       return {
         id: item[`item${index}_id`],
@@ -177,8 +178,6 @@ const transformedDataSource = dataSource.map((item) => {
     all_items: all_items_dynamic,
   };
 });
-
-console.log(transformedDataSource, "transformedDataSource");
 
 // dataSource.map((d, i) => {
 //   console.log(d, "d");
@@ -298,6 +297,11 @@ const Dashboard = () => {
   const selectRef = useRef(null);
   const { token } = theme.useToken();
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const { auth } = useSelector((state) => state);
+  console.log(auth, "auth");
 
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
 
@@ -756,7 +760,8 @@ const Dashboard = () => {
   };
 
   const switchUserType = (userType) => {
-    updateUserTypeInLocalStorage(userType);
+    dispatch(login({ ...auth, userType: userType }));
+    // updateUserTypeInLocalStorage(userType);
     navigate("/cards"); // Reload the page to apply new routes
   };
 

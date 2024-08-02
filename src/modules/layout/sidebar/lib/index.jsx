@@ -1,7 +1,6 @@
 import dashboard from "./dashboard";
 import datepicker from "./datepicker";
 import logs from "./logs";
-import reports from "./redux";
 import setting from "./setting";
 import settingAdmin from "./settingAdmin";
 import table from "./table";
@@ -26,7 +25,6 @@ const payload = [
   ...logs,
   ...redux,
   ...menuItems,
-  ...reports,
   ...setting,
   ...settingAdmin,
 ];

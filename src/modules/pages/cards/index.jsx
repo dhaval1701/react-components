@@ -8,10 +8,17 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import * as htmlToImage from "html-to-image";
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 
 const Cards = () => {
   const { token } = theme.useToken();
   const [selectedFormat, setSelectedFormat] = useState("png");
+  // const { auth } = useSelector((state) => state);
+
+  const { auth } = useOutletContext();
+
+  console.log(auth, "auth");
 
   const divRef = useRef(null);
 
@@ -393,6 +400,99 @@ const Cards = () => {
                       {},
                       { fontSize: "25px" }
                     )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-sm-6 col-lg- col-xl-2 m-5">
+                <div
+                  className="card position-relative"
+                  style={{
+                    backgroundColor: "#e7fef2",
+                    minHeight: "240px",
+                  }}
+                >
+                  <div
+                    className="position-absolute"
+                    style={{
+                      bottom: -76,
+                      // left: 10,
+                      right: -10,
+                      opacity: 0.3,
+                      // transform: "rotate(180deg)",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 36 36"
+                      fill="#0bdb6f"
+                      width={180}
+                    >
+                      <path d="M12 19H14V6.00003L20.3939 8.74028C20.7616 8.89786 21 9.2594 21 9.65943V19H23V21H1V19H3V5.6499C3 5.25472 3.23273 4.89659 3.59386 4.73609L11.2969 1.31251C11.5493 1.20035 11.8448 1.314 11.9569 1.56634C11.9853 1.63027 12 1.69945 12 1.76941V19Z"></path>
+                    </svg>
+                  </div>
+
+                  <div
+                    className="position-absolute"
+                    style={{
+                      bottom: -76,
+                      // left: 10,
+                      right: -60,
+                      opacity: 0.3,
+                      // transform: "rotateY(145deg)",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 36 36"
+                      fill="#08aa56"
+                      width={180}
+                    >
+                      <path d="M12 19H14V6.00003L20.3939 8.74028C20.7616 8.89786 21 9.2594 21 9.65943V19H23V21H1V19H3V5.6499C3 5.25472 3.23273 4.89659 3.59386 4.73609L11.2969 1.31251C11.5493 1.20035 11.8448 1.314 11.9569 1.56634C11.9853 1.63027 12 1.69945 12 1.76941V19Z"></path>
+                    </svg>
+                  </div>
+
+                  <div
+                    className="position-absolute"
+                    style={{
+                      bottom: -42,
+                      // left: 10,
+                      right: 10,
+                      opacity: 0.7,
+                      // transform: "rotateY(145deg)",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 36 36"
+                      fill="#044925"
+                      width={100}
+                    >
+                      <path d="M21 19H23V21H1V19H3V4C3 3.44772 3.44772 3 4 3H14C14.5523 3 15 3.44772 15 4V19H17V9H20C20.5523 9 21 9.44772 21 10V19ZM7 11V13H11V11H7ZM7 7V9H11V7H7Z"></path>
+                    </svg>
+                  </div>
+
+                  <div
+                    className="position-absolute"
+                    style={{
+                      bottom: -62,
+                      // left: 10,
+                      right: 62,
+                      opacity: 0.5,
+                      // transform: "rotateY(145deg)",
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 56 56"
+                      fill="#044925"
+                      width={100}
+                    >
+                      <path d="M20 20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V11H1L11.3273 1.6115C11.7087 1.26475 12.2913 1.26475 12.6727 1.6115L23 11H20V20ZM12 17L15.3588 13.6412C16.2374 12.7625 16.2374 11.3379 15.3588 10.4592C14.4801 9.58056 13.0555 9.58056 12.1768 10.4592L12 10.636L11.8232 10.4592C10.9445 9.58056 9.51992 9.58056 8.64124 10.4592C7.76256 11.3379 7.76256 12.7625 8.64124 13.6412L12 17Z"></path>
+                    </svg>
+                  </div>
+                  <div className="d-flex flex-column justify-content-start align-items-center fs-2 py-3 fw-semibold">
+                    Mumbai
                   </div>
                 </div>
               </div>

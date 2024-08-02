@@ -26,6 +26,7 @@ import { GlobalContext } from "./commonContext";
 import Login from "./modules/pages/auth";
 import Page from "./modules/pages/index";
 import { AdminRoutes, PageRoutes, routeObject } from "./router";
+import { useDispatch, useSelector } from "react-redux";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -43,12 +44,28 @@ function App() {
   const dynamicTheme = generateDynamicLightTheme(brandColor);
   const darkLightTheme = generateTheme(isDarkMode);
 
+  const dispatch = useDispatch();
+
+  const { auth } = useSelector((state) => state);
+
+  console.log(auth, "auth");
+
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
 
+  console.log(data, "data");
+
+  // ------------------------------------ user type with redux
+
+  const routeWithRedux =
+    auth?.userType === 1 ? [...AdminRoutes] : [...PageRoutes];
+
+  // -----------------------------------user type based on the context
   const practiceRoutes =
     data?.userType_ === 1 ? [...AdminRoutes] : [...PageRoutes];
   // Define routes based on user type
   const userRoutes = data?.userType_ ? routeObject[data?.userType_] : [];
+
+  console.log(practiceRoutes, "practiceRoutes");
 
   // Create routes with only createBrowserRouter
   const router1 = createBrowserRouter([
@@ -69,10 +86,11 @@ function App() {
       path: "/",
       element: (
         <Suspense fallback={<LoadingAnimation />}>
-          <PrivateRoute element={<Page />} />
+          <Page auth={auth} />
         </Suspense>
       ),
-      children: [...practiceRoutes],
+      // children: [...practiceRoutes], // route with context
+      children: [...routeWithRedux],
     },
     //this is also working
     // ...(userRoutes?.length > 0
@@ -94,7 +112,7 @@ function App() {
     //   : []),
   ]);
 
-  // Create routes with only createBrowserRouter and createRoutesFromElements
+  // Create routes with  createBrowserRouter and createRoutesFromElements
   const routes = createRoutesFromElements(
     <>
       <Route

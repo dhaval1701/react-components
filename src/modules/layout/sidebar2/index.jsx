@@ -14,6 +14,7 @@ import { useTheme } from "../../../ThemeContext";
 import payload from "../sidebar/lib";
 import { transformedMenu } from "../../../components/menu-items";
 import Icons from "../../../icon";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -46,6 +47,10 @@ const Sidebar2 = (props) => {
   // const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const { isDarkMode } = useTheme();
+  const dispatch = useDispatch();
+
+  const { auth } = useSelector((state) => state);
+  console.log(auth, "auth");
 
   const pathname = location.pathname;
 
@@ -117,7 +122,11 @@ const Sidebar2 = (props) => {
   //   },
   // ];
 
-  const menuValues = transformedMenu(menus);
+  // ---- use this with redux ----
+  const menuValues = transformedMenu(auth?.menus);
+
+  // ----- use this with context ----
+  // const menuValues = transformedMenu(menus);
 
   return (
     <Wrapper flag={isDarkMode}>

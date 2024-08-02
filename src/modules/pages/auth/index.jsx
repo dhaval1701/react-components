@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Icons from "../../../icon";
 import { GetLinks } from "../../../core";
 import { GlobalContext } from "../../../commonContext";
+import { login } from "../../../slices/auth-slice/authSlice";
+import { useDispatch } from "react-redux";
 
 const menus = [
   {
@@ -58,31 +60,59 @@ const Login = () => {
 
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
 
-  const handleLogin = () => {
-    // Here, you would typically validate the username and password
-    // For simplicity, let's assume a successful login if both fields are filled
-    if (username && password) {
-      // Store the user information in localStorage
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userType", 1);
-      updateCommonGlobalVal("userType_", 1);
-      // During login or after fetching the menu data
-      localStorage.setItem("menus", JSON.stringify(menus));
+  const dispatch = useDispatch();
 
-      // Navigate to the layout/dashboard page
+  // -------------------------------------------------------------------Handle Login with Redux and redux-persist
+
+  const handleLogin = () => {
+    if (username && password) {
+      // Mock token
+      const token =
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTg1OTg5OTksImV4cCI6MTcxODY4NTM";
+
+      // Dispatch login action with token
+      dispatch(
+        login({
+          userType: 1, // Set user type (1 for admin, 0 for regular user)
+          menus, // Set menus for the user
+          token, // Set token
+        })
+      );
+
+      // Navigate to dashboard
       navigate("/dashboard");
     } else {
-      // Handle invalid login
       alert("Invalid username or password");
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem(
-      "token",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTg1OTg5OTksImV4cCI6MTcxODY4NTM5OSwidWlkIjoiMiJ9.HMEdMImHQczIstlXVdQOCg8e4ByYUcuDtC3cG0LjPE8"
-    );
-  }, []);
+  // --------------------------------------------------------handle login  with useContext
+
+  // const handleLogin = () => {
+  //   // Here, you would typically validate the username and password
+  //   // For simplicity, let's assume a successful login if both fields are filled
+  //   if (username && password) {
+  //     // Store the user information in localStorage
+  //     localStorage.setItem("isLoggedIn", "true");
+  //     // localStorage.setItem("userType", 1);
+  //     updateCommonGlobalVal("userType_", 1);
+  //     // During login or after fetching the menu data
+  //     localStorage.setItem("menus", JSON.stringify(menus));
+
+  //     // Navigate to the layout/dashboard page
+  //     navigate("/dashboard");
+  //   } else {
+  //     // Handle invalid login
+  //     alert("Invalid username or password");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     "token",
+  //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTg1OTg5OTksImV4cCI6MTcxODY4NTM5OSwidWlkIjoiMiJ9.HMEdMImHQczIstlXVdQOCg8e4ByYUcuDtC3cG0LjPE8"
+  //   );
+  // }, []);
 
   return (
     <div className="container-fluid vh-100 d-flex justify-content-center align-items-center bg-light">
