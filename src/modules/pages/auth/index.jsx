@@ -92,12 +92,21 @@ const Login = () => {
   //   // Here, you would typically validate the username and password
   //   // For simplicity, let's assume a successful login if both fields are filled
   //   if (username && password) {
+  //     const token =
+  //       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiIiLCJqdGkiOiIiLCJpYXQiOjE3MTg1OTg5OTksImV4cCI6MTcxODY4NTM";
+
+  //     const data = {
+  //       isLoggedIn: true,
+  //       userType: 1,
+  //       menus,
+  //       token,
+  //     };
   //     // Store the user information in localStorage
-  //     localStorage.setItem("isLoggedIn", "true");
+  //     // localStorage.setItem("isLoggedIn", "true");
   //     // localStorage.setItem("userType", 1);
-  //     updateCommonGlobalVal("userType_", 1);
+  //     updateCommonGlobalVal("user_data", data);
   //     // During login or after fetching the menu data
-  //     localStorage.setItem("menus", JSON.stringify(menus));
+  //     // localStorage.setItem("menus", JSON.stringify(menus));
 
   //     // Navigate to the layout/dashboard page
   //     navigate("/dashboard");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   DesktopOutlined,
   FileOutlined,
@@ -15,6 +15,7 @@ import payload from "../sidebar/lib";
 import { transformedMenu } from "../../../components/menu-items";
 import Icons from "../../../icon";
 import { useDispatch, useSelector } from "react-redux";
+import { GlobalContext } from "../../../commonContext";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -48,6 +49,8 @@ const Sidebar2 = (props) => {
   const location = useLocation();
   const { isDarkMode } = useTheme();
   const dispatch = useDispatch();
+
+  const { data, updateCommonGlobalVal } = useContext(GlobalContext);
 
   const { auth } = useSelector((state) => state);
   console.log(auth, "auth");
@@ -123,10 +126,12 @@ const Sidebar2 = (props) => {
   // ];
 
   // ---- use this with redux ----
-  const menuValues = transformedMenu(auth?.menus);
+  const menuValues = transformedMenu(auth?.credential?.menus);
+
+  console.log(data?.user_data, "menu data");
 
   // ----- use this with context ----
-  // const menuValues = transformedMenu(menus);
+  // const menuValues = transformedMenu(data?.user_data?.menus);
 
   return (
     <Wrapper flag={isDarkMode}>

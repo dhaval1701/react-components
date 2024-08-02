@@ -47,23 +47,26 @@ function App() {
   const dispatch = useDispatch();
 
   const { auth } = useSelector((state) => state);
+  const user_cred = auth?.credential;
 
   console.log(auth, "auth");
 
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
-
-  console.log(data, "data");
+  const user_cred_context = data?.user_data;
+  console.log(user_cred_context, "user_cred_context");
 
   // ------------------------------------ user type with redux
 
   const routeWithRedux =
-    auth?.userType === 1 ? [...AdminRoutes] : [...PageRoutes];
+    user_cred?.userType === 1 ? [...AdminRoutes] : [...PageRoutes];
 
   // -----------------------------------user type based on the context
   const practiceRoutes =
-    data?.userType_ === 1 ? [...AdminRoutes] : [...PageRoutes];
+    user_cred_context?.userType === 1 ? [...AdminRoutes] : [...PageRoutes];
   // Define routes based on user type
-  const userRoutes = data?.userType_ ? routeObject[data?.userType_] : [];
+  const userRoutes = user_cred_context?.userType
+    ? routeObject[user_cred_context?.userType]
+    : [];
 
   console.log(practiceRoutes, "practiceRoutes");
 
@@ -86,11 +89,12 @@ function App() {
       path: "/",
       element: (
         <Suspense fallback={<LoadingAnimation />}>
-          <Page auth={auth} />
+          {/* <Page auth={user_cred} /> */}
+          <Page auth={user_cred_context} />
         </Suspense>
       ),
-      // children: [...practiceRoutes], // route with context
-      children: [...routeWithRedux],
+      // children: [...practiceRoutes], // routes with context
+      children: [...routeWithRedux], // routes with redux
     },
     //this is also working
     // ...(userRoutes?.length > 0

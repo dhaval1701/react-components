@@ -32,7 +32,7 @@ import AntDropdown from "../../../components/ant-dropdown";
 import ColorShades from "../../../components/colorShades";
 import { generate, presetPalettes } from "@ant-design/colors";
 import RangePickerComponent from "../../../components/ant-rangepicker";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { GlobalContext } from "../../../commonContext";
 import { object } from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
@@ -300,7 +300,9 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-  const { auth } = useSelector((state) => state);
+  const { auth } = useOutletContext();
+
+  // const { auth } = useSelector((state) => state);
   console.log(auth, "auth");
 
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
@@ -760,7 +762,11 @@ const Dashboard = () => {
   };
 
   const switchUserType = (userType) => {
-    dispatch(login({ ...auth, userType: userType }));
+    // dispatch(login({ ...auth, userType: userType })); // switch user with redux
+    updateCommonGlobalVal("user_data", {
+      ...data?.user_data,
+      userType: userType,
+    }); // switch user with use context
     // updateUserTypeInLocalStorage(userType);
     navigate("/cards"); // Reload the page to apply new routes
   };

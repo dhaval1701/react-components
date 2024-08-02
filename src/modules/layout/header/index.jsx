@@ -23,6 +23,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import AntBreadCumb from "../../../components/ant-breadcumb";
 import { NotificationWrapper } from "./style";
 import { useTheme } from "../../../ThemeContext";
+import { useDispatch } from "react-redux";
+import { persistor } from "../../../store/store";
+import { logout } from "../../../slices/auth-slice/authSlice";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -43,10 +46,20 @@ const HeaderAnt = (props) => {
     token: { colorBgContainer, borderRadiusLG, colorBgLayout },
   } = theme.useToken();
 
+  const dispatch = useDispatch();
+
   const { theme1, isDarkMode, toggleTheme } = useTheme();
 
   const handleRedirect = () => {
     localStorage.clear();
+    // Clear the entire persisted state
+
+    persistor.purge();
+
+    // You might also want to dispatch an action to reset your Redux state
+    dispatch(logout());
+
+    // dispatch(logout());
     navigate("/login");
   };
 

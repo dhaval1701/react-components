@@ -20,8 +20,8 @@ const decodeValue = (value) => {
 const GlobalCommonContextProvider = (props) => {
   const [commonGlobalVal, setCommonGlobalVal] = useState({
     window_: window,
-    userType_: localStorage.getItem("userType_")
-      ? decodeValue(localStorage.getItem("userType_"))
+    user_data: localStorage.getItem("user_data")
+      ? decodeValue(localStorage.getItem("user_data"))
       : {},
   });
 
@@ -31,7 +31,7 @@ const GlobalCommonContextProvider = (props) => {
       const updatedState = { ...prevState, [key]: value };
 
       // Store encoded value in localStorage
-      if (key === "userType_") {
+      if (key === "user_data") {
         localStorage.setItem(key, encodeValue(value));
       }
 
@@ -41,11 +41,11 @@ const GlobalCommonContextProvider = (props) => {
 
   // Sync context with localStorage on initial load
   useEffect(() => {
-    const userType = localStorage.getItem("userType");
-    if (userType) {
+    const user_data = localStorage.getItem("user_data");
+    if (user_data) {
       setCommonGlobalVal((prevState) => ({
         ...prevState,
-        userType_: decodeValue(userType),
+        user_data: decodeValue(user_data),
       }));
     }
   }, []);
