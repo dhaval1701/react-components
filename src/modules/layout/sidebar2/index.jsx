@@ -126,12 +126,12 @@ const Sidebar2 = (props) => {
   // ];
 
   // ---- use this with redux ----
-  const menuValues = transformedMenu(auth?.credential?.menus);
+  // const menuValues = transformedMenu(auth?.credential?.menus);
 
   console.log(data?.user_data, "menu data");
 
   // ----- use this with context ----
-  // const menuValues = transformedMenu(data?.user_data?.menus);
+  const menuValues = transformedMenu(data?.user_data?.menus);
 
   return (
     <Wrapper flag={isDarkMode}>

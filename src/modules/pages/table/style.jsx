@@ -27,9 +27,24 @@ export const Wrapper = styled.div`
   //   top: 58px;
   // }
 
-  .ant-table-wrapper .ant-table-thead > tr > th {
-    position: sticky;
-    top: 58px;
-    z-index: 3;
+  .ant-table-wrapper
+    .ant-table-container
+    table
+    > thead
+    > tr:first-child
+    > *:first-child {
+    border-start-start-radius: 8px;
+    padding-left: 80px;
   }
+
+  .ant-table-wrapper .ant-table-row-indent + .ant-table-row-expand-icon {
+    margin-top: 2.5px;
+    margin-inline-end: 50px;
+  }
+
+  // .ant-table-wrapper .ant-table-thead > tr > th {
+  //   position: sticky;
+  //   top: 58px;
+  //   z-index: 3;
+  // }
 `;

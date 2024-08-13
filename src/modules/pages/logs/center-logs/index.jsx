@@ -100,7 +100,7 @@ const CardComponent = ({ index, title, length, onAdd, onRemove }) => {
   );
 };
 
-const OverflowText = ({ row = 1, rule, children, placement }) => {
+export const OverflowText = ({ row = 1, rule, children, placement }) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [id] = useState(() => `overflow-text-${Math.random()}`);
 
@@ -127,7 +127,7 @@ const OverflowText = ({ row = 1, rule, children, placement }) => {
   const style = {
     overflow: "hidden",
     textOverflow: "ellipsis",
-    border: "1px solid #ccc",
+    // border: "1px solid #ccc",
     maxHeight: `${row * 1.5}em`, // Adjust this multiplier as needed
     display: "-webkit-box",
     WebkitLineClamp: row,

@@ -16,11 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <GlobalCommonContextProvider>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <ThemeProvider>
-              <App />
-            </ThemeProvider>
-          </PersistGate>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </Provider>
       </QueryClientProvider>
     </GlobalCommonContextProvider>

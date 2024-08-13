@@ -27,6 +27,8 @@ import Login from "./modules/pages/auth";
 import Page from "./modules/pages/index";
 import { AdminRoutes, PageRoutes, routeObject } from "./router";
 import { useDispatch, useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "./store/store";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -39,6 +41,11 @@ const PrivateRoute = ({ element, ...rest }) => {
 };
 
 function App() {
+  const currentPath = window.location.pathname;
+  const shouldRenderPersistGate = !["/login"].includes(currentPath);
+
+  console.log(shouldRenderPersistGate, "shouldRenderPersistGate");
+
   const { theme1, isDarkMode, toggleTheme } = useTheme();
   const brandColor = "#a0d911"; // Your brand color
   const dynamicTheme = generateDynamicLightTheme(brandColor);
@@ -48,8 +55,6 @@ function App() {
 
   const { auth } = useSelector((state) => state);
   const user_cred = auth?.credential;
-
-  console.log(auth, "auth");
 
   const { data, updateCommonGlobalVal } = useContext(GlobalContext);
   const user_cred_context = data?.user_data;
@@ -68,7 +73,7 @@ function App() {
     ? routeObject[user_cred_context?.userType]
     : [];
 
-  console.log(practiceRoutes, "practiceRoutes");
+  console.log(routeWithRedux, "routeWithRedux");
 
   // Create routes with only createBrowserRouter
   const router1 = createBrowserRouter([
@@ -93,8 +98,8 @@ function App() {
           <Page auth={user_cred_context} />
         </Suspense>
       ),
-      // children: [...practiceRoutes], // routes with context
-      children: [...routeWithRedux], // routes with redux
+      children: [...practiceRoutes], // routes with context
+      // children: [...routeWithRedux], // routes with redux
     },
     //this is also working
     // ...(userRoutes?.length > 0

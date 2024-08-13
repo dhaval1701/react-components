@@ -14,253 +14,573 @@ import {
   Tag,
   Row,
   Col,
+  Tabs,
+  Drawer,
+  Carousel,
 } from "antd";
+import { Wrapper } from "./style";
+
+const { TabPane } = Tabs;
+
+const totalReimbursed = {
+  "Lost Warehouse": 5000,
+  "Damaged Warehouse": 3000,
+  "Lost Inbound": 2000,
+  "Lost Outbound": 1000,
+  "Disposed Of": 500,
+  "Order Discrepancy": 2500,
+  "Damaged Returns": 1800,
+  "FBA Fee": 1500,
+  "Wrong FNSKU Returned": 1000,
+  "Disposition Change": 600,
+  "Referral Fee": 800,
+  "Cancelled Shipment Fee": 106.78,
+};
+
+// Example data for other tabs
+const inProgressReimbursed = {
+  "Lost Warehouse": 2500,
+  "Damaged Warehouse": 1500,
+  "Lost Inbound": 1000,
+  "Lost Outbound": 500,
+  "Disposed Of": 250,
+  "Order Discrepancy": 1250,
+  "Damaged Returns": 900,
+  "FBA Fee": 750,
+  "Wrong FNSKU Returned": 500,
+  "Disposition Change": 300,
+  "Referral Fee": 400,
+  "Cancelled Shipment Fee": 53.39,
+};
+
+const submitReimbursed = {
+  "Lost Warehouse": 1000,
+  "Damaged Warehouse": 500,
+  "Lost Inbound": 400,
+  "Lost Outbound": 200,
+  "Disposed Of": 100,
+  "Order Discrepancy": 500,
+  "Damaged Returns": 400,
+  "FBA Fee": 300,
+  "Wrong FNSKU Returned": 200,
+  "Disposition Change": 120,
+  "Referral Fee": 150,
+  "Cancelled Shipment Fee": 26.7,
+};
+
+const contentStyle = {
+  // margin: 0,
+  padding: 2,
+  height: "173px",
+  color: "#000",
+  // lineHeight: "160px",
+  textAlign: "center",
+  // background: "#364d79",
+};
 
 const StylePage = () => {
-  const [form] = Form.useForm();
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [drawerData, setDrawerData] = useState(null);
+  const [activeKey, setActiveKey] = useState("1");
 
-  const formItemLayout = {
-    labelCol: {
-      span: 23,
-      //   offset: 12,
+  const tableColumns = [
+    {
+      title: "Column 1",
+      dataIndex: "col1",
+      key: "col1",
     },
-    wrapperCol: {
-      span: 23,
+    {
+      title: "Column 2",
+      dataIndex: "col2",
+      key: "col2",
     },
+    // Add more columns as required
+  ];
+
+  const tableData = [
+    {
+      key: "1",
+      col1: "Data 1-1",
+      col2: "Data 1-2",
+    },
+    {
+      key: "2",
+      col1: "Data 2-1",
+      col2: "Data 2-2",
+    },
+    // Add more rows as required
+  ];
+
+  const showDrawer = (item) => {
+    setDrawerData(item);
+    setDrawerVisible(true);
   };
 
-  const validateFields = () => {
-    const fields = Object.keys(form.getFieldsValue());
-
-    const hasError = fields.some(
-      (field) =>
-        !form.getFieldValue(field) || form.getFieldError(field).length != 0
-    );
-
-    // setButtonDisabled(hasError);
+  const closeDrawer = () => {
+    setDrawerVisible(false);
   };
 
-  useEffect(() => {
-    validateFields();
-  }, []);
+  const data = [
+    { title: "Total Reimbursed", values: totalReimbursed },
+    { title: "In Progress Reimbursed", values: inProgressReimbursed },
+    { title: "Submit Reimbursed", values: submitReimbursed },
+  ];
 
+  const renderList = (data) => (
+    <div style={{ maxHeight: "375px", overflow: "auto" }}>
+      <List
+        size="small"
+        bordered
+        dataSource={Object.entries(data)}
+        renderItem={([item, value]) => (
+          <>
+            <div className="d-flex  justify-content-between align-items-center mb-7 p-3">
+              <div>
+                <span className="text-gray-500 fs-6 fw-semibold">{item}</span>
+              </div>
+              <div>
+                <span className="text-muted fs-7 fw-semibold">
+                  {" "}
+                  ${value.toLocaleString()}
+                </span>
+              </div>
+            </div>
+          </>
+        )}
+      />
+    </div>
+  );
+
+  const dataAlert = [
+    { title: "Signature Required", value: "4 Shipments" },
+    { title: "POD & BOL Required", value: "4 Shipments" },
+    { title: "Missing Dimensions", value: "5 FNSKU" },
+    { title: "Payment Due", value: "0" },
+    { title: "Payment Error", value: "0" },
+    { title: "Permissions Error", value: "0" },
+  ];
   return (
     <>
-      <Form
-        {...formItemLayout}
-        form={form}
-        name="addSPUserCredentialForm"
-        className="p-3 mt-5"
-        layout="vertical"
-        //   labelAlign="left"
-        onFieldsChange={validateFields}
-      >
-        <Form.Item
-          label="Company Name"
-          name="company_name"
-          rules={[
-            {
-              required: true,
-              message: "Please input the Company name!",
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(33% - 8px)", // Adjusted for spacing
-            marginRight: "8px", // Add margin to create space between the two fields
-          }}
-        >
-          <Input className="form-control fs-7" />
-        </Form.Item>
+      <Wrapper>
+        <div className="min-h-100" style={{ minHeight: "100vh" }}>
+          <div className="card" style={{ marginBottom: "20px" }}>
+            <div className="d-flex flex-wrap justify-content-around align-items-center p-4">
+              {dataAlert.map((item, index) => (
+                <div
+                  key={index}
+                  className="d-flex flex-column justify-content-start align-items-start align-items-xl-center mt-2 mt-xl-0 flex-sm-wrap px-5 custom-width"
+                  style={{
+                    // width: "220px",
+                    borderRight: index === 5 ? "none" : "2px solid #E5E5E5",
+                  }}
+                >
+                  <div className="text-muted fs-8 fw-semibold">
+                    {item?.title}
+                  </div>
+                  <div className="text-gray-800 fs-6 fw-bold">
+                    {item?.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        <Form.Item
-          label="Seller Name"
-          name="seller_name"
-          rules={[
-            {
-              required: true,
-              message: "Please input the Seller name!",
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(66% - 8px)", // Adjusted for spacing
-          }}
-        >
-          <Input className="form-control fs-7" />
-        </Form.Item>
+          <div className="row gy-5 gx-xl-10">
+            {/*begin::Col*/}
+            <div className="col-xl-8 mb-5 mb-xl-10">
+              <div className="row g-5 g-xl-10">
+                {data.map(({ title, values }, index) => {
+                  const totalAmount = Object.values(values).reduce(
+                    (a, b) => a + b,
+                    0
+                  );
+                  const percentageChange = Math.random() * 10 - 5; // Random percentage for demo purposes
 
-        {/* four items in one line */}
-        <Form.Item
-          label="Seller Name"
-          name="seller_name"
-          rules={[
-            {
-              required: true,
-              message: "Please input the Seller name!",
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(25% - 8px)", // Adjusted for spacing
-          }}
-        >
-          <Input className="form-control fs-7" />
-        </Form.Item>
+                  return (
+                    <div
+                      className="col-md-6"
+                      key={title}
+                      onClick={() => setActiveKey(String(index + 1))}
+                    >
+                      <ReimbursementCard
+                        title={title}
+                        description="Refurbishment"
+                        amount={totalAmount}
+                        percentage={percentageChange.toFixed(2)}
+                        index={index} // Pass the index here
+                      />
+                    </div>
+                  );
+                })}
 
-        <Form.Item
-          label="Seller Name"
-          name="seller_name"
-          rules={[
-            {
-              required: true,
-              message: "Please input the Seller name!",
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(25% - 8px)", // Adjusted for spacing
-          }}
-        >
-          <Input className="form-control fs-7" />
-        </Form.Item>
+                <div className="col-md-6">
+                  <div className="card card-flush h-xl-100">
+                    <h3 className="card-title align-items-start flex-column px-3 text-center">
+                      <span className="card-label fs-6 fw-bold text-danger">
+                        URGENT:ACTION REQUIRED
+                      </span>
+                    </h3>
 
-        <Form.Item
-          label="Seller Name"
-          name="seller_name"
-          rules={[
-            {
-              required: true,
-              message: "Please input the Seller name!",
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(25% - 8px)", // Adjusted for spacing
-          }}
-        >
-          <Input className="form-control fs-7" />
-        </Form.Item>
+                    <Carousel arrows infinite={false}>
+                      {["first", "last"].map((sliceType, index) => (
+                        <div key={index}>
+                          <div style={contentStyle}>
+                            {dataAlert
+                              ?.slice(
+                                sliceType === "first" ? 0 : -3,
+                                sliceType === "first" ? 3 : undefined
+                              )
+                              ?.map((item) => (
+                                <div
+                                  key={item.id} // Ensure each item has a unique key
+                                  className="d-flex justify-content-between align-items-center p-2"
+                                >
+                                  <div className="d-flex align-items-center">
+                                    <div
+                                      className="bullet rounded-2 bg-danger me-3"
+                                      style={{
+                                        background: "red",
+                                        width: "6px",
+                                        height: "6px",
+                                      }}
+                                    ></div>
+                                    <span className="text-gray-800 fs-6 fw-bold">
+                                      {item.title}
+                                    </span>
+                                  </div>
 
-        <Form.Item
-          label="Seller Name"
-          name="seller_name"
-          rules={[
-            {
-              required: true,
-              message: "Please input the Seller name!",
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(25% - 8px)", // Adjusted for spacing
-          }}
-        >
-          <Input className="form-control fs-7" />
-        </Form.Item>
+                                  <div>
+                                    <Button
+                                      type="link"
+                                      className="text-muted fs-6 fw-bold"
+                                      onClick={() => showDrawer(item)}
+                                      style={{
+                                        padding: 0,
+                                        border: "none",
+                                        fontSize: "16px",
+                                      }}
+                                    >
+                                      {item.value}
+                                    </Button>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      ))}
+                    </Carousel>
 
-        <Form.Item
-          label="Company Contact"
-          name="contact_no"
-          rules={[
-            {
-              pattern: /^[0-9]+$/,
-              message:
-                "Please enter a valid phone number (only numbers allowed).",
-              required: true,
-            },
-            {
-              min: 10,
-              max: 10,
-              message: "Contact must be maximum 10 characters long!",
-              required: true,
-            },
-            {
-              pattern: /^(?!\s+$).+/,
-              message: "Contact cannot be only spaces",
-              required: true,
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(50% - 8px)", // Adjusted for spacing
-            marginRight: "8px", // Add margin to create space between the two fields
-          }}
-        >
-          <Input className="form-control fs-7" maxLength={10} />
-        </Form.Item>
+                    {/*begin::Body*/}
+                    {/* <div className="card-body">
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={dataAlert}
+                      renderItem={(item) => (
+                        <>
+                          <div
+                            className="d-flex justify-content-between align-items-center p-2"
+                            style={{ borderBottom: "1px dashed #ccc" }}
+                          >
+                            <div className="d-flex align-items-center">
+                              <div
+                                class="bullet rounded-2 bg-primary me-3"
+                                style={{
+                                  background: "red",
+                                  width: "6px",
+                                  height: "6px",
+                                }}
+                              ></div>
+                              <span className="text-gray-800 fs-6 fw-bold">
+                                {item.title}
+                              </span>
+                            </div>
 
-        <Form.Item
-          label="Company Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              type: "email",
-              message: "Please enter a valid Company email!",
-            },
-          ]}
-          style={{
-            display: "inline-block",
-            width: "calc(50% - 8px)", // Adjusted for spacing
-          }}
-        >
-          <Input className="form-control fs-7" />
-        </Form.Item>
+                            <div>
+                              <Button
+                                type="link"
+                                className="text-muted fs-6 fw-bold"
+                                onClick={() => showDrawer(item)}
+                                style={{
+                                  padding: 0,
+                                  border: "none",
+                                  fontSize: "16px",
+                                }}
+                              >
+                                {item.value}
+                              </Button>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    />
+                  </div> */}
+                    {/*end::Body*/}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/*end::Col*/}
 
-        {/* <Form.Item
-          label="PlateFroms"
-          name="platforms"
-          rules={[
-            {
-              required: true,
-              message: "Please Select PlateFroms",
-            },
-          ]}
-        >
-          <Checkbox.Group options={allPlatform} />
-        </Form.Item> */}
-
-        <div>
-          <p className="fs-6 mt-2 fw-bold text-gray-700">User Details:</p>{" "}
-          {/* This is the label for the section */}
-          <Form.Item
-            label="First Name"
-            name="first_name"
-            rules={[
-              {
-                required: true,
-                message: "Please enter a First Name!",
-              },
-            ]}
-            style={{
-              display: "inline-block",
-              width: "calc(50% - 8px)", // Adjusted for spacing
-              marginRight: "8px", // Add margin to create space between the two fields
-            }}
-          >
-            <Input className="form-control fs-7" />
-          </Form.Item>
-          <Form.Item
-            label="Last Name"
-            name="last_name"
-            rules={[
-              {
-                required: true,
-                message: "Please enter a Last Name!",
-              },
-            ]}
-            style={{
-              display: "inline-block",
-              width: "calc(50% - 8px)", // Adjusted for spacing
-            }}
-          >
-            <Input className="form-control fs-7" />
-          </Form.Item>
+            {/*begin::Col*/}
+            <div className="col-xl-4 mb-xl-10">
+              {/*begin::Engage widget 1*/}
+              <div className="card" dir="ltr">
+                {/*begin::Body*/}
+                <div className="card-body ">
+                  <Tabs
+                    defaultActiveKey="1"
+                    // type="card"
+                    size="large"
+                    activeKey={activeKey}
+                    onChange={(e) => {
+                      setActiveKey(e);
+                    }}
+                    tabBarStyle={{ paddingInline: "100px" }}
+                  >
+                    <TabPane tab="Total" key="1">
+                      {renderList(totalReimbursed)}
+                    </TabPane>
+                    <TabPane tab="In Progress" key="2">
+                      {renderList(inProgressReimbursed)}
+                    </TabPane>
+                    <TabPane tab="Submit" key="3">
+                      {renderList(submitReimbursed)}
+                    </TabPane>
+                  </Tabs>
+                </div>
+                {/*end::Body*/}
+              </div>
+              {/*end::Engage widget 1*/}
+            </div>
+            {/*end::Col*/}
+          </div>
         </div>
-      </Form>
+
+        <Drawer
+          title={drawerData ? drawerData.title : ""}
+          placement="right"
+          onClose={closeDrawer}
+          visible={drawerVisible}
+        >
+          <Table columns={tableColumns} dataSource={tableData} />
+        </Drawer>
+
+        <div className="min-h-100" style={{ minHeight: "100vh" }}>
+          <div className="row g-5 g-xl-10">
+            {data.map(({ title, values }, index) => {
+              const totalAmount = Object.values(values).reduce(
+                (a, b) => a + b,
+                0
+              );
+              const percentageChange = Math.random() * 10 - 5; // Random percentage for demo purposes
+
+              return (
+                <div
+                  className="col-md-4"
+                  key={title}
+                  onClick={() => setActiveKey(String(index + 1))}
+                >
+                  <ReimbursementCard
+                    title={title}
+                    description="Refurbishment"
+                    amount={totalAmount}
+                    percentage={percentageChange.toFixed(2)}
+                    index={index} // Pass the index here
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="row g-5 g-xl-10 py-5">
+            <div className="col-xl-6 mb-xl-10">
+              <div className="card p-3">
+                <Tabs
+                  defaultActiveKey="1"
+                  type="card"
+                  size="large"
+                  activeKey={activeKey}
+                  onChange={(e) => {
+                    setActiveKey(e);
+                  }}
+                >
+                  <TabPane tab="Total" key="1">
+                    {renderList(totalReimbursed)}
+                  </TabPane>
+                  <TabPane tab="In Progress" key="2">
+                    {renderList(inProgressReimbursed)}
+                  </TabPane>
+                  <TabPane tab="Submit" key="3">
+                    {renderList(submitReimbursed)}
+                  </TabPane>
+                </Tabs>
+              </div>
+
+              {/*end::Col*/}
+            </div>
+
+            <div className="col-xl-6 mb-xl-10">
+              {/*begin::Table widget 9*/}
+              <div className="card card-flush h-xl-100">
+                <h3 className="card-title align-items-start flex-column px-3 text-center">
+                  <span className="card-label fs-5 fw-bold text-danger">
+                    URGENT:ACTION REQUIRED
+                  </span>
+                </h3>
+                {/*begin::Body*/}
+                <div className="card-body py-3" style={{ minHeight: "420px" }}>
+                  <table className="table">
+                    <thead style={{ background: "#F5F8FA", padding: "10px" }}>
+                      <tr>
+                        <th className="text-muted fs-6 ">Title</th>
+                        <th className="text-muted fs-6 ">Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dataAlert.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="border-bottom border-dashed m-5"
+                        >
+                          <td className="text-gray-500 fs-6 fw-bold">
+                            {item.title}
+                          </td>
+
+                          <td
+                            className="text-muted fs-6"
+                            style={{ padding: 10 }}
+                          >
+                            <Button
+                              type="link"
+                              className="text-muted fs-6"
+                              onClick={() => showDrawer(item)}
+                              style={{
+                                padding: 0,
+                                border: "none",
+                                fontSize: "16px",
+                              }}
+                            >
+                              {item.value}
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  {/* <List
+                  itemLayout="horizontal"
+                  dataSource={dataAlert}
+                  renderItem={(item) => (
+                    <>
+                      <div className="d-flex  justify-content-between align-items-center mb-7 p-2 border-bottom border-dashed">
+                        <div>
+                          <span className="text-gray-800 fs-6 fw-bold">
+                            {item.title}
+                          </span>
+                        </div>
+                        <div>
+                          <span>{item.value}</span>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                /> */}
+                </div>
+                {/*end::Body*/}
+              </div>
+              {/*end::Table Widget 9*/}{" "}
+            </div>
+          </div>
+        </div>
+      </Wrapper>
     </>
   );
 };
 
 export default StylePage;
+
+const ReimbursementCard = ({
+  title,
+  description,
+  amount,
+  percentage,
+  index,
+}) => (
+  <div
+    className="card card-flush"
+    style={{
+      background:
+        index === 0
+          ? "linear-gradient(to bottom right, black 80%, #ff8c00)"
+          : "linear-gradient(to bottom right, white 80%, #ff8c00)",
+      boxShadow:
+        index === 0 ? "0px 14px 40px 0px rgba(24, 85, 243, 0.20)" : "none",
+      padding: "10px",
+    }}
+  >
+    <div className="card-header d-flex align-items-center pt-6">
+      <div className="symbol symbol-50px me-4">
+        <div
+          className="symbol-label rounded-lg"
+          // style={{ border: "1px dashed rgba(255, 255, 255, 0.20)" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width={58}
+            fill={index === 0 ? "white" : "black"}
+          >
+            <path d="M5 20H19V22H5V20ZM12 18C7.58172 18 4 14.4183 4 10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10C20 14.4183 16.4183 18 12 18ZM12 16C15.3137 16 18 13.3137 18 10C18 6.68629 15.3137 4 12 4C8.68629 4 6 6.68629 6 10C6 13.3137 8.68629 16 12 16Z"></path>
+          </svg>
+        </div>
+      </div>
+      <div className="card-title flex-column flex-grow-1">
+        <div
+          className={`card-label fw-bold fs-5 ${
+            index === 0 ? "text-white" : ""
+          }`}
+        >
+          {title}
+        </div>
+        <div
+          className={`${
+            index === 0 ? "text-white" : "text-dark"
+          } opacity-50 fw-semibold fs-base`}
+        >
+          {description}
+        </div>
+      </div>
+    </div>
+    <div className="card-body d-flex align-items-end pb-3">
+      <div className="d-flex flex-stack flex-row-fluid">
+        <div className="d-flex flex-column">
+          <div className="d-flex align-items-center mb-1">
+            <span
+              className={`fw-bold me-2 ${
+                index === 0 ? "text-white" : "text-dark"
+              }`}
+              style={{ fontSize: "2.5rem" }}
+            >
+              ${amount.toLocaleString()}
+            </span>
+            <span
+              className={`fw-semibold ${
+                percentage > 0 ? "text-success" : "text-danger"
+              } fs-6`}
+            >
+              {percentage > 0 ? `+${percentage}%` : `${percentage}%`}
+            </span>
+          </div>
+          <span
+            className={`fw-semibold ${
+              index === 0 ? "text-white" : "text-dark"
+            } opacity-50`}
+          >
+            For past 24 hours
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+);
