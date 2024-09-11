@@ -21,4 +21,14 @@ export const Wrapper = styled.div`
       width: auto;
     }
   }
+
+  .ant-collapse
+    > .ant-collapse-item
+    > .ant-collapse-header
+    .ant-collapse-expand-icon {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-inline-end: 12px;
+  }
 `;

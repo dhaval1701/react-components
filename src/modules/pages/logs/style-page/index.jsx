@@ -17,10 +17,13 @@ import {
   Tabs,
   Drawer,
   Carousel,
+  Collapse,
 } from "antd";
 import { Wrapper } from "./style";
 
 const { TabPane } = Tabs;
+
+const { Panel } = Collapse;
 
 const totalReimbursed = {
   "Lost Warehouse": 5000,
@@ -83,6 +86,10 @@ const StylePage = () => {
   const [drawerData, setDrawerData] = useState(null);
   const [activeKey, setActiveKey] = useState("1");
 
+  const [activePanel, setActivePanel] = useState(null); // State to track which panel is open
+  // const [tableData, setTableData] = useState([]); // State to hold the data for the table
+  const [columns, setColumns] = useState([]); // State to hold the columns for the table
+
   const tableColumns = [
     {
       title: "Column 1",
@@ -126,30 +133,71 @@ const StylePage = () => {
     { title: "Submit Reimbursed", values: submitReimbursed },
   ];
 
+  // Calculate total sum
+  const totalSum = Object.values(inProgressReimbursed).reduce(
+    (acc, value) => acc + value,
+    0
+  );
+
+  // Function to calculate percentage
+  const calculatePercentage = (value) => ((value / totalSum) * 100).toFixed(2);
+
   const renderList = (data) => (
     <div style={{ maxHeight: "375px", overflow: "auto" }}>
       <List
         size="small"
         bordered
         dataSource={Object.entries(data)}
-        renderItem={([item, value]) => (
-          <>
-            <div className="d-flex  justify-content-between align-items-center mb-7 p-3">
+        renderItem={([item, value]) => {
+          const percentage = calculatePercentage(value);
+          const isPositive = percentage >= 0;
+
+          return (
+            <div className="d-flex justify-content-between align-items-center mb-7 p-3">
               <div>
-                <span className="text-gray-500 fs-6 fw-semibold">{item}</span>
+                <span className="text-muted fs-6 fw-semibold">{item}</span>
               </div>
               <div>
-                <span className="text-muted fs-7 fw-semibold">
-                  {" "}
+                <span className="text-gray-600 fs-7 fw-semibold">
                   ${value.toLocaleString()}
+                </span>
+                <span
+                  className={`fw-semibold ms-2 ${
+                    isPositive ? "text-success" : "text-danger"
+                  }`}
+                  style={{
+                    fontSize: "12px",
+                  }}
+                >
+                  ({percentage}%)
                 </span>
               </div>
             </div>
-          </>
-        )}
+          );
+        }}
       />
     </div>
   );
+
+  const handlePanelChange = (key, item) => {
+    console.log("key", key);
+    console.log("item", item);
+
+    setActivePanel(key);
+
+    // Here, you would set the table data and columns based on the clicked panel
+    // Example: setting data and columns based on the item
+    const data = item.tableData; // Replace with logic to fetch the actual table data
+    const cols = [
+      { title: "Column 1", dataIndex: "col1", key: "col1" },
+      { title: "Column 2", dataIndex: "col2", key: "col2" },
+    ]; // Replace with logic to fetch the actual columns
+
+    // setTableData(data);
+    setColumns(cols);
+  };
+
+  console.log("activePanel", activePanel);
 
   const dataAlert = [
     { title: "Signature Required", value: "4 Shipments" },
@@ -159,6 +207,7 @@ const StylePage = () => {
     { title: "Payment Error", value: "0" },
     { title: "Permissions Error", value: "0" },
   ];
+
   return (
     <>
       <Wrapper>
@@ -244,7 +293,7 @@ const StylePage = () => {
                                         height: "6px",
                                       }}
                                     ></div>
-                                    <span className="text-gray-800 fs-6 fw-bold">
+                                    <span className="text-muted fs-6 fw-bold">
                                       {item.title}
                                     </span>
                                   </div>
@@ -252,7 +301,7 @@ const StylePage = () => {
                                   <div>
                                     <Button
                                       type="link"
-                                      className="text-muted fs-6 fw-bold"
+                                      className="text-dark fs-6 fw-bold"
                                       onClick={() => showDrawer(item)}
                                       style={{
                                         padding: 0,
@@ -429,45 +478,104 @@ const StylePage = () => {
                 </h3>
                 {/*begin::Body*/}
                 <div className="card-body py-3" style={{ minHeight: "420px" }}>
-                  <table className="table">
-                    <thead style={{ background: "#F5F8FA", padding: "10px" }}>
-                      <tr>
-                        <th className="text-muted fs-6 ">Title</th>
-                        <th className="text-muted fs-6 ">Value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {dataAlert.map((item, index) => (
-                        <tr
-                          key={index}
-                          className="border-bottom border-dashed m-5"
-                        >
-                          <td className="text-gray-500 fs-6 fw-bold">
-                            {item.title}
-                          </td>
+                  <div className="table-container">
+                    <div
+                      className="table-header"
+                      style={{
+                        // background: "#F5F8FA",
+                        padding: "20px",
+                        display: "flex",
+                      }}
+                    >
+                      <div
+                        className="text-gray-500 fs-6 ms-4"
+                        style={{ flex: 1 }}
+                      >
+                        Title
+                      </div>
+                      <div
+                        className="text-gray-700 fs-6 ms-4"
+                        style={{ flex: 1 }}
+                      >
+                        Value
+                      </div>
+                    </div>
 
-                          <td
-                            className="text-muted fs-6"
-                            style={{ padding: 10 }}
-                          >
-                            <Button
-                              type="link"
-                              className="text-muted fs-6"
-                              onClick={() => showDrawer(item)}
+                    {dataAlert.map((item, index) => (
+                      <Collapse
+                        activeKey={activePanel}
+                        onChange={(e) => {
+                          handlePanelChange(e[0], item);
+                        }}
+                        bordered={false}
+                        key={index}
+                      >
+                        <Panel
+                          header={
+                            <div
+                              className="table-row"
                               style={{
-                                padding: 0,
-                                border: "none",
-                                fontSize: "16px",
+                                display: "flex",
+                                padding: "10px",
+                                borderBottom: "1px dashed #ccc",
                               }}
                             >
-                              {item.value}
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-
+                              <div
+                                className="text-muted fs-6 fw-bold"
+                                style={{ flex: 1 }}
+                              >
+                                {item.title}
+                              </div>
+                              <div
+                                className="text-gray-500 fs-6"
+                                style={{ flex: 1 }}
+                              >
+                                {item.value}
+                              </div>
+                            </div>
+                          }
+                          key={String(index + 1)}
+                        >
+                          <div
+                            className="table-content"
+                            style={{ padding: "10px" }}
+                          >
+                            <div
+                              className="table-header"
+                              style={{
+                                display: "flex",
+                                borderBottom: "1px solid #ccc",
+                                padding: "10px",
+                              }}
+                            >
+                              {tableColumns.map((col) => (
+                                <div
+                                  key={col.key}
+                                  style={{ flex: 1, fontWeight: "bold" }}
+                                >
+                                  {col.title}
+                                </div>
+                              ))}
+                            </div>
+                            {tableData.map((row, rowIndex) => (
+                              <div
+                                className="table-row"
+                                key={rowIndex}
+                                style={{
+                                  display: "flex",
+                                  borderBottom: "1px dashed #ccc",
+                                  padding: "10px",
+                                }}
+                              >
+                                <div style={{ flex: 1 }}>{row.col1}</div>
+                                <div style={{ flex: 1 }}>{row.col2}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </Panel>
+                      </Collapse>
+                    ))}
+                  </div>
                   {/* <List
                   itemLayout="horizontal"
                   dataSource={dataAlert}
